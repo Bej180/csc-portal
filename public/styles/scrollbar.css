@@ -1,0 +1,39 @@
+.chat-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.chat-container::-webkit-scrollbar-thumb {
+  background-color: #e0e0e0; /* Light mode thumb color */
+  border-radius: 5px;
+}
+
+.chat-container::-webkit-scrollbar-track {
+  background-color: transparent; /* Transparent background */
+}
+
+/* Mozilla (Firefox) */
+.chat-container {
+  scrollbar-width: thin;
+  scrollbar-color: #e0e0e0 transparent;
+}
+
+.chat-container::-moz-scrollbar-thumb {
+  background-color: #e0e0e0; /* Light mode thumb color */
+}
+
+.chat-container::-moz-scrollbar-track {
+  background-color: transparent; /* Transparent background */
+}
+
+/* Dark mode scrollbar styles */
+.dark-mode .chat-container::-webkit-scrollbar-thumb {
+  background-color: #333; /* Dark mode thumb color */
+}
+
+.dark-mode .chat-container::-moz-scrollbar-thumb {
+  background-color: #333; /* Dark mode thumb color */
+}
+
+body {
+  background:red !important;
+}

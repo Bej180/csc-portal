@@ -1,0 +1,13 @@
+<div class="card2" ng-if="!close">
+    <div class="card2-header flex justify-between items-center">
+        <span ng-bind="title" class="flex-1" ng-click="closeWindow()"></span>
+        <span class="flex gap-2">
+            <i class="fa fa-window-close" ng-click="closeWindow()"></i>
+            <i class="fa" ng-click="toggleWindow()"
+                ng-class="{'fa-window-minimize': !minimize, 'fa-window-restore': minimize}"></i>
+        </span>
+    </div>
+    <span ng-show="!minimize">
+        <ng-transclude></ng-transclude>
+    </span>
+</div>

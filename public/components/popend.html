@@ -1,0 +1,10 @@
+<div class="popend" ng-class="{show:popendIsOpen}" tabindex="-1" aria-labelledby="popendLabel" aria-modal="true" role="dialog">
+  <div class="popend-header">
+      <h5 class="sentence-case font-semibold text-sm">{% title %}</h5>
+      <span ng-click="close_popend()" class="btn-text btn-close text-reset"></span>
+  </div>
+  <div class="popend-body">
+      <ng-transclude></ng-transclude>
+  </div>
+</div>
+<div ng-show="popendIsOpen" class="popend-backdrop" ng-click="close_popend()"></div>

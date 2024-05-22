@@ -1,0 +1,13 @@
+<button 
+  type="button" 
+  ng-click="toggleValue()" 
+  value="{% ngModel %}" 
+  data-ui="shuffle">
+  <i ng-class="{[fontIcon]:true}"></i>
+
+  <span class="ui-tooltip">
+    {{ ngModel }}
+    <span class="ui-tooltip-label dir-top">Click Me</span>
+  </span>
+    
+  </button>

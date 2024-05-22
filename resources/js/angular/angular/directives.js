@@ -1,0 +1,16 @@
+import './directives/new-session.js';
+import './directives/scroller.js';
+import './directives/dropdown.js';
+import './directives/toggle.js';
+import './directives/input-mask.js';
+import './directives/form.js';
+import './directives/submit.js';
+import './directives/button.js';
+import './directives/select_single.js';
+import './directives/timer.js';
+import './directives/profile-picture.js';
+import './directives/menu.js';
+import './directives/confirm.js';
+import './directives/Route.js';
+import './directives/file-input.js';
+import './directives/verify-password.js';

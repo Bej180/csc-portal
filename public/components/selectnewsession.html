@@ -1,0 +1,4 @@
+<select ng-click="handleOnClick()" ng-change="handleOnChange()" ng-blur="handleOnChange()">
+  <option value="" ng-bind="clicked === true && sessions.length === 0 ? 'Loading...':'Select Session'"></option>
+  <option ng-repeat="session in sessions" value="{% session %}">{% session %}</option>
+</select>{% session.length %}

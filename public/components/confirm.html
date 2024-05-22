@@ -1,0 +1,27 @@
+<div ng-if="visible" ng-contextmenu="down($event)" class="confirm-backdrop" ng-class="{show:visible}" ng-click="close($event)">
+    <div class="confirm-container confirm-center">
+        <div aria-labelledby="confirm-title" aria-describedby="confirm-content" class="confirm-popup confirm-modal"
+             tabindex="-1" role="dialog" aria-live="assertive" aria-modal="true">
+            <div class="confirm-header">
+                <h2 ng-if="title" class="confirm-title">
+                    {{ title}}
+                </h2>
+                <button type="button" class="confirm-close" ng-click="close($event)" aria-label="Close this dialog">×</button>
+            </div>
+            <div class="confirm-content">
+                <div id="confirm-content" class="confirm-html-container">
+                    <ng-transclude></ng-transclude>
+                </div>
+            </div>
+            <div class="confirm-actions">
+                <button type="button" class="confirm-confirm btn btn-primary" aria-label=""
+                    style="display: inline-block;" ng-click="confirmFunction()">{{ confirmText }}</button>
+                <button type="button" ng-click="denyFunction()" class="confirm-deny" aria-label=""
+                    style="display: none;">{{ denyText }}</button>
+                <button type="button" class="confirm-cancel btn btn-danger ml-1" aria-label=""
+                    style="display: inline-block;" ng-click="close($event)">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+</div>

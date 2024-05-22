@@ -1,0 +1,15 @@
+<div class="dropdown-backdrop" ng-class="{'show': showDropdown}" ng-click="showDropdown=false"></div>
+<div class="dropdown">
+    <button type="button" class="dropdown-toggle input relative z-[999] text-sm px-[8px]" ng-click="toggleDropdown($event)">
+        {% selectedItem.label || "Select an Option" %} 
+    </button>
+    <div class="dropdown-menu !z-[1000]" ng-show="showDropdown" ng-class="{'show': showDropdown}">
+      
+        <ul class="dropdown-body">
+            <li class="dropdown-item" ng-repeat="option in selectables" ng-click="selectOption(option)" ng-class="{'selected': option.value === selectedItem.value}">
+                {% option.label %}
+            </li>
+        </ul>
+    </div>
+</div>
+

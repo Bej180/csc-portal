@@ -1,0 +1,10 @@
+[
+  {
+    "id": 1,
+    "created_by": 1,
+    "advisor_id": 2,
+    "name": "2018/2023",
+    "start_year": 2018,
+    "end_year": 2023
+  }
+]

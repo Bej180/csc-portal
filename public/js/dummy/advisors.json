@@ -1,0 +1,13 @@
+[
+  {
+    "id": 2,
+    "set_id": 1,
+    "created_by": 1,
+    "email": "advisor@gmail.com",
+    "username": "zroberts",
+    "name": "Theodora Ero",
+    "role": "advisor",
+    "password": "$2y$10$iEQzPupTfBtN9BWX2YpMuO.DexGzAZfMm0HUvo7AFhm/Nsx7CefDi",
+    "unique_id": "ADV87654"
+  }
+]

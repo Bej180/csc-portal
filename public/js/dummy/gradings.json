@@ -1,0 +1,11 @@
+[
+    {
+        "name": "ABCDEF Grading",
+        "grading_system": "{\"A\":70,\"B\":60,\"C\":50,\"D\":45, \"E\":40, \"F\":0}"
+    },
+    {
+        "name": "ABCDF Grading",
+        "grading_system": "{\"A\":70,\"B\":60,\"C\":50,\"D\":45, \"F\":0}"
+    }
+]
+

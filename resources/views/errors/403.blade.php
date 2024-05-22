@@ -1,0 +1,1 @@
+@include('errors.template', compact('exception'))

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="200" height="200">
+  <!-- Monitor -->
+  <rect x="64" y="96" width="384" height="256" fill="#ccc" />
+  <!-- Screen -->
+  <rect x="96" y="128" width="320" height="192" fill="#fff" />
+  <!-- Stand -->
+  <rect x="192" y="352" width="128" height="64" fill="#333" />
+  <!-- Keyboard -->
+  <rect x="128" y="432" width="256" height="48" fill="#333" />
+  <!-- Keyboard Keys -->
+  <g fill="#666">
+    <!-- Rows -->
+    <rect x="144" y="448" width="224" height="8" />
+    <rect x="152" y="456" width="208" height="8" />
+    <!-- Keys -->
+    <rect x="152" y="464" width="24" height="16" rx="2" />
+    <rect x="184" y="464" width="24" height="16" rx="2" />
+    <rect x="216" y="464" width="24" height="16" rx="2" />
+    <rect x="248" y="464" width="24" height="16" rx="2" />
+    <rect x="280" y="464" width="24" height="16" rx="2" />
+    <rect x="312" y="464" width="24" height="16" rx="2" />
+    <rect x="344" y="464" width="24" height="16" rx="2" />
+    <rect x="376" y="464" width="24" height="16" rx="2" />
+  </g>
+</svg>

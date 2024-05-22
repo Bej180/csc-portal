@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "gender": "male",
+    "email": "admin@gmail.com",
+    "username": "admin",
+    "name": "G. A. Chukwudebe",
+    "role": "admin",
+    "password": "$2y$10$4Z/3VZRgU2hjIFfs/7h5auQAxlHXJHSPbHErK3dBbMec4Vwkbcq2i",
+    "staff_id": "ADM67890",
+    "rank": "Professor",
+    "title": "Engr. Prof. (Mrs)"
+  }
+]

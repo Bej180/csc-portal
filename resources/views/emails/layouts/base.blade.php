@@ -1,0 +1,1 @@
+@include('emails.layouts.new-base')

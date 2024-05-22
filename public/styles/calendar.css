@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+.calendar-wrapper{
+  background: transparent;
+}
+
+.calendar-wrapper .calendar-header{
+  display: flex;
+  align-items: center;
+  padding: 25px 10px 10px;
+  justify-content: space-between;
+}
+.calendar-header .icons{
+  display: flex;
+}
+.calendar-header .icons span{
+  height: 30px;
+  width: 30px;
+  margin: 0 1px;
+  cursor: pointer;
+  color: #878787;
+  text-align: center;
+  line-height: 30px;
+  /* font-size: 1.5rem; */
+  user-select: none;
+  border-radius: 50%;
+}
+.icons span:last-child{
+  margin-right: -10px;
+}
+.calendar-header .icons span:hover{
+  background: #f2f2f2;
+}
+.calendar-header .current-date{
+  /* font-size: 1.05rem; */
+  font-weight: 500;
+}
+
+.calendar ul{
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  text-align: center;
+}
+.calendar .calendar-days{
+  margin-bottom: 20px;
+}
+.calendar li{
+  color: #333;
+  width: calc(100% / 7);
+  /* font-size: 1.0rem; */
+}
+.dark .calendar li {
+  color: #fff;
+}
+.calendar .calendar-weeks li{
+  font-weight: 500;
+  cursor: default;
+}
+.calendar .calendar-days li{
+  z-index: 1;
+  cursor: pointer;
+  position: relative;
+  margin-top: 30px;
+}
+.calendar-days li.inactive{
+  color: #aaa;
+  pointer-events: none;
+}
+.dark .calendar-days li.inactive {
+  color: #525252;
+}
+.calendar-days li.active{
+  color: #fff;
+}
+.calendar-days li::before{
+  position: absolute;
+  content: "";
+  left: 50%;
+  top: 50%;
+  height: 30px;
+  width: 30px;
+  z-index: -1;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: blink 1s linear infinite alternate;
+}
+.calendar-days li.active::before{
+  background: rgb(16, 163, 127);
+}
+.dark .calendar li:hover {
+  color: rgb(16, 163, 127);
+}
+.calendar-days li:not(.active):hover::before{
+  background: #f2f2f2;
+}
+.calendar-wrapper {
+  transition: all 0.5s;
+}

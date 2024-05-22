@@ -1,0 +1,7490 @@
+[
+  {
+    "course_id": 1,
+    "reg_no": "20181121585",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 2,
+    "reg_no": "20181121585",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 3,
+    "reg_no": "20181121585",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 4,
+    "reg_no": "20181121585",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 5,
+    "reg_no": "20181121585",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 6,
+    "reg_no": "20181121585",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 7,
+    "reg_no": "20181121585",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 8,
+    "reg_no": "20181121585",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 9,
+    "reg_no": "20181121585",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 11,
+    "reg_no": "20181121585",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 13,
+    "reg_no": "20181121585",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 14,
+    "reg_no": "20181121585",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 15,
+    "reg_no": "20181121585",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 16,
+    "reg_no": "20181121585",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 17,
+    "reg_no": "20181121585",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 18,
+    "reg_no": "20181121585",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 19,
+    "reg_no": "20181121585",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 20,
+    "reg_no": "20181121585",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 21,
+    "reg_no": "20181121585",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 22,
+    "reg_no": "20181121585",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 23,
+    "reg_no": "20181121585",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 24,
+    "reg_no": "20181121585",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 25,
+    "reg_no": "20181121585",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 26,
+    "reg_no": "20181121585",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 27,
+    "reg_no": "20181121585",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 28,
+    "reg_no": "20181121585",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 29,
+    "reg_no": "20181121585",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 30,
+    "reg_no": "20181121585",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 31,
+    "reg_no": "20181121585",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 32,
+    "reg_no": "20181121585",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 33,
+    "reg_no": "20181121585",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 34,
+    "reg_no": "20181121585",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 35,
+    "reg_no": "20181121585",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 36,
+    "reg_no": "20181121585",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 37,
+    "reg_no": "20181121585",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 38,
+    "reg_no": "20181121585",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 39,
+    "reg_no": "20181121585",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 40,
+    "reg_no": "20181121585",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 41,
+    "reg_no": "20181121585",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 42,
+    "reg_no": "20181121585",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 43,
+    "reg_no": "20181121585",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 44,
+    "reg_no": "20181121585",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 45,
+    "reg_no": "20181121585",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 46,
+    "reg_no": "20181121585",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 50,
+    "reg_no": "20181121585",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 51,
+    "reg_no": "20181121585",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 52,
+    "reg_no": "20181121585",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 53,
+    "reg_no": "20181121585",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 54,
+    "reg_no": "20181121585",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 55,
+    "reg_no": "20181121585",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 56,
+    "reg_no": "20181121585",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 60,
+    "reg_no": "20181121585",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 61,
+    "reg_no": "20181121585",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 62,
+    "reg_no": "20181121585",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 63,
+    "reg_no": "20181121585",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 64,
+    "reg_no": "20181121585",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 65,
+    "reg_no": "20181121585",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 66,
+    "reg_no": "20181121585",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 67,
+    "reg_no": "20181121585",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 68,
+    "reg_no": "20181121585",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 69,
+    "reg_no": "20181121585",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 76,
+    "reg_no": "20181121585",
+    "reference_id": 402,
+    "semester": "RAIN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 77,
+    "reg_no": "20181121585",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 78,
+    "reg_no": "20181121585",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 79,
+    "reg_no": "20181121585",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 80,
+    "reg_no": "20181121585",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 81,
+    "reg_no": "20181121585",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 82,
+    "reg_no": "20181121585",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 83,
+    "reg_no": "20181121585",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 84,
+    "reg_no": "20181121585",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 90,
+    "reg_no": "20181121585",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 91,
+    "reg_no": "20181121585",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 92,
+    "reg_no": "20181121585",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 93,
+    "reg_no": "20181121585",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 94,
+    "reg_no": "20181121585",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 95,
+    "reg_no": "20181121585",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 96,
+    "reg_no": "20181121585",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 97,
+    "reg_no": "20181121585",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 1,
+    "reg_no": "20181111082",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 2,
+    "reg_no": "20181111082",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 3,
+    "reg_no": "20181111082",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 4,
+    "reg_no": "20181111082",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 5,
+    "reg_no": "20181111082",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 6,
+    "reg_no": "20181111082",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 7,
+    "reg_no": "20181111082",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 8,
+    "reg_no": "20181111082",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 9,
+    "reg_no": "20181111082",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 11,
+    "reg_no": "20181111082",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 13,
+    "reg_no": "20181111082",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 14,
+    "reg_no": "20181111082",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 15,
+    "reg_no": "20181111082",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 16,
+    "reg_no": "20181111082",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 17,
+    "reg_no": "20181111082",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 18,
+    "reg_no": "20181111082",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 19,
+    "reg_no": "20181111082",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 20,
+    "reg_no": "20181111082",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 21,
+    "reg_no": "20181111082",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 22,
+    "reg_no": "20181111082",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 23,
+    "reg_no": "20181111082",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 24,
+    "reg_no": "20181111082",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 25,
+    "reg_no": "20181111082",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 26,
+    "reg_no": "20181111082",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 27,
+    "reg_no": "20181111082",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 28,
+    "reg_no": "20181111082",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 29,
+    "reg_no": "20181111082",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 30,
+    "reg_no": "20181111082",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 31,
+    "reg_no": "20181111082",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 32,
+    "reg_no": "20181111082",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 33,
+    "reg_no": "20181111082",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 34,
+    "reg_no": "20181111082",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 35,
+    "reg_no": "20181111082",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 36,
+    "reg_no": "20181111082",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 37,
+    "reg_no": "20181111082",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 38,
+    "reg_no": "20181111082",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 39,
+    "reg_no": "20181111082",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 40,
+    "reg_no": "20181111082",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 41,
+    "reg_no": "20181111082",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 42,
+    "reg_no": "20181111082",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 43,
+    "reg_no": "20181111082",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 44,
+    "reg_no": "20181111082",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 45,
+    "reg_no": "20181111082",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 46,
+    "reg_no": "20181111082",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 50,
+    "reg_no": "20181111082",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 51,
+    "reg_no": "20181111082",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 52,
+    "reg_no": "20181111082",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 53,
+    "reg_no": "20181111082",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 54,
+    "reg_no": "20181111082",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 55,
+    "reg_no": "20181111082",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 56,
+    "reg_no": "20181111082",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 60,
+    "reg_no": "20181111082",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 61,
+    "reg_no": "20181111082",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 62,
+    "reg_no": "20181111082",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 63,
+    "reg_no": "20181111082",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 64,
+    "reg_no": "20181111082",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 65,
+    "reg_no": "20181111082",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 66,
+    "reg_no": "20181111082",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 67,
+    "reg_no": "20181111082",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 68,
+    "reg_no": "20181111082",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 69,
+    "reg_no": "20181111082",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 76,
+    "reg_no": "20181111082",
+    "reference_id": 402,
+    "semester": "RAIN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 77,
+    "reg_no": "20181111082",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 78,
+    "reg_no": "20181111082",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 79,
+    "reg_no": "20181111082",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 80,
+    "reg_no": "20181111082",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 81,
+    "reg_no": "20181111082",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 82,
+    "reg_no": "20181111082",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 83,
+    "reg_no": "20181111082",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 84,
+    "reg_no": "20181111082",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 90,
+    "reg_no": "20181111082",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 91,
+    "reg_no": "20181111082",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 92,
+    "reg_no": "20181111082",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 93,
+    "reg_no": "20181111082",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 94,
+    "reg_no": "20181111082",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 95,
+    "reg_no": "20181111082",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 96,
+    "reg_no": "20181111082",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 97,
+    "reg_no": "20181111082",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 1,
+    "reg_no": "20181121456",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 2,
+    "reg_no": "20181121456",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 3,
+    "reg_no": "20181121456",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 4,
+    "reg_no": "20181121456",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 5,
+    "reg_no": "20181121456",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 6,
+    "reg_no": "20181121456",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 7,
+    "reg_no": "20181121456",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 8,
+    "reg_no": "20181121456",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 9,
+    "reg_no": "20181121456",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 11,
+    "reg_no": "20181121456",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 13,
+    "reg_no": "20181121456",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 14,
+    "reg_no": "20181121456",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 15,
+    "reg_no": "20181121456",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 16,
+    "reg_no": "20181121456",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 17,
+    "reg_no": "20181121456",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 18,
+    "reg_no": "20181121456",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 19,
+    "reg_no": "20181121456",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 20,
+    "reg_no": "20181121456",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 21,
+    "reg_no": "20181121456",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 22,
+    "reg_no": "20181121456",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 23,
+    "reg_no": "20181121456",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 24,
+    "reg_no": "20181121456",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 25,
+    "reg_no": "20181121456",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 26,
+    "reg_no": "20181121456",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 27,
+    "reg_no": "20181121456",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 28,
+    "reg_no": "20181121456",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 29,
+    "reg_no": "20181121456",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 30,
+    "reg_no": "20181121456",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 31,
+    "reg_no": "20181121456",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 32,
+    "reg_no": "20181121456",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 33,
+    "reg_no": "20181121456",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 34,
+    "reg_no": "20181121456",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 35,
+    "reg_no": "20181121456",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 36,
+    "reg_no": "20181121456",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 37,
+    "reg_no": "20181121456",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 38,
+    "reg_no": "20181121456",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 39,
+    "reg_no": "20181121456",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 40,
+    "reg_no": "20181121456",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 41,
+    "reg_no": "20181121456",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 42,
+    "reg_no": "20181121456",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 43,
+    "reg_no": "20181121456",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 44,
+    "reg_no": "20181121456",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 45,
+    "reg_no": "20181121456",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 46,
+    "reg_no": "20181121456",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 50,
+    "reg_no": "20181121456",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 51,
+    "reg_no": "20181121456",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 52,
+    "reg_no": "20181121456",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 53,
+    "reg_no": "20181121456",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 54,
+    "reg_no": "20181121456",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 55,
+    "reg_no": "20181121456",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 56,
+    "reg_no": "20181121456",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 60,
+    "reg_no": "20181121456",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 61,
+    "reg_no": "20181121456",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 62,
+    "reg_no": "20181121456",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 63,
+    "reg_no": "20181121456",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 64,
+    "reg_no": "20181121456",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 65,
+    "reg_no": "20181121456",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 66,
+    "reg_no": "20181121456",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 67,
+    "reg_no": "20181121456",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 68,
+    "reg_no": "20181121456",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 69,
+    "reg_no": "20181121456",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 76,
+    "reg_no": "20181121456",
+    "reference_id": 402,
+    "semester": "RAIN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 77,
+    "reg_no": "20181121456",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 78,
+    "reg_no": "20181121456",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 79,
+    "reg_no": "20181121456",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 80,
+    "reg_no": "20181121456",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 81,
+    "reg_no": "20181121456",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 82,
+    "reg_no": "20181121456",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 83,
+    "reg_no": "20181121456",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 84,
+    "reg_no": "20181121456",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 90,
+    "reg_no": "20181121456",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 91,
+    "reg_no": "20181121456",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 92,
+    "reg_no": "20181121456",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 93,
+    "reg_no": "20181121456",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 94,
+    "reg_no": "20181121456",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 95,
+    "reg_no": "20181121456",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 96,
+    "reg_no": "20181121456",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 97,
+    "reg_no": "20181121456",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 1,
+    "reg_no": "20181121885",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 2,
+    "reg_no": "20181121885",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 3,
+    "reg_no": "20181121885",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 4,
+    "reg_no": "20181121885",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 5,
+    "reg_no": "20181121885",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 6,
+    "reg_no": "20181121885",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 7,
+    "reg_no": "20181121885",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 8,
+    "reg_no": "20181121885",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 9,
+    "reg_no": "20181121885",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 11,
+    "reg_no": "20181121885",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 13,
+    "reg_no": "20181121885",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 14,
+    "reg_no": "20181121885",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 15,
+    "reg_no": "20181121885",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 16,
+    "reg_no": "20181121885",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 17,
+    "reg_no": "20181121885",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 18,
+    "reg_no": "20181121885",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 19,
+    "reg_no": "20181121885",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 20,
+    "reg_no": "20181121885",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 21,
+    "reg_no": "20181121885",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 22,
+    "reg_no": "20181121885",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 23,
+    "reg_no": "20181121885",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 24,
+    "reg_no": "20181121885",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 25,
+    "reg_no": "20181121885",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 26,
+    "reg_no": "20181121885",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 27,
+    "reg_no": "20181121885",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 28,
+    "reg_no": "20181121885",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 29,
+    "reg_no": "20181121885",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 30,
+    "reg_no": "20181121885",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 31,
+    "reg_no": "20181121885",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 32,
+    "reg_no": "20181121885",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 33,
+    "reg_no": "20181121885",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 34,
+    "reg_no": "20181121885",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 35,
+    "reg_no": "20181121885",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 36,
+    "reg_no": "20181121885",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 37,
+    "reg_no": "20181121885",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 38,
+    "reg_no": "20181121885",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 39,
+    "reg_no": "20181121885",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 40,
+    "reg_no": "20181121885",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 41,
+    "reg_no": "20181121885",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 42,
+    "reg_no": "20181121885",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 43,
+    "reg_no": "20181121885",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 44,
+    "reg_no": "20181121885",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 45,
+    "reg_no": "20181121885",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 46,
+    "reg_no": "20181121885",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 50,
+    "reg_no": "20181121885",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 51,
+    "reg_no": "20181121885",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 52,
+    "reg_no": "20181121885",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 53,
+    "reg_no": "20181121885",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 54,
+    "reg_no": "20181121885",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 55,
+    "reg_no": "20181121885",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 56,
+    "reg_no": "20181121885",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 60,
+    "reg_no": "20181121885",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 61,
+    "reg_no": "20181121885",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 62,
+    "reg_no": "20181121885",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 63,
+    "reg_no": "20181121885",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 64,
+    "reg_no": "20181121885",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 65,
+    "reg_no": "20181121885",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 66,
+    "reg_no": "20181121885",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 67,
+    "reg_no": "20181121885",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 68,
+    "reg_no": "20181121885",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 69,
+    "reg_no": "20181121885",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 76,
+    "reg_no": "20181121885",
+    "reference_id": 402,
+    "semester": "RAIN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 77,
+    "reg_no": "20181121885",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 78,
+    "reg_no": "20181121885",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 79,
+    "reg_no": "20181121885",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 80,
+    "reg_no": "20181121885",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 81,
+    "reg_no": "20181121885",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 82,
+    "reg_no": "20181121885",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 83,
+    "reg_no": "20181121885",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 84,
+    "reg_no": "20181121885",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 90,
+    "reg_no": "20181121885",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 91,
+    "reg_no": "20181121885",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 92,
+    "reg_no": "20181121885",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 93,
+    "reg_no": "20181121885",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 94,
+    "reg_no": "20181121885",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 95,
+    "reg_no": "20181121885",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 96,
+    "reg_no": "20181121885",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 97,
+    "reg_no": "20181121885",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 1,
+    "reg_no": "20181121776",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 2,
+    "reg_no": "20181121776",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 3,
+    "reg_no": "20181121776",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 4,
+    "reg_no": "20181121776",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 5,
+    "reg_no": "20181121776",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 6,
+    "reg_no": "20181121776",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 7,
+    "reg_no": "20181121776",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 8,
+    "reg_no": "20181121776",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 9,
+    "reg_no": "20181121776",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 11,
+    "reg_no": "20181121776",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 13,
+    "reg_no": "20181121776",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 14,
+    "reg_no": "20181121776",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 15,
+    "reg_no": "20181121776",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 16,
+    "reg_no": "20181121776",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 17,
+    "reg_no": "20181121776",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 18,
+    "reg_no": "20181121776",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 19,
+    "reg_no": "20181121776",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 20,
+    "reg_no": "20181121776",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 21,
+    "reg_no": "20181121776",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 22,
+    "reg_no": "20181121776",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 23,
+    "reg_no": "20181121776",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 24,
+    "reg_no": "20181121776",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 25,
+    "reg_no": "20181121776",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 26,
+    "reg_no": "20181121776",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 27,
+    "reg_no": "20181121776",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 28,
+    "reg_no": "20181121776",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 29,
+    "reg_no": "20181121776",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 30,
+    "reg_no": "20181121776",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 31,
+    "reg_no": "20181121776",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 32,
+    "reg_no": "20181121776",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 33,
+    "reg_no": "20181121776",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 34,
+    "reg_no": "20181121776",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 35,
+    "reg_no": "20181121776",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 36,
+    "reg_no": "20181121776",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 37,
+    "reg_no": "20181121776",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 38,
+    "reg_no": "20181121776",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 39,
+    "reg_no": "20181121776",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 40,
+    "reg_no": "20181121776",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 41,
+    "reg_no": "20181121776",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 42,
+    "reg_no": "20181121776",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 43,
+    "reg_no": "20181121776",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 44,
+    "reg_no": "20181121776",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 45,
+    "reg_no": "20181121776",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 46,
+    "reg_no": "20181121776",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 50,
+    "reg_no": "20181121776",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 51,
+    "reg_no": "20181121776",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 52,
+    "reg_no": "20181121776",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 53,
+    "reg_no": "20181121776",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 54,
+    "reg_no": "20181121776",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 55,
+    "reg_no": "20181121776",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 56,
+    "reg_no": "20181121776",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 60,
+    "reg_no": "20181121776",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 61,
+    "reg_no": "20181121776",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 62,
+    "reg_no": "20181121776",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 63,
+    "reg_no": "20181121776",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 64,
+    "reg_no": "20181121776",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 65,
+    "reg_no": "20181121776",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 66,
+    "reg_no": "20181121776",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 67,
+    "reg_no": "20181121776",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 68,
+    "reg_no": "20181121776",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 69,
+    "reg_no": "20181121776",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 76,
+    "reg_no": "20181121776",
+    "reference_id": 402,
+    "semester": "RAIN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 77,
+    "reg_no": "20181121776",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 78,
+    "reg_no": "20181121776",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 79,
+    "reg_no": "20181121776",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 80,
+    "reg_no": "20181121776",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 81,
+    "reg_no": "20181121776",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 82,
+    "reg_no": "20181121776",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 83,
+    "reg_no": "20181121776",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 84,
+    "reg_no": "20181121776",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 90,
+    "reg_no": "20181121776",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 91,
+    "reg_no": "20181121776",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 92,
+    "reg_no": "20181121776",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 93,
+    "reg_no": "20181121776",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 94,
+    "reg_no": "20181121776",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 95,
+    "reg_no": "20181121776",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 96,
+    "reg_no": "20181121776",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 97,
+    "reg_no": "20181121776",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 1,
+    "reg_no": "20181121565",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 2,
+    "reg_no": "20181121565",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 3,
+    "reg_no": "20181121565",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 4,
+    "reg_no": "20181121565",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 5,
+    "reg_no": "20181121565",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 6,
+    "reg_no": "20181121565",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 7,
+    "reg_no": "20181121565",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 8,
+    "reg_no": "20181121565",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 9,
+    "reg_no": "20181121565",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 11,
+    "reg_no": "20181121565",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 13,
+    "reg_no": "20181121565",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 14,
+    "reg_no": "20181121565",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 15,
+    "reg_no": "20181121565",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 16,
+    "reg_no": "20181121565",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 17,
+    "reg_no": "20181121565",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 18,
+    "reg_no": "20181121565",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 19,
+    "reg_no": "20181121565",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 20,
+    "reg_no": "20181121565",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 21,
+    "reg_no": "20181121565",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 22,
+    "reg_no": "20181121565",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 23,
+    "reg_no": "20181121565",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 24,
+    "reg_no": "20181121565",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 25,
+    "reg_no": "20181121565",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 26,
+    "reg_no": "20181121565",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 27,
+    "reg_no": "20181121565",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 28,
+    "reg_no": "20181121565",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 29,
+    "reg_no": "20181121565",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 30,
+    "reg_no": "20181121565",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 31,
+    "reg_no": "20181121565",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 32,
+    "reg_no": "20181121565",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 33,
+    "reg_no": "20181121565",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 34,
+    "reg_no": "20181121565",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 35,
+    "reg_no": "20181121565",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 36,
+    "reg_no": "20181121565",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 37,
+    "reg_no": "20181121565",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 38,
+    "reg_no": "20181121565",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 39,
+    "reg_no": "20181121565",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 40,
+    "reg_no": "20181121565",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 41,
+    "reg_no": "20181121565",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 42,
+    "reg_no": "20181121565",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 43,
+    "reg_no": "20181121565",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 44,
+    "reg_no": "20181121565",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 45,
+    "reg_no": "20181121565",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 46,
+    "reg_no": "20181121565",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 50,
+    "reg_no": "20181121565",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 51,
+    "reg_no": "20181121565",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 52,
+    "reg_no": "20181121565",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 53,
+    "reg_no": "20181121565",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 54,
+    "reg_no": "20181121565",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 55,
+    "reg_no": "20181121565",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 56,
+    "reg_no": "20181121565",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 60,
+    "reg_no": "20181121565",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 61,
+    "reg_no": "20181121565",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 62,
+    "reg_no": "20181121565",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 63,
+    "reg_no": "20181121565",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 64,
+    "reg_no": "20181121565",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 65,
+    "reg_no": "20181121565",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 66,
+    "reg_no": "20181121565",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 67,
+    "reg_no": "20181121565",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 68,
+    "reg_no": "20181121565",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 69,
+    "reg_no": "20181121565",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 76,
+    "reg_no": "20181121565",
+    "reference_id": 402,
+    "semester": "RAIN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 77,
+    "reg_no": "20181121565",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 78,
+    "reg_no": "20181121565",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 79,
+    "reg_no": "20181121565",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 80,
+    "reg_no": "20181121565",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 81,
+    "reg_no": "20181121565",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 82,
+    "reg_no": "20181121565",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 83,
+    "reg_no": "20181121565",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 84,
+    "reg_no": "20181121565",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 90,
+    "reg_no": "20181121565",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 91,
+    "reg_no": "20181121565",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 92,
+    "reg_no": "20181121565",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 93,
+    "reg_no": "20181121565",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 94,
+    "reg_no": "20181121565",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 95,
+    "reg_no": "20181121565",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 96,
+    "reg_no": "20181121565",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 97,
+    "reg_no": "20181121565",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 1,
+    "reg_no": "20181136785",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 2,
+    "reg_no": "20181136785",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 3,
+    "reg_no": "20181136785",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 4,
+    "reg_no": "20181136785",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 5,
+    "reg_no": "20181136785",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 6,
+    "reg_no": "20181136785",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 7,
+    "reg_no": "20181136785",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 8,
+    "reg_no": "20181136785",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 9,
+    "reg_no": "20181136785",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 11,
+    "reg_no": "20181136785",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 13,
+    "reg_no": "20181136785",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 14,
+    "reg_no": "20181136785",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 15,
+    "reg_no": "20181136785",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 16,
+    "reg_no": "20181136785",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 17,
+    "reg_no": "20181136785",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 18,
+    "reg_no": "20181136785",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 19,
+    "reg_no": "20181136785",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 20,
+    "reg_no": "20181136785",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 21,
+    "reg_no": "20181136785",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 22,
+    "reg_no": "20181136785",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 23,
+    "reg_no": "20181136785",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 24,
+    "reg_no": "20181136785",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 25,
+    "reg_no": "20181136785",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 26,
+    "reg_no": "20181136785",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 27,
+    "reg_no": "20181136785",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 28,
+    "reg_no": "20181136785",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 29,
+    "reg_no": "20181136785",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 30,
+    "reg_no": "20181136785",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 31,
+    "reg_no": "20181136785",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 32,
+    "reg_no": "20181136785",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 33,
+    "reg_no": "20181136785",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 34,
+    "reg_no": "20181136785",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 35,
+    "reg_no": "20181136785",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 36,
+    "reg_no": "20181136785",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 37,
+    "reg_no": "20181136785",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 38,
+    "reg_no": "20181136785",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 39,
+    "reg_no": "20181136785",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 40,
+    "reg_no": "20181136785",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 41,
+    "reg_no": "20181136785",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 42,
+    "reg_no": "20181136785",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 43,
+    "reg_no": "20181136785",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 44,
+    "reg_no": "20181136785",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 45,
+    "reg_no": "20181136785",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 46,
+    "reg_no": "20181136785",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 50,
+    "reg_no": "20181136785",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 51,
+    "reg_no": "20181136785",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 52,
+    "reg_no": "20181136785",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 53,
+    "reg_no": "20181136785",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 54,
+    "reg_no": "20181136785",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 55,
+    "reg_no": "20181136785",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 56,
+    "reg_no": "20181136785",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 60,
+    "reg_no": "20181136785",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 61,
+    "reg_no": "20181136785",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 62,
+    "reg_no": "20181136785",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 63,
+    "reg_no": "20181136785",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 64,
+    "reg_no": "20181136785",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 65,
+    "reg_no": "20181136785",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 66,
+    "reg_no": "20181136785",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 67,
+    "reg_no": "20181136785",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 68,
+    "reg_no": "20181136785",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 69,
+    "reg_no": "20181136785",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 76,
+    "reg_no": "20181136785",
+    "reference_id": 402,
+    "semester": "RAIN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 77,
+    "reg_no": "20181136785",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 78,
+    "reg_no": "20181136785",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 79,
+    "reg_no": "20181136785",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 80,
+    "reg_no": "20181136785",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 81,
+    "reg_no": "20181136785",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 82,
+    "reg_no": "20181136785",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 83,
+    "reg_no": "20181136785",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 84,
+    "reg_no": "20181136785",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 90,
+    "reg_no": "20181136785",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 91,
+    "reg_no": "20181136785",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 92,
+    "reg_no": "20181136785",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 93,
+    "reg_no": "20181136785",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 94,
+    "reg_no": "20181136785",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 95,
+    "reg_no": "20181136785",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 96,
+    "reg_no": "20181136785",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 97,
+    "reg_no": "20181136785",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 1,
+    "reg_no": "20181005168",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 2,
+    "reg_no": "20181005168",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 3,
+    "reg_no": "20181005168",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 4,
+    "reg_no": "20181005168",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 5,
+    "reg_no": "20181005168",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 6,
+    "reg_no": "20181005168",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 7,
+    "reg_no": "20181005168",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 8,
+    "reg_no": "20181005168",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 9,
+    "reg_no": "20181005168",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 11,
+    "reg_no": "20181005168",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 13,
+    "reg_no": "20181005168",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 14,
+    "reg_no": "20181005168",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 15,
+    "reg_no": "20181005168",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 16,
+    "reg_no": "20181005168",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 17,
+    "reg_no": "20181005168",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 18,
+    "reg_no": "20181005168",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 19,
+    "reg_no": "20181005168",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 20,
+    "reg_no": "20181005168",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 21,
+    "reg_no": "20181005168",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 22,
+    "reg_no": "20181005168",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 23,
+    "reg_no": "20181005168",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 24,
+    "reg_no": "20181005168",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 25,
+    "reg_no": "20181005168",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 26,
+    "reg_no": "20181005168",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 27,
+    "reg_no": "20181005168",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 28,
+    "reg_no": "20181005168",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 29,
+    "reg_no": "20181005168",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 30,
+    "reg_no": "20181005168",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 31,
+    "reg_no": "20181005168",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 32,
+    "reg_no": "20181005168",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 33,
+    "reg_no": "20181005168",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 34,
+    "reg_no": "20181005168",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 35,
+    "reg_no": "20181005168",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 36,
+    "reg_no": "20181005168",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 37,
+    "reg_no": "20181005168",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 38,
+    "reg_no": "20181005168",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 39,
+    "reg_no": "20181005168",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 40,
+    "reg_no": "20181005168",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 41,
+    "reg_no": "20181005168",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 42,
+    "reg_no": "20181005168",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 43,
+    "reg_no": "20181005168",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 44,
+    "reg_no": "20181005168",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 45,
+    "reg_no": "20181005168",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 46,
+    "reg_no": "20181005168",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 50,
+    "reg_no": "20181005168",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 51,
+    "reg_no": "20181005168",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 52,
+    "reg_no": "20181005168",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 53,
+    "reg_no": "20181005168",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 54,
+    "reg_no": "20181005168",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 55,
+    "reg_no": "20181005168",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 56,
+    "reg_no": "20181005168",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 60,
+    "reg_no": "20181005168",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 61,
+    "reg_no": "20181005168",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 62,
+    "reg_no": "20181005168",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 63,
+    "reg_no": "20181005168",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 64,
+    "reg_no": "20181005168",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 65,
+    "reg_no": "20181005168",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 66,
+    "reg_no": "20181005168",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 67,
+    "reg_no": "20181005168",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 68,
+    "reg_no": "20181005168",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 69,
+    "reg_no": "20181005168",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 76,
+    "reg_no": "20181005168",
+    "reference_id": 402,
+    "semester": "RAIN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 77,
+    "reg_no": "20181005168",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 78,
+    "reg_no": "20181005168",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 79,
+    "reg_no": "20181005168",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 80,
+    "reg_no": "20181005168",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 81,
+    "reg_no": "20181005168",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 82,
+    "reg_no": "20181005168",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 83,
+    "reg_no": "20181005168",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 84,
+    "reg_no": "20181005168",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 90,
+    "reg_no": "20181005168",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 91,
+    "reg_no": "20181005168",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 92,
+    "reg_no": "20181005168",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 93,
+    "reg_no": "20181005168",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 94,
+    "reg_no": "20181005168",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 95,
+    "reg_no": "20181005168",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 96,
+    "reg_no": "20181005168",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 97,
+    "reg_no": "20181005168",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 1,
+    "reg_no": "20181121116",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 2,
+    "reg_no": "20181121116",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 3,
+    "reg_no": "20181121116",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 4,
+    "reg_no": "20181121116",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 5,
+    "reg_no": "20181121116",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 6,
+    "reg_no": "20181121116",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 7,
+    "reg_no": "20181121116",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 8,
+    "reg_no": "20181121116",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 9,
+    "reg_no": "20181121116",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 11,
+    "reg_no": "20181121116",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 13,
+    "reg_no": "20181121116",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 14,
+    "reg_no": "20181121116",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 15,
+    "reg_no": "20181121116",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 16,
+    "reg_no": "20181121116",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 17,
+    "reg_no": "20181121116",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 18,
+    "reg_no": "20181121116",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 19,
+    "reg_no": "20181121116",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 20,
+    "reg_no": "20181121116",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 21,
+    "reg_no": "20181121116",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 22,
+    "reg_no": "20181121116",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 23,
+    "reg_no": "20181121116",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 24,
+    "reg_no": "20181121116",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 25,
+    "reg_no": "20181121116",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 26,
+    "reg_no": "20181121116",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 27,
+    "reg_no": "20181121116",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 28,
+    "reg_no": "20181121116",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 29,
+    "reg_no": "20181121116",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 30,
+    "reg_no": "20181121116",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 31,
+    "reg_no": "20181121116",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 32,
+    "reg_no": "20181121116",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 33,
+    "reg_no": "20181121116",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 34,
+    "reg_no": "20181121116",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 35,
+    "reg_no": "20181121116",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 36,
+    "reg_no": "20181121116",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 37,
+    "reg_no": "20181121116",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 38,
+    "reg_no": "20181121116",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 39,
+    "reg_no": "20181121116",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 40,
+    "reg_no": "20181121116",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 41,
+    "reg_no": "20181121116",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 42,
+    "reg_no": "20181121116",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 43,
+    "reg_no": "20181121116",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 44,
+    "reg_no": "20181121116",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 45,
+    "reg_no": "20181121116",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 46,
+    "reg_no": "20181121116",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 50,
+    "reg_no": "20181121116",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 51,
+    "reg_no": "20181121116",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 52,
+    "reg_no": "20181121116",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 53,
+    "reg_no": "20181121116",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 54,
+    "reg_no": "20181121116",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 55,
+    "reg_no": "20181121116",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 56,
+    "reg_no": "20181121116",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 60,
+    "reg_no": "20181121116",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 61,
+    "reg_no": "20181121116",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 62,
+    "reg_no": "20181121116",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 63,
+    "reg_no": "20181121116",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 64,
+    "reg_no": "20181121116",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 65,
+    "reg_no": "20181121116",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 66,
+    "reg_no": "20181121116",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 67,
+    "reg_no": "20181121116",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 68,
+    "reg_no": "20181121116",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 69,
+    "reg_no": "20181121116",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 76,
+    "reg_no": "20181121116",
+    "reference_id": 402,
+    "semester": "RAIN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 77,
+    "reg_no": "20181121116",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 78,
+    "reg_no": "20181121116",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 79,
+    "reg_no": "20181121116",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 80,
+    "reg_no": "20181121116",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 81,
+    "reg_no": "20181121116",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 82,
+    "reg_no": "20181121116",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 83,
+    "reg_no": "20181121116",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 84,
+    "reg_no": "20181121116",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 90,
+    "reg_no": "20181121116",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 91,
+    "reg_no": "20181121116",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 92,
+    "reg_no": "20181121116",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 93,
+    "reg_no": "20181121116",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 94,
+    "reg_no": "20181121116",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 95,
+    "reg_no": "20181121116",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 96,
+    "reg_no": "20181121116",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 97,
+    "reg_no": "20181121116",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 1,
+    "reg_no": "20181131754",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 2,
+    "reg_no": "20181131754",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 3,
+    "reg_no": "20181131754",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 4,
+    "reg_no": "20181131754",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 5,
+    "reg_no": "20181131754",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 6,
+    "reg_no": "20181131754",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 7,
+    "reg_no": "20181131754",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 8,
+    "reg_no": "20181131754",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 9,
+    "reg_no": "20181131754",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 11,
+    "reg_no": "20181131754",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 13,
+    "reg_no": "20181131754",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 14,
+    "reg_no": "20181131754",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 15,
+    "reg_no": "20181131754",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 16,
+    "reg_no": "20181131754",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 17,
+    "reg_no": "20181131754",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 18,
+    "reg_no": "20181131754",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 19,
+    "reg_no": "20181131754",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 20,
+    "reg_no": "20181131754",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 21,
+    "reg_no": "20181131754",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 22,
+    "reg_no": "20181131754",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 23,
+    "reg_no": "20181131754",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 24,
+    "reg_no": "20181131754",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 25,
+    "reg_no": "20181131754",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 26,
+    "reg_no": "20181131754",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 27,
+    "reg_no": "20181131754",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 28,
+    "reg_no": "20181131754",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 29,
+    "reg_no": "20181131754",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 30,
+    "reg_no": "20181131754",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 31,
+    "reg_no": "20181131754",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 32,
+    "reg_no": "20181131754",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 33,
+    "reg_no": "20181131754",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 34,
+    "reg_no": "20181131754",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 35,
+    "reg_no": "20181131754",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 36,
+    "reg_no": "20181131754",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 37,
+    "reg_no": "20181131754",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 38,
+    "reg_no": "20181131754",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 39,
+    "reg_no": "20181131754",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 40,
+    "reg_no": "20181131754",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 41,
+    "reg_no": "20181131754",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 42,
+    "reg_no": "20181131754",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 43,
+    "reg_no": "20181131754",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 44,
+    "reg_no": "20181131754",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 45,
+    "reg_no": "20181131754",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 46,
+    "reg_no": "20181131754",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 50,
+    "reg_no": "20181131754",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 51,
+    "reg_no": "20181131754",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 52,
+    "reg_no": "20181131754",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 53,
+    "reg_no": "20181131754",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 54,
+    "reg_no": "20181131754",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 55,
+    "reg_no": "20181131754",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 56,
+    "reg_no": "20181131754",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 60,
+    "reg_no": "20181131754",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 61,
+    "reg_no": "20181131754",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 62,
+    "reg_no": "20181131754",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 63,
+    "reg_no": "20181131754",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 64,
+    "reg_no": "20181131754",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 65,
+    "reg_no": "20181131754",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 66,
+    "reg_no": "20181131754",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 67,
+    "reg_no": "20181131754",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 68,
+    "reg_no": "20181131754",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 69,
+    "reg_no": "20181131754",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 76,
+    "reg_no": "20181131754",
+    "reference_id": 402,
+    "semester": "RAIN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 77,
+    "reg_no": "20181131754",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 78,
+    "reg_no": "20181131754",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 79,
+    "reg_no": "20181131754",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 80,
+    "reg_no": "20181131754",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 81,
+    "reg_no": "20181131754",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 82,
+    "reg_no": "20181131754",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 83,
+    "reg_no": "20181131754",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 84,
+    "reg_no": "20181131754",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 90,
+    "reg_no": "20181131754",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 91,
+    "reg_no": "20181131754",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 92,
+    "reg_no": "20181131754",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 93,
+    "reg_no": "20181131754",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 94,
+    "reg_no": "20181131754",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 95,
+    "reg_no": "20181131754",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 96,
+    "reg_no": "20181131754",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 97,
+    "reg_no": "20181131754",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 1,
+    "reg_no": "20181136785",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 2,
+    "reg_no": "20181136785",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 3,
+    "reg_no": "20181136785",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 4,
+    "reg_no": "20181136785",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 5,
+    "reg_no": "20181136785",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 6,
+    "reg_no": "20181136785",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 7,
+    "reg_no": "20181136785",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 8,
+    "reg_no": "20181136785",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 9,
+    "reg_no": "20181136785",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 11,
+    "reg_no": "20181136785",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 13,
+    "reg_no": "20181136785",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 14,
+    "reg_no": "20181136785",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 15,
+    "reg_no": "20181136785",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 16,
+    "reg_no": "20181136785",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 17,
+    "reg_no": "20181136785",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 18,
+    "reg_no": "20181136785",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 19,
+    "reg_no": "20181136785",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 20,
+    "reg_no": "20181136785",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 21,
+    "reg_no": "20181136785",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 22,
+    "reg_no": "20181136785",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 23,
+    "reg_no": "20181136785",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 24,
+    "reg_no": "20181136785",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 25,
+    "reg_no": "20181136785",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 26,
+    "reg_no": "20181136785",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 27,
+    "reg_no": "20181136785",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 28,
+    "reg_no": "20181136785",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 29,
+    "reg_no": "20181136785",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 30,
+    "reg_no": "20181136785",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 31,
+    "reg_no": "20181136785",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 32,
+    "reg_no": "20181136785",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 33,
+    "reg_no": "20181136785",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 34,
+    "reg_no": "20181136785",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 35,
+    "reg_no": "20181136785",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 36,
+    "reg_no": "20181136785",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 37,
+    "reg_no": "20181136785",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 38,
+    "reg_no": "20181136785",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 39,
+    "reg_no": "20181136785",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 40,
+    "reg_no": "20181136785",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 41,
+    "reg_no": "20181136785",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 42,
+    "reg_no": "20181136785",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 43,
+    "reg_no": "20181136785",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 44,
+    "reg_no": "20181136785",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 45,
+    "reg_no": "20181136785",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 46,
+    "reg_no": "20181136785",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 50,
+    "reg_no": "20181136785",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 51,
+    "reg_no": "20181136785",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 52,
+    "reg_no": "20181136785",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 53,
+    "reg_no": "20181136785",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 54,
+    "reg_no": "20181136785",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 55,
+    "reg_no": "20181136785",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 56,
+    "reg_no": "20181136785",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 60,
+    "reg_no": "20181136785",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 61,
+    "reg_no": "20181136785",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 62,
+    "reg_no": "20181136785",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 63,
+    "reg_no": "20181136785",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 64,
+    "reg_no": "20181136785",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 65,
+    "reg_no": "20181136785",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 66,
+    "reg_no": "20181136785",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 67,
+    "reg_no": "20181136785",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 68,
+    "reg_no": "20181136785",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 69,
+    "reg_no": "20181136785",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 76,
+    "reg_no": "20181136785",
+    "reference_id": 402,
+    "semester": "RAIN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 77,
+    "reg_no": "20181136785",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 78,
+    "reg_no": "20181136785",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 79,
+    "reg_no": "20181136785",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 80,
+    "reg_no": "20181136785",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 81,
+    "reg_no": "20181136785",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 82,
+    "reg_no": "20181136785",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 83,
+    "reg_no": "20181136785",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 84,
+    "reg_no": "20181136785",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 90,
+    "reg_no": "20181136785",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 91,
+    "reg_no": "20181136785",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 92,
+    "reg_no": "20181136785",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 93,
+    "reg_no": "20181136785",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 94,
+    "reg_no": "20181136785",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 95,
+    "reg_no": "20181136785",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 96,
+    "reg_no": "20181136785",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 97,
+    "reg_no": "20181136785",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 1,
+    "reg_no": "20181121075",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 2,
+    "reg_no": "20181121075",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 3,
+    "reg_no": "20181121075",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 4,
+    "reg_no": "20181121075",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 5,
+    "reg_no": "20181121075",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 6,
+    "reg_no": "20181121075",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 7,
+    "reg_no": "20181121075",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 8,
+    "reg_no": "20181121075",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 9,
+    "reg_no": "20181121075",
+    "reference_id": 101,
+    "semester": "HARMATTAN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 11,
+    "reg_no": "20181121075",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 13,
+    "reg_no": "20181121075",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 14,
+    "reg_no": "20181121075",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 15,
+    "reg_no": "20181121075",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 16,
+    "reg_no": "20181121075",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 17,
+    "reg_no": "20181121075",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 18,
+    "reg_no": "20181121075",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 19,
+    "reg_no": "20181121075",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 20,
+    "reg_no": "20181121075",
+    "reference_id": 102,
+    "semester": "RAIN",
+    "session": "2018\/2019",
+    "level": 100
+  },
+  {
+    "course_id": 21,
+    "reg_no": "20181121075",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 22,
+    "reg_no": "20181121075",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 23,
+    "reg_no": "20181121075",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 24,
+    "reg_no": "20181121075",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 25,
+    "reg_no": "20181121075",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 26,
+    "reg_no": "20181121075",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 27,
+    "reg_no": "20181121075",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 28,
+    "reg_no": "20181121075",
+    "reference_id": 201,
+    "semester": "HARMATTAN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 29,
+    "reg_no": "20181121075",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 30,
+    "reg_no": "20181121075",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 31,
+    "reg_no": "20181121075",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 32,
+    "reg_no": "20181121075",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 33,
+    "reg_no": "20181121075",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 34,
+    "reg_no": "20181121075",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 35,
+    "reg_no": "20181121075",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 36,
+    "reg_no": "20181121075",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 37,
+    "reg_no": "20181121075",
+    "reference_id": 202,
+    "semester": "RAIN",
+    "session": "2019\/2020",
+    "level": 200
+  },
+  {
+    "course_id": 38,
+    "reg_no": "20181121075",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 39,
+    "reg_no": "20181121075",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 40,
+    "reg_no": "20181121075",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 41,
+    "reg_no": "20181121075",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 42,
+    "reg_no": "20181121075",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 43,
+    "reg_no": "20181121075",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 44,
+    "reg_no": "20181121075",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 45,
+    "reg_no": "20181121075",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 46,
+    "reg_no": "20181121075",
+    "reference_id": 301,
+    "semester": "HARMATTAN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 50,
+    "reg_no": "20181121075",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 51,
+    "reg_no": "20181121075",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 52,
+    "reg_no": "20181121075",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 53,
+    "reg_no": "20181121075",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 54,
+    "reg_no": "20181121075",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 55,
+    "reg_no": "20181121075",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 56,
+    "reg_no": "20181121075",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 60,
+    "reg_no": "20181121075",
+    "reference_id": 302,
+    "semester": "RAIN",
+    "session": "2020\/2021",
+    "level": 300
+  },
+  {
+    "course_id": 61,
+    "reg_no": "20181121075",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 62,
+    "reg_no": "20181121075",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 63,
+    "reg_no": "20181121075",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 64,
+    "reg_no": "20181121075",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 65,
+    "reg_no": "20181121075",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 66,
+    "reg_no": "20181121075",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 67,
+    "reg_no": "20181121075",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 68,
+    "reg_no": "20181121075",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 69,
+    "reg_no": "20181121075",
+    "reference_id": 401,
+    "semester": "HARMATTAN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 76,
+    "reg_no": "20181121075",
+    "reference_id": 402,
+    "semester": "RAIN",
+    "session": "2021\/2022",
+    "level": 400
+  },
+  {
+    "course_id": 77,
+    "reg_no": "20181121075",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 78,
+    "reg_no": "20181121075",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 79,
+    "reg_no": "20181121075",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 80,
+    "reg_no": "20181121075",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 81,
+    "reg_no": "20181121075",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 82,
+    "reg_no": "20181121075",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 83,
+    "reg_no": "20181121075",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 84,
+    "reg_no": "20181121075",
+    "reference_id": 501,
+    "semester": "HARMATTAN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 90,
+    "reg_no": "20181121075",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 91,
+    "reg_no": "20181121075",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 92,
+    "reg_no": "20181121075",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 93,
+    "reg_no": "20181121075",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 94,
+    "reg_no": "20181121075",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 95,
+    "reg_no": "20181121075",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 96,
+    "reg_no": "20181121075",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  },
+  {
+    "course_id": 97,
+    "reg_no": "20181121075",
+    "reference_id": 502,
+    "semester": "RAIN",
+    "session": "2022\/2023",
+    "level": 500
+  }
+]

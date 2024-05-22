@@ -1,0 +1,13 @@
+[
+    {
+        "id": 1,
+        "created_by": null,
+        "birthdate": null,
+        "address": null,
+        "staff_id": null,
+        "gender": "male",
+        "image": null,
+        "created_at": "2024-03-03 05:00:48",
+        "updated_at": "2024-03-03 05:00:48"
+    }
+]

@@ -1,0 +1,6 @@
+.thick-border td {
+  border-top: 2px solid black;
+}
+.dark .thick-border {
+  border-top-color: #fff;
+}

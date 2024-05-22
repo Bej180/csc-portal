@@ -1,0 +1,40 @@
+#nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    overflow-y: scroll;
+    height: 100%;
+}
+
+#nav a {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    color: var(--body-300);
+    font-weight: 600;
+    padding: .75rem;
+    border-radius: .25rem;
+    transition: .2s ease;
+}
+
+#nav a:hover {
+    background-color: var(--primary-50);
+}
+
+#nav a.active {
+    background-color: var(--primary-50);
+    color: var(--body-800)
+}
+
+#nav a.active:hover {
+    background-color: var(--primary-100);
+    color: var(--body-800)
+}
+
+#nav a span {
+    display: grid;
+    place-content: center;
+    width: 1.4rem;
+    height: 1.4rem;
+    overflow: hidden;
+}
