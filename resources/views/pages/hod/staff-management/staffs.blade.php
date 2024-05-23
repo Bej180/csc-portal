@@ -21,7 +21,7 @@
                     </div>
                     <div class="list">
 
-                        <div ng-if="staff_members!=null" ng-click="displayStaff(staff)" ng-repeat="staff in staff_members"
+                        <div ng-if="staff_members!=null" ng-click="staffInView(staff)" ng-repeat="staff in staff_members"
                             class="panel cursor-pointer relative hover:shadow hover:bg-[--surface-100] transition-all p-3">
                             <span ng-if="staff.is_class_advisor" class="advisor-badge">Advisor</span>
                             <div class="panel-header">

@@ -44,7 +44,7 @@
 @endphp
 <!DOCTYPE html>
 <html lang="en" ng-cloak ng-app="cscPortal" ng-controller="RootController" ng-class="{'dark': darkMode}"
-    ng-resize="handleResize()" class="{{ $htmlClass }}" ng-init="init('{{$role}}', '{{csrf_token()}}')" custom-on-change>
+    ng-resize="handleResize()" class="{{ $htmlClass }}" ng-init="init('{{$role}}')" custom-on-change>
 
 <head>
     @include('layouts.head', compact('title', 'style'))

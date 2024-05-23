@@ -3,15 +3,15 @@ import toastr from 'toastr';
 import 'toastr/build/toastr.css';
 import ApexCharts from 'apexcharts';
 import '../../public/js/storage.js';
-
-import './angular/helpers.js';
 import './request.js';
+import './angular/helpers.js';
 import '../../public/js/http';
 import './angular/bootstrap.js';
 import '../../public/js/location.js';
 // import Echo from 'laravel-echo';
 // import config from './config';
 // import Pusher from 'pusher-js';
+
 
 window.toastr = toastr;
 window.ApexCharts = ApexCharts;

@@ -26,7 +26,6 @@
     //     $score_array[$course->id] = '';
     // }
 
-
     $student_results = [];
 
     foreach ($students as $student) {
@@ -63,29 +62,101 @@
     }
 
     // $results = $class
-        // ->students()
-        // ->join('results', 'results.reg_no', '=', 'students.reg_no')
-        // ->join('courses', 'courses.id', '=', 'results.course_id')
-        // ->join('enrollments', 'enrollments.course_id', '=', 'results.course_id')
-        // ->where('enrollments.session', '=', $session)
-        // ->where('enrollments.semester', '=', $semester)
-        // ->orderBy('courses.id')
-        // ->get([
-        //     'courses.code',
-        //     'results.course_id',
-        //     'results.score',
-        //     'results.lab',
-        //     'results.exam',
-        //     'results.test',
-        //     'students.reg_no',
-        // ]);
+    // ->students()
+    // ->join('results', 'results.reg_no', '=', 'students.reg_no')
+    // ->join('courses', 'courses.id', '=', 'results.course_id')
+    // ->join('enrollments', 'enrollments.course_id', '=', 'results.course_id')
+    // ->where('enrollments.session', '=', $session)
+    // ->where('enrollments.semester', '=', $semester)
+    // ->orderBy('courses.id')
+    // ->get([
+    //     'courses.code',
+    //     'results.course_id',
+    //     'results.score',
+    //     'results.lab',
+    //     'results.exam',
+    //     'results.test',
+    //     'students.reg_no',
+    // ]);
 
 @endphp
 
 
 
-<div id="advisor-results-container-cgpa-summary" class="cd mt-5">
-    <table id="resultsTable" idx="all-sessions" class="cd-b responsive-table  text-xs">
+<x-template>
+    <div id="advisor-results-container-cgpa-summary" class="cd mt-5">
+        <table id="resultsTable" idx="all-sessions" class="cd-b responsive-table text-xs">
+            <thead style="text-align: center;">
+                <tr>
+                    <th class="w-5">S/N</th>
+                    <th>Reg. No.</th>
+
+                    <!-- Assuming $courses is available in the view -->
+                    <span>
+                        @foreach ($courses as $course)
+                            <th>{{ $course->code }}</th>
+                        @endforeach
+                    </span>
+
+                    <th colspan="3">Current</th>
+                    <th colspan="3">Previous</th>
+                    <th colspan="3">Cumulative</th>
+                    <th>Remark</th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th></th>
+
+                    <span>
+                        @foreach ($courses as $course)
+                            <th class="!text-center">{{ $course->units }}</th>
+                        @endforeach
+                    </span>
+                    <th>TGP</th>
+                    <th>TNU</th>
+                    <th>GPA</th>
+
+                    <th>TGP</th>
+                    <th>TNU</th>
+                    <th>GPA</th>
+
+                    <th>TGP</th>
+                    <th>TNU</th>
+                    <th>GPA</th>
+
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody style="text-align: center;">
+                @foreach ($studentResults as $index => $studentResult)
+                    <tr>
+                        <td class="!text-center">{{ $index + 1 }}</td>
+                        <td>{{ $studentResult['reg_no'] }}</td>
+
+                        <span>
+                            @foreach ($studentResult['scores'] as $score)
+                                <td class="!text-center">{{ $score }}</td>
+                            @endforeach
+                        </span>
+
+                        <td class="border-l-2">{{ $studentResult['current']['TGP'] }}</td>
+                        <td>{{ $studentResult['current']['TNU'] }}</td>
+                        <td>{{ $studentResult['current']['GPA'] }}</td>
+
+                        <td class="border-l-2">{{ $studentResult['previous']['TGP'] }}</td>
+                        <td>{{ $studentResult['previous']['TNU'] }}</td>
+                        <td>{{ $studentResult['previous']['GPA'] }}</td>
+
+                        <td class="border-l-2">{{ $studentResult['cumulative']['TGP'] }}</td>
+                        <td>{{ $studentResult['cumulative']['TNU'] }}</td>
+                        <td>{{ $studentResult['cumulative']['GPA'] }}</td>
+
+                        <td class="border-l-2">{{ $studentResult['current']['GPA'] >= 1.0 ? 'PASS' : 'FAIL' }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+        {{-- <table id="resultsTable" idx="all-sessions" class="cd-b responsive-table  text-xs">
         <thead style="text-align: center;">
             <tr>
                 <th class="w-5">S/N</th>
@@ -166,5 +237,6 @@
 
 
         </tbody>
-    </table>
-</div>
+    </table> --}}
+    </div>
+</x-template>

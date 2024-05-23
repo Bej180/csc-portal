@@ -197,9 +197,9 @@ app.controller("RootController", [
                 delete init.type;
             }
 
-            // const csrfToken = await getCSRFToken();
-            if ($scope.token && init.method === "POST") {
-                init.headers["X-CSRF-TOKEN"] = $scope.token;
+            const csrfToken = await getCSRFToken();
+            if (csrfToken && init.method === "POST") {
+                init.headers["X-CSRF-TOKEN"] = csrfToken;
             }
 
             if (

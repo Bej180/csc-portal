@@ -144,7 +144,7 @@ class Result extends Model
     }
 
 
-    public static function studentGPA($reg_no, $semester, $session)
+    public static function studentGPA_($reg_no, $semester, $session)
     {
 
 
@@ -259,6 +259,48 @@ class Result extends Model
 
         return self::calculateGPA($enrollments, $semester, $session);
     }
+
+    public static function studentGPA($reg_no, $semester, $session)
+{
+    // Fetch results for the current semester and session
+    $currentResults = Result::where('reg_no', $reg_no)
+        ->where('semester', $semester)
+        ->where('session', $session)
+        ->get();
+
+    $currentTGP = $currentResults->sum('grade_points');
+    $currentTNU = $currentResults->sum('units');
+    $currentGPA = $currentTNU ? round($currentTGP / $currentTNU, 2) : 0;
+
+    $current = [
+        'TGP' => $currentTGP,
+        'TNU' => $currentTNU,
+        'GPA' => $currentGPA,
+    ];
+
+    // Determine the previous semester
+    $previousSemester = $semester === 'HARMATTAN' ? 'RAIN' : 'HARMATTAN';
+    $previousLevel = $semester === 'HARMATTAN' ? $currentResults->first()?->course?->level - 100 : $currentResults->first()?->course?->level;
+
+    // Fetch results for the previous semester and level
+    $previousResults = Result::where('reg_no', $reg_no)
+        ->where('semester', $previousSemester)
+        ->where('session', $session)
+        ->where('level', $previousLevel)
+        ->get();
+
+    $previousTGP = $previousResults->sum('grade_points');
+    $previousTNU = $previousResults->sum('units');
+    $previousGPA = $previousTNU ? round($previousTGP / $previousTNU, 2) : 0;
+
+    $previous = [
+        'TGP' => $previousTGP,
+        'TNU' => $previousTNU,
+        'GPA' => $previousGPA,
+    ];
+
+    return compact('current', 'previous');
+}
 
 
     public static function studentPreviousSemesterGPA($reg_no, $semester, $session)

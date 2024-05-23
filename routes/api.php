@@ -70,7 +70,9 @@ Route::get('/csrf-end-point', fn () => ['token' => csrf_token()]);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/testtter', function(Request $request) {
-        
+        return response()->json([
+            'error' => 'not found'
+        ], 400);
     });
 });
 
@@ -86,6 +88,7 @@ Route::get('/tokens/create', function (Request $request) {
 
 Route::post('/dologin', [AuthController::class, 'api_login']);
 Route::post('/app/auth/verify_otp', [AuthController::class, 'verifyOTP']);
+Route::post('/authenticate', [AuthController::class, 'authenticate']);
 
 // Route::get('/register', 'AuthController@register');
 Route::post('/doRegister', [AuthController::class, 'api_register_student']);
@@ -273,6 +276,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/app/hod/staff/show', [HODController::class, 'get_staff']);
     Route::post('/app/hod/course_allocation/deallocate', [HODController::class, 'deallocate_courses']);
     Route::post('/app/hod/course_allocation/allocate', [HODController::class, 'allocate_courses']);
+    Route::post('/app/hod/course_allocation/allocatable/all', [HODController::class, 'allocatable_courses']);
 
 
 
@@ -284,7 +288,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/app/staff/results/save_draft', [StaffController::class, 'save_as_draft']);
     Route::post('/app/staff/results/index', [ResultsController::class, 'staff_results_index_page']);
     Route::post('/app/staff/lab_scores/index', [StaffController::class, 'staff_lab_scores_index_page']);
-    Route::post('/app/hod/results/approve', [StaffController::class, 'approve_lab_scores']);
+    Route::post('/app/staff/results/approve_lab_scores', [StaffController::class, 'approve_lab_scores']);
 
 
     Route::post('/app/staff/course/results', [ResultsController::class, 'single_course_results']);

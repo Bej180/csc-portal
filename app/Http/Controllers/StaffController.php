@@ -464,7 +464,7 @@ class StaffController extends Controller
                 $existingResult = Result::where([
                     'reg_no' => $student['reg_no'],
                     'course_id' => $course_id,
-                    'session' => $session,
+                    'session' => $session
                 ])->first();
 
                 
@@ -474,13 +474,9 @@ class StaffController extends Controller
                     $existingResult->test = $student['test'];
                     $existingResult->test = $student['score'];
                     $existingResult->setGradings();
-
-                    return $existingResult;
-                    
                     $existingResult->status = 'PENDING';
-                    $existingResult->grade = $existingResult->getGrade();
-                    $existingResult->remark = $existingResult->getRemark();
                     $existingResult->save();
+                    
                 }
                 else {
                     // result contains lab, exam, score, reg_no
@@ -488,6 +484,8 @@ class StaffController extends Controller
                     $result->status = 'PENDING';
                     $result->units = $course->units;
                     $result->course_id = $course_id;
+                    
+                    $result->level = $course->level;
                     $result->setGradings();
                     
                     $result->reference_id = $reference_id;

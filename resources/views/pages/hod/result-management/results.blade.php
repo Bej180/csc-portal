@@ -80,7 +80,7 @@
                                                     <span class="fa fa-eye"></span>
                                                     <span class="p-button-label">View</span>
                                                 </button>
-                                                <button controller="approveResult(pending)" class="btn btn-secondary whitespace-nowrap" type="button" aria-label="Approve">
+                                                <button controller="approveResult(pending[0])" class="btn btn-secondary whitespace-nowrap" type="button" aria-label="Approve">
                                                     <span class="fa fa-check fa-icon"></span> 
                                                     Approve
                                                 </button>

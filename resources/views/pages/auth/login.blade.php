@@ -5,7 +5,7 @@
     @include('layouts.head')
 </head>
 
-<body ng-controller="AuthController" ng-init="resetPassword=false;activateAccount=false;otp=[]"
+<body ng-controller="AuthController" ng-init="initAuth({{auth()->check()?'true':'false'}})"
     class="bg-[#f7f7fa] text-[#333333] font-sans font-[16px] h-full overflow-x-hidden">
 
 
@@ -95,7 +95,7 @@
                     <div class="mt-5">
     
                       
-                        OTP has been sent to you. Please check your registered phone number +23490384**5 for the six-digit
+                        OTP has been sent to you. Please check your registered email address <span class="font-semibold" ng-bind="otp_user_email | maskEmail"></span> for the six-digit
                         code.
                         <div class="mt-6 opacity-65">
                             Enter the six digit code below

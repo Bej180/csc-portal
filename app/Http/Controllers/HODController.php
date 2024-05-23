@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use \App\Mail\ApprovedResultNotification;
+use App\Models\Course;
 use App\Models\CourseAllocation;
 use \App\Models\Result;
 use App\Models\Staff;
@@ -47,11 +48,11 @@ class HODController extends Controller
     {
 
 
-        $pendingResults = Result::query()->where('status', 'complete')
+        $pendingResults = Result::query()->where('status', 'PENDING')
             ->with(['student.user', 'updater', 'course']);
 
 
-        $approvedResults = Result::query('status', 'approved')
+        $approvedResults = Result::query()->where('status', 'APPROVED')
             ->with(['student.user', 'updater', 'course']);
 
         if ($request->sort && is_array($request->sort)) {
@@ -108,6 +109,7 @@ class HODController extends Controller
 
     public function approve_results(Request $request)
     {
+        
 
         $validator = Validator::make($request->all(), [
             'results_id' => 'required|exists:results,reference_id',
@@ -116,16 +118,18 @@ class HODController extends Controller
             'results_id.exists' => 'Results were not found. They may have been deleted'
         ]);
 
+        // return response()->json(['error'=>$validator->errors(),$request->all()], 400);
+
         if ($validator->fails()) {
             return response()->json([
                 'errors' => $validator->errors()
-            ]);
+            ], 400);
         }
 
         $results = Result::where('reference_id', '=', $request->results_id)->with('course');
 
         $results->update([
-            'status' => 'approved'
+            'status' => 'APPROVED'
         ]);
 
         $firstResult = $results->first();
@@ -211,7 +215,6 @@ class HODController extends Controller
         if ($validator->fails()) {
 
             return error_helper($validator->errors());
-
         }
 
         $auth = $request->user();
@@ -260,6 +263,70 @@ class HODController extends Controller
 
 
     /**
+     * Allocates courses
+     * 
+     * Add courses to the list of courses offered by the staff
+     */
+
+    public function allocate_courses(Request $request)
+    {
+
+
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:staffs',
+            'courses' => 'required'
+        ], [
+            'id.numeric' => 'Invalid Staff Id',
+            'id.required' => 'Staff ID must be provided',
+            'id.exists' => 'Staff Account is unavailable at the moment',
+            'courses.required' => 'Courses to deallocate must be provided',
+            'courses.array' => 'Course to be deallocated is missing',
+        ]);
+
+
+        if ($validator->fails()) {
+
+            return response()->json([
+                'errors' => $validator->errors(),
+            ], 400);
+        }
+
+
+
+        $courseRecord = Course::query();
+        $courseRecord->whereIn('id', $request->courses);
+        $staff = Staff::find($request->id)->first();
+
+
+        if ($staff->designation === 'technologists') {
+            $courseRecord->where('has_practical', true);
+        }
+
+        $courses = $courseRecord->get();
+
+        $newCourses = [];
+
+
+
+        foreach ($courses as $course) {
+
+            $new = CourseAllocation::updateOrCreate([
+                'staff_id' => $request->id,
+                'course_id' => $course->id
+            ]);
+            if ($new) {
+                $newCourses[] = $course->id;
+            }
+        }
+
+        $staff->courses = CourseAllocation::whereIn('course_id', $newCourses)->with('course')->get();
+
+        return response()->json([
+            'success' => 'Course allocation was successfully',
+            'staff' => $staff
+        ]);
+    }
+    /**
      * Deallocates courses
      * 
      * Removes courses from the list of courses offered by the staff
@@ -284,14 +351,64 @@ class HODController extends Controller
             ], 400);
         }
 
+
         $courses = CourseAllocation::whereIn('course_id', $request->courses)
             ->where('staff_id', $request->id);
+
+
+
         $deallocating = $courses->get();
+
         $courses->delete();
+
+        // Deallocate from courses the staff is cordinating
+        $cordinatingCourses = Course::whereIn('id', $request->courses)
+            ->where('cordinator', $request->id);
+
+        if ($cordinatingCourses->exists()) {
+            $cordinatingCourses->fill([
+                'cordinator' => null
+            ])->save();
+        }
 
         return response()->json([
             'success' => 'Course deallocation was successfully',
             'deallocated' => $deallocating
         ]);
+    }
+
+
+    public function allocatable_courses(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'staff_id' => 'required|exists:staff,id',
+            'semester' => 'required',
+            'level' => 'required',
+        ], [
+            'staff_id.required' => 'Staff ID must be provided',
+            'staff_id.exists' => 'Staff is not available',
+            'semester.required' => 'Semester is required',
+            'level.required' => 'Level must be provided',
+        ]);
+
+        $staff = Staff::find($request->staff_id);
+
+        $designation = $staff->designation;
+
+        $blacklist_courses = ['SIW 200', 'SIW 400', 'CSC 555', 'CSC 556'];
+
+        $courses = Course::query();
+        $courses = $courses->where('semester', $request->semester)
+            ->whereNotIn('code', $blacklist_courses)
+            ->where('level', $request->level);
+
+        if ($designation == 'technologist') {
+            $courses->where('has_practical', true);
+        }
+        $previousAllocations = CourseAllocation::where('staff_id', $request->staff_id)->get()->pluck('course_id');
+        $courses->whereNotIn('id', $previousAllocations);
+
+        $courses = $courses->get();
+        return ['allocatables' => $courses];
     }
 }

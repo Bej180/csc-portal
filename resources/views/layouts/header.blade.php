@@ -1,11 +1,11 @@
 @php
     $authUser = \App\Models\User::active();
 
-    $announcements = auth()->user()->notifications();
-    
+    $announcements = auth()->user()?->notifications();
+
     if (auth()->check()) {
         if (auth()->user()->role === 'student') {
-            $announcements = auth()->user()->student->notifications();
+            $announcements = auth()->user()->student?->notifications();
         }
     }
 
@@ -42,7 +42,7 @@
                 <div class="notification-wrapper">
                     <i class="material-symbols-rounded"
                         ng-click="toggleNotificationVisibility()">notifications_rounded</i>
-                    @if ($count = $announcements->count())
+                    @if ($count = $announcements?->count())
                         <span class="notification-bell">{{ $count }} </span>
                     @endif
 
@@ -50,22 +50,25 @@
 
                     <div class="notification-content">
                         <div class="notification-body">
-                            @foreach ($announcements as $announcement)
-                                <div class="border-b border-zinc-200 last:border-none p-4">
-                                    <span class="font-semibold link">
-                                        {{ $announcement->announcer->name }}
-                                    </span>
+                            @if (!empty($announcements))
+                                @forelse ($announcements as $announcement)
+                                    <div class="border-b border-zinc-200 last:border-none p-4">
+                                        <span class="font-semibold link">
+                                            {{ $announcement->announcer->name }}
+                                        </span>
 
 
-                                    <div class="flex-1">
-                                        {{ $announcement->message }}
+                                        <div class="flex-1">
+                                            {{ $announcement->message }}
+                                        </div>
+                                        <span class="text-zinc-400">
+                                            {{ timeago($announcement->created_at) }}
+                                        </span>
+
                                     </div>
-                                    <span class="text-zinc-400">
-                                        {{ timeago($announcement->created_at) }}
-                                    </span>
-
-                                </div>
-                            @endforeach
+                                @empty
+                                @endforelse
+                            @endif
                         </div>
                     </div>
                 </div>

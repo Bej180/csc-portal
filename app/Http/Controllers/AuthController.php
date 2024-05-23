@@ -31,17 +31,44 @@ class AuthController extends Controller
     {
         return 111111;
     }
+
+
+    public function authenticate(Request $request)
+    {
+        // Validate the request data (token)
+        $request->validate([
+            'token' => 'required|string',
+        ]);
+
+        
+        $token = $request->token;
+        
+
+        // Attempt to authenticate the user using Sanctum's token
+        if (Auth::onceUsingId($token)) {
+            // Authentication successful
+            return response()->json(['message' => 'Authentication successful'], 200);
+        } else {
+            // Authentication failed
+            return response()->json(['message' => 'Invalid token'], 401);
+        }
+    }
     public function verifyOTP(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'tokens' => 'required|array',
             'email' => 'required|exists:users'
+        ], [
+            'tokens.required' => 'OTP tokens must be provided',
+            'email.required' => 'email address is missing',
+            'email.exists' => 'User account not found',
+            
         ]);
 
         if ($validator->fails()) {
             return response()->json([
                 'errors' => $validator->errors(),
-            ], 400);
+            ], 402);
         }
         $otp = Arr::join($request->tokens, '');
 
@@ -58,7 +85,7 @@ class AuthController extends Controller
             $token = $user->createToken($user->role)->plainTextToken;
 
             // Determine token holder based on remember flag
-            $tokenHolder = $request->remember_me ? 'persistent_session' : 'temporary_token';
+            $tokenHolder = $request->remember_me ? 'persistent_session' : 'temporary_session';
 
             $response = [
                 $tokenHolder => $token,
@@ -75,7 +102,7 @@ class AuthController extends Controller
 
         return response()->json([
             'error' => 'Validation Failed',
-        ], 400);
+        ], 401);
     }
 
 
@@ -415,15 +442,17 @@ class AuthController extends Controller
         // Attempt to authenticate the user
         $user = $this->authenticateUser($request);
 
-
+        
         if (!$user) {
             return response()->json(['error' => 'Invalid credentials'], 401);
         }
+        
 
         // Handle account lockout if necessary
         if ($this->isAccountLocked($user)) {
             return response()->json(['error' => 'Account has been locked'], 401);
         }
+
 
 
         // Check if 2FA is enabled

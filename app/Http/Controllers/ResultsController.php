@@ -13,6 +13,7 @@ use App\Models\AcademicSet;
 use App\Models\Admin;
 use App\Models\Course;
 use App\Models\Enrollment;
+use App\Models\Student;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -573,4 +574,75 @@ class ResultsController extends Controller
         return view('pages.staff.result-management.lab-score-index');
     }
 
+
+
+
+
+    public function show(Student $student)
+    {
+        // Define the current semester and session here, replace with your logic
+        $currentSemester = 'HARMATTAN';
+        $currentSession = '2023/2024';
+
+        // Fetch all results for the student
+        $results = $student->results()->with('course')->get();
+
+        // Calculate the GPA data for the student
+        $gpaData = Result::studentGPA($student->reg_no, $currentSemester, $currentSession);
+
+        // Calculate cumulative GPA
+        $cumulativeTGP = $gpaData['current']['TGP'] + $gpaData['previous']['TGP'];
+        $cumulativeTNU = $gpaData['current']['TNU'] + $gpaData['previous']['TNU'];
+        $cumulativeGPA = $cumulativeTNU ? $cumulativeTGP / $cumulativeTNU : 0;
+
+        // Prepare data for the view
+        $studentResults = [
+            'reg_no' => $student->reg_no,
+            'scores' => $results->pluck('score'),
+            'current' => $gpaData['current'],
+            'previous' => $gpaData['previous'],
+            'cumulative' => ['TGP' => $cumulativeTGP, 'TNU' => $cumulativeTNU, 'GPA' => round($cumulativeGPA, 2)]
+        ];
+
+        return view('students.show', compact('studentResults'));
+    }
+
+
+
+    public function showAll()
+    {
+        // Define the current semester and session here, replace with your logic
+        $currentSemester = 'HARMATTAN';
+        $currentSession = '2023/2024';
+
+        // Fetch all students
+        $students = Student::with('results.course')->get();
+
+        // Prepare data for all students
+        $studentResults = $students->map(function($student) use ($currentSemester, $currentSession) {
+            // Calculate the GPA data for the student
+            $gpaData = Result::studentGPA($student->reg_no, $currentSemester, $currentSession);
+
+            // Calculate cumulative GPA
+            $cumulativeTGP = $gpaData['current']['TGP'] + $gpaData['previous']['TGP'];
+            $cumulativeTNU = $gpaData['current']['TNU'] + $gpaData['previous']['TNU'];
+            $cumulativeGPA = $cumulativeTNU ? $cumulativeTGP / $cumulativeTNU : 0;
+
+            return [
+                'reg_no' => $student->reg_no,
+                'scores' => $student->results->pluck('score'),
+                'current' => $gpaData['current'],
+                'previous' => $gpaData['previous'],
+                'cumulative' => [
+                    'TGP' => $cumulativeTGP,
+                    'TNU' => $cumulativeTNU,
+                    'GPA' => round($cumulativeGPA, 2)
+                ]
+            ];
+        });
+
+        return view('pages.admin.result-management.all-results', compact('studentResults'));
+    }
 }
+
+

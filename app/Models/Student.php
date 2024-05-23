@@ -155,7 +155,7 @@ class Student extends Model
     }
 
     public function courseRegistrationPerSemester() {
-        return $this->hasMany(Enrollment::class, 'reg_no', 'reg_no')->orderBy('level')->groupBy('request_id');
+        return $this->hasMany(Enrollment::class, 'reg_no', 'reg_no')->orderBy('level', 'asc')->orderBy('semester', 'desc')->groupBy('request_id');
     }
 
     public function results() {

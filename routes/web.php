@@ -99,6 +99,7 @@ Route::post('/2fa/verify', [TwoFactorController::class, 'postVerify'])->name('2f
         Route::get('/lost-password', fn() => view('pages.auth.lost-password'))->middleware('guest');
 
 
+        Route::get('/all-results', [ResultsController::class, 'showAll']);
        
         
         Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'passwordResetView'])->name('password.reset');
