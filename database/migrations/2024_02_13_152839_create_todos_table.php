@@ -19,7 +19,6 @@ return new class extends Migration
             $table->longText('title');
             $table->boolean('complete')->default(false);
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

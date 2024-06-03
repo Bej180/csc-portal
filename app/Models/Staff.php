@@ -13,7 +13,6 @@ class Staff extends Model
     protected $fillable = [
         'birthdate',
         'address',
-        'gender',
         'image',
         'staff_id',
         'id',
@@ -21,10 +20,11 @@ class Staff extends Model
         'is_class_advisor',
         'designation',
         'is_hod',
-        'title',
     ];
 
     protected $table = 'staffs';
+
+    
 
 
     public function user()
@@ -62,20 +62,6 @@ class Staff extends Model
 
 
 
-
-    // Class Advisor methods
-    public static function getFillables(array $data = [])
-    {
-        $class = __CLASS__;
-        $obj = new $class;
-        $fillables = $obj->fillable;
-
-        if (count($data) === 0) {
-            return $fillables;
-        }
-
-        return Arr::only($data, $fillables);
-    }
 
     // Define relationship 
 

@@ -1,6 +1,16 @@
 app.controller("AccountSetting", function ($scope) {
     // $scope.two_factor={};
 
+    $scope.updateUserLogins = (user) => {
+        return api(
+            '/app/admin/user/resetlogins',
+            user,
+            res => console.log(res),
+            err => console.error(err)
+        );
+    };
+    
+
     $scope.uploadImage = async () => {
         const formData = new FormData();
         formData.append("image", $scope.image);

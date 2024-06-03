@@ -145,9 +145,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     
 
 
-
-    // Staff controllers
-    Route::post('/make-staff-staff', [StaffController::class, 'makeStaffAdviser']);
 });
 
 
@@ -246,6 +243,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/app/admin/student/create', [StudentController::class, 'store']);
     Route::post('/app/admin/staff/create', [AdminController::class, 'store_staff']);
     Route::post('/app/admin/staff/index', [AdminController::class, 'index_staff']);
+    Route::post('/app/admin/user/resetlogins', [AdminController::class, 'resetLoginDetails']);
     Route::post('/admin/user/reset_password', [AdminController::class, 'reset_user_password']);
 
 
@@ -272,11 +270,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('/app/hod/results/index', [HODController::class, 'api_index_results']);
     Route::post('/app/hod/results/approve', [HODController::class, 'approve_results']);
-    Route::post('/app/hod/staff/index', [HODController::class, 'get_staffs']);
-    Route::post('/app/hod/staff/show', [HODController::class, 'get_staff']);
-    Route::post('/app/hod/course_allocation/deallocate', [HODController::class, 'deallocate_courses']);
-    Route::post('/app/hod/course_allocation/allocate', [HODController::class, 'allocate_courses']);
-    Route::post('/app/hod/course_allocation/allocatable/all', [HODController::class, 'allocatable_courses']);
+    Route::post('/app/staff/index', [UserController::class, 'get_staffs']);
+    Route::post('/app/staff/show', [UserController::class, 'get_staff']);
+    Route::post('/app/staff/course_allocation/deallocate', [UserController::class, 'deallocate_courses']);
+    Route::post('/app/staff/course_allocation/allocate', [UserController::class, 'allocate_courses']);
+    Route::post('/app/staff/course_allocation/allocatable/all', [UserController::class, 'allocatable_courses']);
 
 
 
@@ -289,6 +287,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/app/staff/results/index', [ResultsController::class, 'staff_results_index_page']);
     Route::post('/app/staff/lab_scores/index', [StaffController::class, 'staff_lab_scores_index_page']);
     Route::post('/app/staff/results/approve_lab_scores', [StaffController::class, 'approve_lab_scores']);
+
+
+    Route::post('/app/moderator/make_staff_class_advisor', [ModeratorController::class, 'makeStaffAdviser']);
 
 
     Route::post('/app/staff/course/results', [ResultsController::class, 'single_course_results']);
@@ -321,6 +322,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/app/todo/store', [TodoController::class, 'store']);
     Route::post('/app/todo/index', [TodoController::class, 'get_todos']);
     Route::post('/app/todo/delete', [TodoController::class, 'delete_todo']);
+
+    Route::post('/app/annoucement/stream', [AnnouncementController::class, 'unseen_announcements']);
 
 
 });

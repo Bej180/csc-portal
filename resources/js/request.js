@@ -1,9 +1,20 @@
 import axios, { AxiosError } from "axios";
 
+window.csrfToken = document
+    .querySelector('meta[name="csrf_token"]')
+    .getAttribute("content");
+window.bearerToken =
+    sessionStorage.getItem("authToken") || localStorage.getItem("authToken");
+
+if (bearerToken) {
+    axios.defaults.headers.common["Authorization"] = "Bearer " + bearerToken;
+}
+axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
+
 const getHeaders = (session, customHeaders) => {
     const headers = {
         "Content-Type": "application/json",
-        "Accept": "application/json",
+        Accept: "application/json",
         ...(session && { Authorization: `Bearer ${session}` }),
         ...customHeaders,
     };
@@ -12,16 +23,20 @@ const getHeaders = (session, customHeaders) => {
 
 const handleResponse = (response, callback, init) => {
     response = parseResponse(response);
-    
+
     if (!init.silent)
         document.getElementById("isLoading").classList.remove("show");
 
     if (typeof response === "string") {
-      throw response;
+        throw response;
     }
     if (callback) callback(response);
-    if (!init.silent && response.success)
-        toastr.success(response.success);
+    if (!init.silent && response.success) toastr.success(response.success);
+    if (response.alert)
+        $.confirm(response.alert, {
+            type: "alert",
+            style: 'success',
+        });
     if (response.redirect)
         setTimeout(() => (window.location.href = response.redirect), 2000);
 
@@ -30,51 +45,52 @@ const handleResponse = (response, callback, init) => {
 
 const handleError = (err, fallback, init) => {
     const errorData = parseResponse(err);
-    
 
     if (fallback) fallback(errorData, err);
     if (!init.silent) {
         ENV.error(err);
 
-        if ('error' in errorData || 'errors' in errorData) {
-          toastr.error(
-              errorData.errors
-                  ? Object.values(errorData.errors)[0]
-                  : errorData.error
-          );
-
+        if ("error" in errorData || "errors" in errorData) {
+            toastr.error(
+                errorData.errors
+                    ? Object.values(errorData.errors)[0]
+                    : errorData.error
+            );
+        }
+        else if ('alert' in errorData) {
+            $.confirm(errorData.alert, {
+                type: "alert",
+                style: 'danger',
+            });
         }
         if (errorData.redirect)
             setTimeout(() => (window.location.href = errorData.redirect), 2000);
     }
 
-
     throw errorData;
 };
 const parseResponse = (axios) => {
-    
-    if (typeof axios.response === 'undefined') {
-        let data = axios.data||axios;
-        if (typeof data == 'string') {
-            return {response: data};
+    if (typeof axios.response === "undefined") {
+        let data = axios.data || axios;
+        if (typeof data == "string") {
+            return { response: data };
         }
         return data;
-    }
-    else if (typeof axios.response.data === 'object' && axios.response.data !== null) {
+    } else if (
+        typeof axios.response.data === "object" &&
+        axios.response.data !== null
+    ) {
         return axios.response.data;
-    }
-    else if (typeof axios.response === 'object' && axios.response !== null) {
+    } else if (typeof axios.response === "object" && axios.response !== null) {
         return axios.response;
-    }
-    else if (axios instanceof AxiosError) {
-        return {message: 'An error occurred'};
-    }
-    else if (typeof axios === 'object' && axios !== null) {
+    } else if (axios instanceof AxiosError) {
+        return { message: "An error occurred" };
+    } else if (typeof axios === "object" && axios !== null) {
         return axios;
     }
 
-    return {message: axios.toString()};
-}
+    return { message: axios.toString() };
+};
 
 const api = async (url, data, callback, fallback, init = {}) => {
     url = `/api/${url.replace(/^\//, "")}`;
@@ -95,40 +111,33 @@ const api = async (url, data, callback, fallback, init = {}) => {
         localStorage.getItem("authToken") ||
         sessionStorage.getItem("authToken");
 
-      const headers = getHeaders(session, init.headers);
-      delete init.headers;
+    const headers = getHeaders(session, init.headers);
+    delete init.headers;
     init = {
         silent: false,
         ...init,
         headers: headers,
     };
-    
+
     try {
         const response = await Promise.race([
             axios.post(url, data, init),
-            new Promise((_, reject) =>
+            new Promise((_, reject) => 
                 setTimeout(
-                    () => reject(new Error("Request Timeout")),
+                    () => init.timeout && reject(new Error("Request Timeout")),
                     init.timeout || 5000
                 )
             ),
         ]);
 
-
         return handleResponse(response, callback, init);
     } catch (err) {
-        
         return handleError(err, fallback, init);
     }
-}
-
-
-
-
+};
 
 window.parseResponse = parseResponse;
 window.api = api;
-
 
 // import axios from "axios";
 

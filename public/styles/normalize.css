@@ -21,12 +21,13 @@
 }
 .dark {
   --input-color: rgb(156 161 171);
-  --input-bg-color: rgba(24,24,27);
-  
+  --input-bg-color: #22222499;;
+  --input-border-color: transparent;
   --td-border-color: #aaa;
-  /* @apply bg-zinc-900 */
+  
   /* @apply bg-zinc-800; text-black dark:text-[#96a2b4]*/
 }
+
 
 * {
   font-weight: normal;

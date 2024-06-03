@@ -18,15 +18,11 @@ return new class extends Migration
             $table->date('birthdate')->nullable();
             $table->string('address')->nullable();
             $table->string('staff_id')->nullable();
-            $table->enum('gender', ['male', 'female'])->nullable();
             $table->string('title')->nullable();
             
-            $table->string('image')->nullable();
 
             $table->timestamps();
 
-            // Establish relationships
-            $table->foreign('id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

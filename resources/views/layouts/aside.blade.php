@@ -3,14 +3,22 @@
         $role = auth()->user()->role;
     @endphp
     <div ng-init="nav='{{ $nav }}'" ng-controller="SidebarController">
-        <div class="sidebar shrink-0 minimized closed-sidebar" ng-class="{'closed-sidebar':!opensidebar}">
+        <div class="sidebar shrink-0 minimized closed-sidebar" ng-class="{'closed-sidebar':!opensidebar}" ng-mouseenter="enterSidebar()" ng-mouseleave="leaveSidebar()">
+           
+            <div class="sidebar-background"></div>
 
-            <div ng-click="closeSidebar()" class="gap-1 flex justify-end lg:hidden text-white/50 px-2">
-                <span class="btn-text btn-close">X</span> Close
-            </div>
-
+            
+            
             <div class="sidebar-header mt-8">
-
+                
+                <div id="color-scheme-toggler" ng-init="system='System ('+system_detect+')'">
+                <select 
+                    options="{light:'Light Mode', dark:'Dark Mode', system: system}"
+                
+                    ng-change="saveTheme(colorScheme)" class=" dark:bg-[--grey-800] w-[90px]" ng-model="colorScheme" placeholder="Color Scheme">
+                    
+                </select> {% colorScheme %}
+            </div>
 
 
                 <form class="flex w-full justify-center px-3">
@@ -102,6 +110,6 @@
             @endauth
 
         </div>
-        <div ng-show="opensidebar" class="sidebar-backdrop" ng-click="closeSidebar()"></div>
+        <!-- <div ng-show="opensidebar" class="sidebar-backdrop" ng-click="closeSidebar()"></div> -->
     </div>
 @endauth

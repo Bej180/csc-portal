@@ -23,6 +23,7 @@ return new class extends Migration
             $table->unsignedBigInteger('uploader');
             $table->string('course_code', 10);
             $table->timestamps();
+
             
         });
     }

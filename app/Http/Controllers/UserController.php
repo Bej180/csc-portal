@@ -6,6 +6,9 @@ use App\Models\ActivityLog;
 use App\Models\Advisor;
 use App\Models\Student;
 use App\Models\User;
+use App\Models\Staff;
+use App\Models\CourseAllocation;
+use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
@@ -95,19 +98,18 @@ class UserController extends Controller
     {
         $role = $user->role;
         $gender = $user->gender;
-        if (!$gender) {
-            $gender = $user->$role->gender;
-        }
+       
         $image = public_path(match (true) {
-            !is_null($user->$role->image) => 'storage/' . $user->$role->image,
-            $gender == 'female' => 'images/avatar-f.png',
-            $gender  == 'male' => 'images/avatar-m.png',
+            isset($user->$role->image) => 'storage/' . $user->$role->image,
+            isset($user->image) => 'storage/' . $user->image,
+            $gender == 'FEMALE' => 'images/avatar-f.png',
+            $gender  == 'MALE' => 'images/avatar-m.png',
             default => 'images/avatar-u.png',
         });
 
 
         if (!file_exists($image)) {
-            abort(404);
+            $image = public_path('images/avatar-u.png');
         }
 
         $mime = mime_content_type($image);
@@ -130,11 +132,23 @@ class UserController extends Controller
     public function dashboard()
     {
         if (!auth()->check()) {
-            view('pages.auth.login');
+            return view('pages.auth.login');
         }
         $user = auth()->user();
+        $role = $user->role;
+
+        if ($user->activation_token) {
+            return view("pages.$role.dashboard", compact('user'));
+        } 
+        else if ($role === 'admin') {
+            session()->flash('alert', 'You are welcome. You logged in as Administrator and you need to set the configurations of this portal.');
+            return redirect('/page/configurations');
+        }
+        else {
+            session()->flash('info', 'You are welcome. You need to activate your account to continue using this portal.');
+            return redirect("$role/activation");
+        }
         
-        return view("pages." . auth()->user()->role . ".dashboard", compact('user'));
     }
 
 
@@ -465,8 +479,8 @@ class UserController extends Controller
         
         $profile->image = asset(match (true) {
             !is_null($profile->image) => 'storage/' . $profile->image,
-            $profile->gender === 'male' => 'images/avatar-m.png',
-            $profile->gender == 'female' => 'images/avatar-f.png',
+            $profile->gender === 'MALE' => 'images/avatar-m.png',
+            $profile->gender == 'FEMALE' => 'images/avatar-f.png',
             default => 'images/avatar-u.png',
         });
 
@@ -525,4 +539,312 @@ class UserController extends Controller
 
 
     } 
+
+
+
+
+
+
+
+     /**
+     * Fetch multiple staff members
+     */
+    public function get_staffs(Request $request)
+    {
+        $auth = $request->user();
+    
+
+        $newStaff = Staff::query()
+                ->whereNot('staffs.id', $auth->id)
+                ->with(['user', 'classes','courses.course']);
+
+        if ($search = $request->search) {
+            $search = preg_replace('/\s+/', '%', $search);
+
+            $newStaff->where(function ($query) use ($search) {
+                    $query->where('users.name', 'LIKE', "%$search%")
+                        ->orWhere('designation', 'LIKE', "%$search%")
+                        ->orWhere('staff_id', 'LIKE', "%$search%")
+                        ->orWhere('users.phone', 'LIKE', "%$search%")
+                        ->orWhere('users.email', 'LIKE', "%$search%");
+                });
+        }
+
+        $newStaff = $newStaff
+            
+            ->orderBy('staffs.created_at', 'DESC')
+            ->paginate(10);
+        
+        $newStaff = $newStaff->map(fn($staff) => array_merge($staff->toArray(), $staff->user->toArray()));
+
+        
+        return $newStaff;
+
+        $staffs = Staff::query()->whereNot('staffs.id', $auth->id)
+            //->join('users', 'users.id', '=', 'staffs.id')
+            ->with(['user', 'courses.course']);
+
+
+
+
+
+        $staffs = $staffs
+            ->latest()
+            ->paginate(10)
+            ->map(function ($staff) {
+                $staff->classes = $staff->classes;
+                return $staff;
+            })
+            ->filter(function ($staff) use ($request) {
+                $search = $request->search;
+
+                if ($search) {
+                    $search = preg_replace('/\s+/', '%', $request->search);
+
+                    return Staff::where('staffs.id', $staff->id)
+                        ->join('users', 'users.id', '=', 'staffs.id')
+                        ->where(function ($query) use ($search) {
+                            $query->where('users.name', 'LIKE', "%$search%")
+                                ->orWhere('designation', 'LIKE', "%$search%")
+                                ->orWhere('staff_id', 'LIKE', "%$search%")
+                                ->orWhere('users.phone', 'LIKE', "%$search%")
+                                ->orWhere('users.email', 'LIKE', "%$search%");
+                        })->exists();
+                }
+                return true;
+            });
+
+        return $staffs;
+    }
+
+    /**
+     * Fetch single staff member information
+     */
+
+    public function get_staff(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|numeric|exists:staffs'
+        ], [
+            'id.required' => 'Staff ID must be provided',
+            'id.numeric' => 'Invalid staff ID',
+            'id.exists' => 'Staff account unavailable',
+        ]);
+
+        if ($validator->fails()) {
+
+            return error_helper($validator->errors());
+        }
+
+        $auth = $request->user();
+
+
+        $staffs = Staff::query()->where('id', $request->id)
+            //->join('users', 'users.id', '=', 'staffs.id')
+            ->with(['user', 'courses.course']);
+
+
+
+
+
+        $staffs = $staffs
+            ->latest()
+            ->paginate(10)
+            ->map(function ($staff) {
+                $staff->classes = $staff->classes;
+                return $staff;
+            })
+            ->filter(function ($staff) use ($request) {
+                $search = $request->search;
+
+                if ($search) {
+                    $search = preg_replace('/\s+/', '%', $request->search);
+
+                    return Staff::where('staffs.id', $staff->id)
+                        ->join('users', 'users.id', '=', 'staffs.id')
+                        ->where(function ($query) use ($search) {
+                            $query->where('users.name', 'LIKE', "%$search%")
+                                ->orWhere('designation', 'LIKE', "%$search%")
+                                ->orWhere('staff_id', 'LIKE', "%$search%")
+                                ->orWhere('users.phone', 'LIKE', "%$search%")
+                                ->orWhere('users.email', 'LIKE', "%$search%");
+                        })->exists();
+                }
+                return true;
+            });
+
+        return $staffs;
+    }
+
+
+
+
+
+    /**
+     * Allocates courses
+     * 
+     * Add courses to the list of courses offered by the staff
+     */
+
+     public function allocate_courses(Request $request)
+     {
+ 
+ 
+         $validator = Validator::make($request->all(), [
+             'id' => 'required|exists:staffs',
+             'courses' => 'required'
+         ], [
+             'id.numeric' => 'Invalid Staff Id',
+             'id.required' => 'Staff ID must be provided',
+             'id.exists' => 'Staff Account is unavailable at the moment',
+             'courses.required' => 'Courses to deallocate must be provided',
+             'courses.array' => 'Course to be deallocated is missing',
+         ]);
+
+         if (!$request->user()->hasPermissionTo('allocate_course')) {
+            return response()->json([
+                'error' => "You do not have the permission to allocate course",
+            ], 400);
+         }
+ 
+ 
+         if ($validator->fails()) {
+ 
+             return response()->json([
+                 'errors' => $validator->errors(),
+             ], 400);
+         }
+ 
+ 
+ 
+         $courseRecord = Course::query();
+         $courseRecord->whereIn('id', $request->courses);
+         $staff = Staff::find($request->id)->first();
+ 
+ 
+         if ($staff->designation === 'technologists') {
+             $courseRecord->where('has_practical', true);
+         }
+ 
+         $courses = $courseRecord->get();
+ 
+         $newCourses = [];
+ 
+ 
+ 
+         foreach ($courses as $course) {
+ 
+             $new = CourseAllocation::updateOrCreate([
+                 'staff_id' => $request->id,
+                 'course_id' => $course->id
+             ]);
+             if ($new) {
+                 $newCourses[] = $course->id;
+             }
+         }
+ 
+         $staff->courses = CourseAllocation::whereIn('course_id', $newCourses)->with('course')->get();
+ 
+         return response()->json([
+             'success' => 'Course allocation was successfully',
+             'staff' => $staff
+         ]);
+     }
+     /**
+      * Deallocates courses
+      * 
+      * Removes courses from the list of courses offered by the staff
+      */
+ 
+     public function deallocate_courses(Request $request)
+     {
+ 
+         $validator = Validator::make($request->all(), [
+             'id' => 'required|exists:staffs',
+             'courses' => 'required|array'
+         ], [
+             'id.required' => 'Staff ID must be provided',
+             'id.exists' => 'Staff Account is unavailable at the moment',
+             'courses.required' => 'Courses to deallocate must be provided',
+             'courses.array' => 'Course to be deallocated is missing',
+         ]);
+         if (!$request->user()->hasPermissionTo('allocate_course')) {
+            return response()->json([
+                'error' => "You do not have the permission to deallocate course",
+            ], 400);
+         }
+ 
+         if ($validator->fails()) {
+             return response()->json([
+                 'errors' => $validator->errors(),
+             ], 400);
+         }
+ 
+ 
+         $courses = CourseAllocation::whereIn('course_id', $request->courses)
+             ->where('staff_id', $request->id);
+ 
+ 
+ 
+         $deallocating = $courses->get();
+ 
+         $courses->delete();
+ 
+         // Deallocate from courses the staff is cordinating
+         $cordinatingCourses = Course::whereIn('id', $request->courses)
+             ->where('cordinator', $request->id);
+ 
+         if ($cordinatingCourses->exists()) {
+             $cordinatingCourses->fill([
+                 'cordinator' => null
+             ])->save();
+         }
+ 
+         return response()->json([
+             'success' => 'Course deallocation was successfully',
+             'deallocated' => $deallocating
+         ]);
+     }
+ 
+ 
+     public function allocatable_courses(Request $request)
+     {
+         $validator = Validator::make($request->all(), [
+             'staff_id' => 'required|exists:staff,id',
+             'semester' => 'required',
+             'level' => 'required',
+         ], [
+             'staff_id.required' => 'Staff ID must be provided',
+             'staff_id.exists' => 'Staff is not available',
+             'semester.required' => 'Semester is required',
+             'level.required' => 'Level must be provided',
+         ]);
+
+         if (!$request->user()->hasPermissionTo('allocate_course')) {
+            return response()->json([
+                'error' => "You do not have the permission to allocate course",
+            ], 400);
+         }
+ 
+         $staff = Staff::find($request->staff_id);
+ 
+         $designation = $staff->designation;
+ 
+         $blacklist_courses = ['SIW 200', 'SIW 400', 'CSC 555', 'CSC 556'];
+ 
+         $courses = Course::query();
+         $courses = $courses->where('semester', $request->semester)
+             ->whereNotIn('code', $blacklist_courses)
+             ->where('level', $request->level);
+ 
+         if ($designation == 'technologist') {
+             $courses->where('has_practical', true);
+         }
+         $previousAllocations = CourseAllocation::where('staff_id', $request->staff_id)->get()->pluck('course_id');
+         $courses->whereNotIn('id', $previousAllocations);
+ 
+         $courses = $courses->get();
+         return ['allocatables' => $courses];
+     }
+
 }

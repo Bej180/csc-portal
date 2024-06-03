@@ -31,6 +31,10 @@ class Student extends Model
         'religion',
     ];
 
+
+
+
+
     private $gradingSystem = [
         'A' => 5,
         'B' => 4,

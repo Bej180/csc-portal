@@ -1,4 +1,12 @@
-<select ng-click="handleOnClick()" ng-change="handleOnChange()" ng-blur="handleOnChange()">
+<!-- <select class="ignore" ng-click="handleOnClick()" name="session" ng-change="handleOnChange($event)" ng-blur="handleOnChange($event)">
   <option value="" ng-bind="clicked === true && sessions.length === 0 ? 'Loading...':'Select Session'"></option>
   <option ng-repeat="session in sessions" value="{% session %}">{% session %}</option>
-</select>{% session.length %}
+</select> -->
+
+<span>
+    <select ng-click="handleOnClick()" ng-model="$ctr.ngModel" ng-change="handleOnChange($event)" class="ignore" ng-if="$ctr.ngModel!=='custom-session'">
+      <option value="" ng-bind="clicked === true && sessions.length === 0 ? 'Loading...':'Select Session'"></option>
+      <option ng-repeat="session in sessions" value="{% session %}">{% session %}</option>
+    </select>
+    <input type="text" ng-input="handleInput($event)" ng-if="$ctr.ngModel=='custom-session'" mask="9999/9999" />
+</span>

@@ -1,5 +1,5 @@
 @props(['name', 'title', 'colorful', 'class'])
-<div class="popend-wrapper" ng-class="{show:is_popend('{{$name}}')}">
+<div class="popend-wrapper" ng-cloak ng-class="{show:is_popend('{{$name}}')}" {{$attributes}}>
 <div class="popend {{$class??''}}"  tabindex="-1" aria-labelledby="popendLabel" aria-modal="true" role="dialog">
   <div class="popend-header">
       <h5 class="sentence-case text-[1.25rem] font-[600]">{{ $title?? '' }}</h5>

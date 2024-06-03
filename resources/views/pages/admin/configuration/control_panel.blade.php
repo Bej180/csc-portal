@@ -62,7 +62,7 @@
                                     <p>Create New Session</p>
                                 </div>
                             </legend>
-                            <form ng-action="createSession()" values="{sending:'Submitting', sent:'Submitted'}">
+                            <form values="{sending:'Submitting', sent:'Submitted'}">
                                 <div class="p-fieldset-content">
                                     <div class="flex flex-col gap-2 justify-between">
                                         <div class="flex flex-col text-sm font-medium gap-1">
@@ -110,7 +110,7 @@
 
 
                                         <div class="flex flex-col">
-                                            <input type="submit" class="btn btn-primary" value="Submit" />
+                                            <button type="button" controller="createSession()" class="btn btn-primary">Create Session</button>
                                         </div>
                                     </div>
                                 </div>
@@ -181,7 +181,7 @@
                                                     type="button"ng-repeat="(index, open_semester) in open_semesters"
                                                     class="uppercase rounded-md px-2 py-0.5 border hover:bg-red-100 hover:text-red-600 border-zinc-200 bg-zinc-100 flex justify-between items-center"
                                                     ng-click="closeSemester($event, open_semester, index)"
-                                                    title="Click me to delete me">
+                                                    title="Click to Close Course Registration">
                                                     <span>{% open_semester.semester%}</span>
                                                     <span>{%open_semester.session %}</span>
                                                 </button>

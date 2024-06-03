@@ -1,4 +1,4 @@
-<x-template nav="staff" ng-controller="HODStaffController" ng-init="init()">
+<x-template nav="staff" ng-controller="StaffController" ng-init="init()">
     <main class="columns">
         <section class="p-5 w-full">
             <div class="card">

@@ -1,66 +1,181 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel AngularJS Application
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This project is a web application built using Laravel for the backend and AngularJS for the frontend. This README provides instructions on how to set up and run the application, even if you have never used Laravel or AngularJS before.
 
-## About Laravel
+## Table of Contents
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+  - [Backend (Laravel)](#backend-laravel)
+  - [Frontend (AngularJS)](#frontend-angularjs)
+- [Running the Application](#running-the-application)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Prerequisites
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Before you begin, ensure you have met the following requirements:
 
-## Learning Laravel
+- A web server like Apache or Nginx (for production).
+- [Git](https://git-scm.com/) installed on your machine.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Installing Composer
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Composer is a dependency manager for PHP. Follow these steps to install Composer:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+#### On Windows
 
-## Laravel Sponsors
+1. Download and run the [Composer-Setup.exe](https://getcomposer.org/Composer-Setup.exe) file.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+#### On macOS
 
-### Premium Partners
+1. Open your terminal.
+2. Run the following command:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+    ```sh
+    brew install composer
+    ```
+
+#### On Linux
+
+1. Open your terminal.
+2. Run the following commands:
+
+    ```sh
+    sudo apt update
+    sudo apt install php-cli unzip
+    curl -sS https://getcomposer.org/installer | php
+    sudo mv composer.phar /usr/local/bin/composer
+    ```
+
+### Installing Node.js and npm
+
+Node.js is a JavaScript runtime, and npm is the Node.js package manager. Follow these steps to install Node.js and npm:
+
+#### On Windows and macOS
+
+1. Download the installer from the [Node.js website](https://nodejs.org/).
+2. Run the installer and follow the prompts.
+
+#### On Linux
+
+1. Open your terminal.
+2. Run the following commands:
+
+    ```sh
+    sudo apt update
+    sudo apt install nodejs npm
+    ```
+
+## Installation
+
+### Backend (Laravel)
+
+1. **Clone the repository:**
+
+    ```sh
+    git clone https://github.com/Albrite/csc-portal.git
+    cd your-repo-name
+    ```
+
+2. **Install PHP dependencies:**
+
+    ```sh
+    composer install
+    ```
+
+3. **Set up the environment file:**
+
+    ```sh
+    cp .env.example .env
+    ```
+
+    Open the `.env` file and configure your database and other settings.
+
+4. **Generate an application key:**
+
+    ```sh
+    php artisan key:generate
+    ```
+
+5. **Run database migrations:**
+
+    ```sh
+    php artisan migrate
+    ```
+
+### Frontend (AngularJS)
+
+1. **Navigate to the AngularJS directory:**
+
+    ```sh
+    cd public/angularjs-app
+    ```
+
+2. **Install Node.js dependencies:**
+
+    ```sh
+    npm install
+    ```
+
+## Running the Application
+
+1. **Start the Laravel development server:**
+
+    ```sh
+    php artisan serve
+    ```
+
+    The server will start at `http://localhost:8000`.
+
+2. **Serve the AngularJS application:**
+
+    Since AngularJS files are served as static files within the Laravel application, there's no need for a separate development server for AngularJS. Ensure that your AngularJS application files are in the `public/angularjs-app` directory.
+
+3. **Open your browser and navigate to:**
+
+    ```
+    http://localhost:8000
+    ```
+
+    You should see your application running.
+
+## Usage
+
+Once the application is running, you can interact with the frontend through the AngularJS interface and the backend will handle API requests via Laravel.
+
+### Example Pages
+
+- **Home Page:** Provides an overview of the application.
+- **User Management:** Allows you to manage users (e.g., create, read, update, delete users).
+- **Settings:** Configure application settings.
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+If you would like to contribute to this project, please fork the repository and create a pull request. You can also open issues for any bugs or feature requests.
 
-## Code of Conduct
+1. **Fork the repository**
+2. **Create a new branch**
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    ```sh
+    git checkout -b feature-branch
+    ```
 
-## Security Vulnerabilities
+3. **Make your changes and commit them**
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    ```sh
+    git commit -m "Description of your changes"
+    ```
+
+4. **Push to your branch**
+
+    ```sh
+    git push origin feature-branch
+    ```
+
+5. **Create a pull request**
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.

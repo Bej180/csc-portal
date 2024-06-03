@@ -1,4 +1,4 @@
-@props(['title','nav','style','module','minimize', 'bg'])
+@props(['title','nav','style','module','minimize', 'bg', 'controller'])
 
 @php
     use Illuminate\Support\Facades\Session;
@@ -17,6 +17,12 @@
         if (!isset($$default)) {
             $$default = $value;
         }
+    }
+    $script = null;
+    if (isset($controller)) {
+        $controller = preg_replace('/Controller$/', '', $controller);
+        $controller = strtolower(preg_replace('/([a-z_])([A-Z]+)/', '$1-$2', $controller));
+        $script = asset('/js/modules/'.$controller.'.js');
     }
     
 
@@ -42,10 +48,7 @@
     }
 
 @endphp
-<!DOCTYPE html>
-<html lang="en" ng-cloak ng-app="cscPortal" ng-controller="RootController" ng-class="{'dark': darkMode}"
-    ng-resize="handleResize()" class="{{ $htmlClass }}" ng-init="init('{{$role}}')" custom-on-change>
-
+<x-app>
 <head>
     @include('layouts.head', compact('title', 'style'))
 
@@ -75,7 +78,7 @@
         </div>
     </div>
     
-    @include('layouts.footer')
+    @include('layouts.footer', compact('script'))
 </body>
 
-</html>
+</x-app>

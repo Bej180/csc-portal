@@ -12,12 +12,12 @@
             <div class="card">
                 <div clas="card-header">
                     <div class="card-title">
-                        Overview
+                        Dashboard
                     </div>
                 </div>
 
 
-                <div class="card-body">
+                <div class="card-body flex flex-col gap-5">
 
                     <section class="grid sm:grid-cols-2 grid-rows-1 gap-4">
 
@@ -28,17 +28,20 @@
                                     <img src="{{ asset($user->picture()) }}" alt="advisor"
                                         class="aspect-square w-12 rounded-full object-cover">
                                     <div>
-                                        <p class="font-semibold text-xl">{{ $user->name }}</p>
-                                        <p class="font-medium text-red-500 text-pretty">ADMINISTRATOR</p>
+                                        <p class="font-semibold text-md lg:text-xl">{{ $user->name }}</p>
+                                        <p class="font-medium text-red-500 text-pretty flex items-center">
+                                            <x-icon name="star"/>
+                                            <span>ADMINISTRATOR</span>
+                                        </p>
                                     </div>
                                 </div>
-                                <div class="panel-icons"><!----></div>
+                                <div class="panel-icons"></div>
                             </div>
                         </div>
 
 
                         <div
-                            class="bg-[--blue-200] p-4 flex flex-col justify-between overflow-hidden rounded-md min-h-32">
+                            class="blue-card">
                             <header class="w-full flex items-center justify-between">
                                 <p class="font-medium uppercase">students</p><span
                                     class="material-symbols-rounded">groups</span>
@@ -52,7 +55,7 @@
 
 
                         <div
-                            class="bg-[--red-200] p-4 flex flex-col justify-between overflow-hidden rounded-md min-h-32">
+                            class="red-card">
                             <header class="w-full flex items-center justify-between">
                                 <p class="font-medium uppercase">staff</p><span
                                     class="material-symbols-rounded">work</span>
@@ -63,7 +66,7 @@
                             </div>
                         </div>
                         <div
-                            class="bg-[--purple-200] p-4 flex flex-col justify-between overflow-hidden rounded-md min-h-32">
+                            class="purple-card">
                             <header class="w-full flex items-center justify-between">
                                 <p class="font-medium uppercase">advisors</p><span
                                     class="material-symbols-rounded">group</span>
@@ -75,7 +78,7 @@
                         </div>
 
                         <div
-                            class="bg-[--yellow-200] p-4 flex flex-col justify-between overflow-hidden rounded-md min-h-32">
+                            class="yellow-card">
                             <header class="w-full flex items-center justify-between">
                                 <p class="font-medium uppercase">courses</p><span
                                     class="material-symbols-rounded">book_2</span>
@@ -86,13 +89,13 @@
                             </div>
                         </div>
                         <div
-                            class="bg-[--primary-200] p-4 flex flex-col justify-between overflow-hidden rounded-md min-h-32">
+                            class="primary-card">
                             <header class="w-full flex items-center justify-between">
                                 <p class="font-medium uppercase" ng-bind="config.active_session.name"></p><span
                                     class="material-symbols-rounded">book_2</span>
                             </header>
                             <div>
-                                <h1 class="font-medium text-4xl" ng-bind="config.active_session.active_semester"></h1>
+                                <h1 class="font-medium text-2xl lg:text-4xl" ng-bind="config.active_session.active_semester"></h1>
                                 <h1 class="font-medium text-4xl"></h1>
                             </div>
                         </div>
@@ -100,11 +103,11 @@
 
 
 
-                    <div class="card2 ">
-                        <div class="card2-header">
-                            <h2>Student Survey</h2>
+                    <div>
+                        <div class="card-header">
+                            <div class="card-title">Student Survey</div>
                         </div>
-                        <div class="card2-body min-h-[365px]">
+                        <div class="card-body min-h-[365px]">
                             <canvas data-label="Student Survey" class="flex-1 object-fit" id="barChart" width="400"
                                 height="400"></canvas>
                         </div>
@@ -116,7 +119,7 @@
         </section>
 
         <section>
-            <div class="cardx">
+            <div class="card">
 
                 <div class="card-body flex flex-col gap-4">
                     <x-calendar />
@@ -129,9 +132,9 @@
                         $countLog = count($activityLogs);
 
                     @endphp
-                    <div class="card2">
-                        <div class="card2-header">Log Activities</div>
-                        <div class="card2-body italic flex flex-col gap-3 min-h-[291px]">
+                    <div class="card">
+                        <div class="card-header">Log Activities</div>
+                        <div class="card-body italic flex flex-col gap-3 min-h-[291px]">
 
                             @forelse ($activityLogs as $log)
                                 <div><b>{{ $log->user->id === auth()->id() ? 'You' : $log->user->name }}</b>
@@ -141,9 +144,6 @@
                                 <p>No activity logs found.</p>
                             @endforelse
                         </div>
-                        @if ($countLog > 0)
-                            <div class="card2-footer">{{ $activityLogs->links() }}</div>
-                        @endif
                     </div>
 
                     <x-todo />

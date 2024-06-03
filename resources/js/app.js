@@ -13,6 +13,7 @@ import '../../public/js/location.js';
 // import Pusher from 'pusher-js';
 
 
+
 window.toastr = toastr;
 window.ApexCharts = ApexCharts;
 

@@ -73,7 +73,11 @@
                     </div>
                 </div>
             </span>
-            {{-- <i class="material-symbols-rounded text-green-500" id="page-tips">help</i> --}}
+            <label class="switch">
+                <input type="checkbox" name="theme_toggler" value="true" ng-model="theme_toggler" ng-change="changeMode(theme_toggler)" id="theme-toggler" ng-checked="darkMode">
+                <span class="slider round"></span>
+            </label>
+            <i class="material-symbols-rounded text-green-500" id="page-tips">help</i> 
 
             @auth
                 <div class="relative flex items-center" ng-controller="ProfileCardController">

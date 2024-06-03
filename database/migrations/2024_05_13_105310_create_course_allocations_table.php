@@ -18,9 +18,7 @@ return new class extends Migration
             $table->timestamps();
             $table->unsignedBigInteger('staff_id');
             $table->unsignedBigInteger('course_id');
-            // $table->enum('designation', ['lecturer','technologist']);
             
-            $table->foreign('staff_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

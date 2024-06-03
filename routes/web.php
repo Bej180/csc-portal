@@ -24,7 +24,8 @@ use App\Http\Controllers\ {
     MailController,
     MaterialController,
     TechnologistController,
-    TestController
+    TestController,
+    PortalConfigurationController
 };
 use App\Http\Controllers\ForgotPasswordController;
 use Illuminate\Http\Request;
@@ -47,7 +48,10 @@ use PhpParser\Builder\ClassConst;
 
 
 // HOME
-Route::get('/', fn() => redirect(auth()->check()?'/home':'/login'));
+Route::get('/', function() {
+    PortalConfigurationController::initializeAdminAccount();
+    return redirect(auth()->check()?'/home':'/login');
+});
 Route::get('/home', [UserController::class, 'dashboard'])->name('home');
 
 

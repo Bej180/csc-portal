@@ -8,7 +8,7 @@
     "name": "Amalagu Chikezie",
     "role": "student",
     "password": "$2y$10$6XfKYyIIv.mGOjEvceXjK.4P.tpZ0gIkTywJOQon15poydvf.XcF2",
-    "gender": "male",
+    "gender": "MALE",
     "level": 500,
     "created_by": 2,
     "unique_id": "STU12345"
@@ -23,7 +23,7 @@
     "firstname": "Cosmos",
     "role": "student",
     "password": "$2y$10$11DdX0hWkKnfwOeG7JLBluBZxovLVON0BGqLZZF6GlzlFMQ02bq1a",
-    "gender": "male",
+    "gender": "MALE",
     "level": 500,
     "created_by": 2,
     "unique_id": "STU54321"
@@ -37,7 +37,7 @@
     "name": "Abara Mercy",
     "role": "student",
     "password": "$2y$10$E3V.Uu7aPzPJ0oisTAyfeOWH.1t6nHaAooJx3yz6bv51IE.ZxBkK2",
-    "gender": "female",
+    "gender": "FEMALE",
     "level": 500,
     "created_by": 2,
     "unique_id": "STU98765"
@@ -51,7 +51,7 @@
     "name": "Promise Borgreat",
     "role": "student",
     "password": "$2y$10$1VAMA9V9pclc1UKDmO2WUO9P59ZPoi2TMgERT5wAxQI6\/v8Jm4bZK",
-    "gender": "male",
+    "gender": "MALE",
     "level": 500,
     "created_by": 2,
     "unique_id": "STU45678"
@@ -65,7 +65,7 @@
     "name": "Paul Favour",
     "role": "student",
     "password": "$2y$10$sWBdfrx2IqNwbVRPwiiJDejVlAreLcI8EyR6Xx0y22fBlwdwH.C6C",
-    "gender": "male",
+    "gender": "MALE",
     "level": 500,
     "created_by": 2,
     "unique_id": "STU87654"
@@ -79,7 +79,7 @@
     "name": "Sinclair Chidubem",
     "role": "student",
     "password": "$2y$10$nysT6q8Ug0ThpSxBHvJNBu4zuZBEQoF5Ng0y5H7xeq6Fwp6UgcG\/O",
-    "gender": "male",
+    "gender": "MALE",
     "level": 500,
     "created_by": 2,
     "unique_id": "STU32145"
@@ -93,7 +93,7 @@
     "name": "Ekekwe Chidera",
     "role": "student",
     "password": "$2y$10$VXgOQQ3bGfMzN5U.PawhkOM8t3fkd4JztxFeM.\/Wp6kRlfsgRVF2y",
-    "gender": "female",
+    "gender": "FEMALE",
     "level": 500,
     "created_by": 2,
     "unique_id": "STU54321"
@@ -107,7 +107,7 @@
     "name": "Egemba Kelechi",
     "role": "student",
     "password": "$2y$10$6Ars7GXkr9IH7zlRQzG4qe9EILYJpE39lQ6YYDaw03GqtcdOWPUu2",
-    "gender": "male",
+    "gender": "MALE",
     "level": 500,
     "created_by": 2,
     "unique_id": "STU98765"
@@ -120,7 +120,7 @@
     "name": "Nnoruka John",
     "role": "student",
     "password": "$2y$10$3Wl5u9N7e8MBHuC0CfyhQ.8fhbzV.Ut4072\/VnXjTAVB84x\/RHUXC",
-    "gender": "male",
+    "gender": "MALE",
     "level": 500,
     "created_by": 2,
     "unique_id": "STU12345"
@@ -134,7 +134,7 @@
     "name": "Chika Ugada Precious",
     "role": "student",
     "password": "$2y$10$cSHE1o\/M8X8Yd\/sNr.Myn.NF3EYEJJRajtnn6eRgkmkIp.Q08cMHy",
-    "gender": "female",
+    "gender": "FEMALE",
     "level": 500,
     "created_by": 2,
     "unique_id": "STU67890"
@@ -148,7 +148,7 @@
     "name": "Blessing Chukwu",
     "role": "student",
     "password": "$2y$10$6oXizkEdTRkq8ZYxukdCR.w5q3af8zGy9SKnP\/EAd3PI0MFIO57s.",
-    "gender": "female",
+    "gender": "FEMALE",
     "level": 500,
     "created_by": 2,
     "unique_id": "STU56789"
@@ -162,7 +162,7 @@
     "name": "Ejimadu Chibuzo Bright",
     "role": "student",
     "password": "$2y$10$tppIrDWm3qnKfVLgYnpv3.cZmuEuPQLcN604JW1ZoVtdNr2QSvtAm",
-    "gender": "male",
+    "gender": "MALE",
     "level": 500,
     "created_by": 2,
     "unique_id": "STU12345"

@@ -14,18 +14,15 @@ return new class extends Migration
     public function up()
     {
         Schema::create('deans', function (Blueprint $table) {
-            $table->unsignedBigInteger('id'); 
-            $table->timestamps();
+            $table->unsignedBigInteger('id');  // dean's id 
             $table->string('title')->nullable();
             $table->string('staff_id');
             $table->string('image')->nullable();
             $table->enum('gender', ['MALE', 'FEMALE']);
             $table->string('address');
-            $table->string('email');
-            $table->string('phone')->nullale();
-            $table->string('password');
-
-            $table->foreign('id')->references('id')->on('users')->onDelete('cascade');
+            
+            
+            $table->timestamps();
         });
     }
 

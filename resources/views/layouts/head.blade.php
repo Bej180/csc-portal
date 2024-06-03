@@ -20,7 +20,7 @@ $styles = [
   $styles = array_unique($styles);
 @endphp
 <meta charset="UTF-8" />
-<title>{!!$title??'Futo CSC Portal'!!}</title>
+<title>{{ $title??'Futo CSC Portal' }}</title>
 <meta name="theme-color" content="#000000"/>
 @if (isset($description)) 
   <meta name="description" content="{!!$description!!}"/>
@@ -36,7 +36,9 @@ $styles = [
 <link rel="stylesheet" href="{{asset('styles/chosen.css')}}">
 
 <link rel="stylesheet" href="{{asset('styles/base.css')}}">
+<!-- <link rel="stylesheet" href="{{asset('build/assets/app-8ec616c6.css')}}"> -->
 @vite('resources/css/app.css')
+
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 

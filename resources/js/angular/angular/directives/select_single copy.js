@@ -1,4 +1,5 @@
 // Single Select
+/*
 app.directive("select", function () {
     return {
         restrict: "E",
@@ -15,6 +16,7 @@ app.directive("select", function () {
                 return;
             }
             scope.drop = scope.drop || "down";
+            
 
             // Extract options and selected values
             const options = element.find("option");
@@ -23,6 +25,13 @@ app.directive("select", function () {
                 placeholder = isMultiple ? "Select Options" : "Select Option";
             }
             const label = element.prev("label:not(.ignore)");
+            const ngLabel = options.first();
+
+            // if (ngLabel.is('[ng-label')) {
+            //   placeholder = ngLabel.attr('ng-label');
+            //   //ngLabel.remove();
+            // }
+            // else
             if (label.length > 0) {
                 placeholder = label.text();
                 label.remove();
@@ -30,6 +39,7 @@ app.directive("select", function () {
             const selections = element.find("option[selected]");
             let selectedValues = []; // Handle initial selected values
             let selectedOptions = [];
+            const ngModel = element.attr("ng-model") || "";
             let optionObj = {};
             let selectedValue = "";
 
@@ -51,33 +61,37 @@ app.directive("select", function () {
                 }
             }
 
-            let display = placeholder;
+            let display = scope.ngModel || placeholder;
             if (isMultiple && selectedValues.length > 0) {
                 const mapValues = selectedValues.map((value) => {
                     const label = optionObj[value];
                     if (typeof label !== "string") {
                         return "";
                     }
-                    return `<span class="chip" data-value="${value}">${label}</span>`;
+                    return `<span class="chip" style="max-width:40px;text-overflow:ellipse; overflow:hidden" data-value="${value}">${label}</span>`;
                 });
                 let text = "";
 
                 let cut = mapValues.slice(0, 2);
                 let others = mapValues.length - cut.length;
                 if (others.length > 0) {
-                    cut.push(`<span class="chip">+${others}</span>`);
+                    cut.push(
+                        `<span class="chip" style="max-width:40px;text-overflow:ellipse; overflow:hidden">+${others}</span>`
+                    );
                 }
                 display = cut.join("");
             }
 
             // Create custom multi-select container
             const customContainer = angular.element(
-                `<span class="dropdown-container"><div class="dropdown"><button type="button" class="dropdown-toggle relative input text-sm"><span class="dropdown-toggle-text">${display}</span> <span class="caret"></span></button><ul class="dropdown-menu"></ul></div><div class="dd-backdrop"></div></span>`
+                `<span class="dropdown-container group"><input type="hidden" class="hidden-input" ng-model="${ngModel}"/><div class="dropdown"><button type="button" class="dropdown-toggle relative input text-sm"><span class="dropdown-toggle-text">${display}</span> <span class="caret"></span></button><ul class="dropdown-menu"></ul></div><div class="dd-backdrop"></div></span>`
             );
             // Handle trigger button click to toggle options list visibility
             const trigger = customContainer.find(".dropdown-toggle");
             const dropdown = customContainer.find(".dropdown");
             const optionsList = dropdown.find(".dropdown-menu");
+            const dropdownMenu = dropdown.find(".dropdown-menu");
+            const input = customContainer.find(".hidden-input");
             const dropdownItem = optionsList.find(".dropdown-item[data-value]");
             const backdrop = customContainer.find(".dd-backdrop");
             const triggerText = trigger.find(".dropdown-toggle-text");
@@ -120,15 +134,14 @@ app.directive("select", function () {
 
                                 let others = scope.ngModel.length - cut.length;
                                 for (let i = 0; i < cut.length; i++) {
-                                    console.log("options", scope.ngModel);
                                     const label = scope.items[cut[i]];
-                                    console.log({ ng: scope.items });
+
                                     if (typeof label === "string") {
-                                        text += `<span class="chip" data-value="${cut[i]}">${label}</span>`;
+                                        text += `<span class="chip" style="max-width:40px;text-overflow:ellipse; overflow:hidden" data-value="${cut[i]}">${label}</span>`;
                                     }
                                 }
                                 if (others > 0) {
-                                    text += `<span class="chip">+${others}</span>`;
+                                    text += `<span class="chip" style="max-width:40px;text-overflow:ellipse; overflow:hidden">+${others}</span>`;
                                 }
                             }
                             triggerText.html(text);
@@ -136,9 +149,9 @@ app.directive("select", function () {
                                 "aria-expanded",
                                 customContainer.hasClass("show")
                             );
-                            
 
                             scope.$apply();
+                            input.val(scope.ngModel)
                             scope.ngChange.call(scope);
                         }
                     );
@@ -152,10 +165,9 @@ app.directive("select", function () {
                             const label = $(this).text();
 
                             let text;
-                            if (value === scope.ngModel) {
-                               
+                            if (value == scope.ngModel) {
                                 text = label;
-                                //scope.ngModel = "";
+                                // scope.ngModel = "";
                                 optionsList
                                     .find(".dropdown-item.selected")
                                     .removeClass("selected");
@@ -163,9 +175,9 @@ app.directive("select", function () {
                             } else {
                                 scope.ngModel = value;
                                 text = placeholder;
-                                // optionsList
-                                //     .find(".dropdown-item.selected")
-                                //     .removeClass("selected");
+                                optionsList
+                                    .find(".dropdown-item.selected")
+                                    .removeClass("selected");
                                 // $(this).addClass("selected");
                             }
 
@@ -177,47 +189,59 @@ app.directive("select", function () {
                                 customContainer.hasClass("show")
                             );
                             scope.adjustDropdownPosition();
+                            
+                            input.val(scope.ngModel)
                             scope.$apply();
                             scope.ngChange.call(scope);
                         });
                 }
+
+                input.val(scope.ngModel);
             };
             const prepareItems = () => {
                 let items = {};
-                const dropdownMenu = customContainer.find(".dropdown-menu");
+
                 dropdownMenu.empty();
 
-               
-                if (typeof scope.options === "object" && scope.options !== null) {
+                if (
+                    typeof scope.options === "object" &&
+                    scope.options !== null
+                ) {
                     //options = scope.options;
-                } 
-                else if (Array.isArray(scope.options)) {
+                } else if (Array.isArray(scope.options)) {
                     const newOption = {};
                     for (var i in scope.options) {
                         newOption[scope.options[i]] = scope.options[i];
                     }
                     items = newOption;
+                } else {
+                    return;
                 }
-                else {
-                  return;
-               }
-                
-                console.log("Setting", items)
+
 
                 const array_keys = Object.keys(scope.items);
 
                 array_keys.forEach((key) => {
                     const value = key;
                     const text = scope.items[key];
-                  
 
                     if (value && text) {
                         let list = `<li class="dropdown-item" data-value="${value}">${text}</li>`;
 
+                        
+
                         if (isMultiple) {
                             list = `<li class="dropdown-item">
-                                  <label class="flex items-center gap-1">
-                                      <input type="checkbox" class="checkbox" value="${value}" ng-model="ngModel.indexOf(${value}) !== -1">${text}</label></li>`;
+                                  <label class="flex items-center gap-1.5">
+                                      <span style="width:20px">
+                                        <input type="checkbox" class="checkbox" value="${value}" ng-model="ngModel.indexOf(${value}) !== -1">
+                                       </span>
+                                       <span>${text}</span>
+                                   </label>
+                                  </li>`;
+                        }
+                        if (value == scope.ngModel) {
+                            list.addClass('selected')
                         }
 
                         const listItem = angular.element(list);
@@ -238,7 +262,7 @@ app.directive("select", function () {
 
                     scope.items[value] = option.text;
 
-                    let isSelected = selectedValue === value;
+                    let isSelected = selectedValue === value || value === scope.ngModel;
                     if (isMultiple) {
                         isSelected = selectedValues.includes(value); // Check if initially selected
                     } else {
@@ -255,6 +279,7 @@ app.directive("select", function () {
                     ) {
                         isSelected = true;
                     }
+                    
 
                     let item = `<li class="dropdown-item ${
                         !value ? "disabled" : ""
@@ -265,9 +290,9 @@ app.directive("select", function () {
                     if (isMultiple) {
                         item = `<li class="dropdown-item ${
                             !value && "disabled"
-                        }"><label class="flex items-center gap-1"><input type="checkbox" class="checkbox" value="${value}" ng-model="ngModel.indexOf(${value}) !== -1" ${
+                        }"><label class="flex items-center gap-1.5"><span style="width:20px"><input type="checkbox" class="checkbox" value="${value}" ng-model="ngModel.indexOf(${value}) !== -1" ${
                             value && isSelected ? "checked" : ""
-                        }>${option.text}</label></li>`;
+                        }></span><span>${option.text}</span></label></li>`;
                     }
 
                     const listItem = angular.element(item);
@@ -276,8 +301,7 @@ app.directive("select", function () {
                 });
             }
 
-           
-            scope.ngModel = isMultiple ? selectedValues :selectedValue; // Initialize with initial selected values
+            scope.ngModel = isMultiple ? selectedValues : selectedValue; // Initialize with initial selected values
 
             // Replace original select element with the custom container
             element.replaceWith(customContainer);
@@ -287,6 +311,25 @@ app.directive("select", function () {
                 customContainer.toggleClass("show");
 
                 $(this).attr("aria-expanded", customContainer.hasClass("show"));
+
+                const setCordinates = dropdownMenu.attr("set-cordinates");
+
+                if (!setCordinates && customContainer.hasClass("show")) {
+                    const cordinates = dropdownMenu[0].getBoundingClientRect();
+                    const buttonCordinates = trigger[0].getBoundingClientRect();
+                    const gapY = cordinates.top - buttonCordinates.bottom;
+                    const gapX = cordinates.left - buttonCordinates.left;
+
+                    // dropdownMenu.css({
+                    //     height: cordinates.height,
+                    //     left: cordinates.left,
+                    //     width: cordinates.width,
+                    //     position: "fixed",
+                    //     top: cordinates.top,
+                    // });
+
+                    // dropdownMenu.attr("set-cordinates", `${gapX}:${gapY}`);
+                }
             });
 
             optionsList.attr("tabindex", 0);
@@ -309,7 +352,6 @@ app.directive("select", function () {
                             let items = {};
                             if (Array.isArray(scope.options)) {
                                 scope.options.forEach((item) => {
-                                   
                                     items[item] = item;
                                 });
                                 scope.items = items;
@@ -332,32 +374,38 @@ app.directive("select", function () {
                             });
                         }
                     }
-                   
 
                     scope.$apply();
                 }, 50);
 
-                if (typeof scope.ngModel === "object" && scope.ngModel !== null && scope.ngModel.length > 0) {
-                  console.log("================================", scope.ngModel);
-                  customContainer.find('.dropdown-item').removeClass('selected');
+                if (
+                    typeof scope.ngModel === "object" &&
+                    scope.ngModel !== null &&
+                    scope.ngModel.length > 0
+                ) {
+                 
+                    customContainer
+                        .find(".dropdown-item")
+                        .removeClass("selected");
 
-                  Object.keys(scope.ngModel).map(key => {
-                    customContainer.find(`.dropdown-item[data-value="${key}"]`).addClass('selected');
-                  })
+                    Object.keys(scope.ngModel).map((key) => {
+                        customContainer
+                            .find(`.dropdown-item[data-value="${key}"]`)
+                            .addClass("selected");
+                    });
+                } else if (typeof scope.ngModel === "string") {
+                    customContainer
+                        .find(`.dropdown-item[data-value="${scope.ngModel}"]`)
+                        .addClass("selected");
                 }
-                else if (typeof scope.ngModel === "string") {
-                  customContainer.find(`.dropdown-item[data-value="${scope.ngModel}"]`).addClass('selected');
-                }
-                  
             });
 
             scope.$watch("options", function () {
                 if (scope.options) {
-                  setTimeout(()=> {
-
-                    prepareItems();
-                    scope.$apply();
-                  })
+                    setTimeout(() => {
+                        prepareItems();
+                        scope.$apply();
+                    });
                 }
             });
 
@@ -423,7 +471,7 @@ app.directive("select", function () {
             // Adjust dropdown position on toggle and window resize
             scope.$watch("showDropdown", function () {
                 // scope.adjustWidthAndHeight();
-                // scope.adjustDropdownPosition();
+                scope.adjustDropdownPosition();
             });
             window.addEventListener("resize", scope.adjustDropdownPosition);
 
@@ -437,3 +485,4 @@ app.directive("select", function () {
         },
     };
 });
+*/

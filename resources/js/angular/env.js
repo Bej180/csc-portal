@@ -1,5 +1,5 @@
 const ENV = {
-    debugger: false,
+    debugger: true,
     log(){
         if (this.debugger) {
             console.log(...arguments);

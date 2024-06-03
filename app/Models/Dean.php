@@ -17,6 +17,8 @@ class Dean extends Model
         'staff_id'
     ];
 
+  
+
 
     public function user()
     {

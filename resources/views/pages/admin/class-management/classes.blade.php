@@ -1,12 +1,12 @@
-<x-template>
+<x-template nav="classes" controller="AdminClassController">
 
-   
-   
-    <main class="w-full h-full md:flex overflow-y-scroll" ng-controller="AdminClassController" ng-init="loadClasses()">
 
-        <section class="p-5 h-full w-full md:w-[60%] lg:flex-grow overflow-x-hidden">
 
-            <div class="card h-[calc(-6.4rem+100dvh)]">
+    <main class="columns" ng-controller="AdminClassController" ng-init="loadClasses()">
+
+        <section class="half-60">
+
+            <div class="card">
                 <div ng-if="classes.length > 0" class="card-header flex flex-col lg:flex-row lg:justify-between">
                     <div class="card-title">
                         Classes
@@ -36,8 +36,8 @@
                     <div class="flex flex-col gap-4" ng-class="{'items-center': initiated && classes.length == 0}">
 
 
-                        <div ng-if="classes.length > 0" ng-repeat="class in classes"
-                            class="section cursor-context-menu">
+                        <div ng-if="classes.length > 0" ng-repeat="class in classes" class="panel cursor-context-menu"
+                            ng-click="displayClass(class)">
 
                             <div class="panel-header">
 
@@ -63,7 +63,7 @@
                                             <span class="p-button-label">&nbsp;
                                             </span>
                                         </button>
-                                        <button class="btn-icon btn-danger rounded-full" type="button"
+                                        <button class="btn-icon hover:btn-danger rounded-full" type="button"
                                             title="Delete class">
                                             <span class="fa fa-trash">
                                             </span>
@@ -71,7 +71,7 @@
 
                                     </div>
 
-                                    <!---->
+
 
                                 </div>
 
@@ -90,16 +90,20 @@
                                             Advisor:
                                             <span class="font-bold" ng-bind="class.advisor.user.name"></span>
                                         </div>
-                                        <div ng-if="!class.advisor" class="input-group !w-48" ng-init="class.advisor=''">
+                                        <div ng-if="!class.advisor" class="input-group !w-48"
+                                            ng-init="class.advisor=''">
 
-                                            <select drop="top" class="ignore !border-none input !rounded-l-md" ng-model="choose_advisor" placeholder="Choose Class Advisor">
+                                            <select drop="top" class="ignore !border-none input !rounded-l-md"
+                                                ng-model="choose_advisor" placeholder="Choose Class Advisor">
                                                 <option value="">Select Class advisor</option>
                                                 @foreach ($staffs as $staff)
                                                     <option value="{{ $staff->id }}">{{ $staff->user->name }}
                                                     </option>
                                                 @endforeach
                                             </select>
-                                            <button type="button" ng-click="saveCourseAdvisor(class, choose_advisor)" ng-disabled="!choose_advisor" class="btn btn-primary btn-adaptive">Save</button>
+                                            <button type="button" ng-click="saveCourseAdvisor(class, choose_advisor)"
+                                                ng-disabled="!choose_advisor"
+                                                class="btn btn-primary btn-adaptive">Save</button>
 
                                         </div>
 
@@ -166,10 +170,13 @@
 
                     </div>
                 </div>
+            </div>
+
+
 
         </section>
 
-        <section class="p-5 h-full w-full md:w-[40%] lg:w-96 overflow-x-hidden">
+        <section class="half-40">
 
             <div class="card gap-2 !justify-start">
                 <div class="card-header">
@@ -181,7 +188,7 @@
                 <div class="card-body">
 
 
-                    <form ng-action="createClass()" class="flex flex-col gap-3">
+                    <form class="flex flex-col gap-3">
 
                         <p class="text-red-500 font-medium text-sm mt-4">Required Fields
                         </p>
@@ -189,8 +196,8 @@
                         <div class="flex flex-col gap-1 mt-2">
                             <label class="label" for="className">Class Name
                             </label>
-                            <input class="input mk-session" mask="9999/9999" ng-model="createData.name" id="className"
-                                placeholder="Class Name">
+                            <input class="input mk-session" mask="9999/9999" ng-model="createData.name"
+                                id="className" placeholder="Class Name">
 
                         </div>
 
@@ -218,7 +225,7 @@
                             </select>
 
                         </div>
-                        <button type="button" ng-submit class="btn btn-primary">Add Class</button>
+                        <button type="button" controller="createClass()" class="btn btn-primary">Add Class</button>
 
 
                     </form>
@@ -230,6 +237,8 @@
             </div>
 
         </section>
+
+        @include('pages.admin.class-management.view-class')
 
 
     </main>

@@ -1,128 +1,397 @@
-import { app } from "../app";
 
 /**
  * StaffController
  * Controller responsible for managing staff-related data and actions.
  * @param {Object} $scope - AngularJS scope object for data binding.
  */
-app.controller("StaffController", function ($scope) {
+app.controller("StaffController", function ($scope, $timeout) {
     // Initialize variables
-    $scope.show_staff = null; // Selected staff to display
+    $scope.staff_members = [];
+    $scope.currentPage = 1;
+    $scope.allocation_list = [];
+    $scope.deallocation_list = [];
+    $scope.display_course_allocations = false;
+    $scope.staff_in_view = {};
+    $scope.staff_courses = {};
+    $scope.loaded = false;
+    $scope.propertyName = 'name';
+    $scope.reverse = true;
+    $scope.currentPage = 0;
+    $scope.courses_selected = [];
 
-    $scope.courses = []; // List of courses
-    $scope.staff = null; // Current staff data
-    $scope.staff_id = Location.get("staff_id"); // ID of the staff
-    $scope.addStaff = null; // Data for adding a new staff
-    $scope.edit = false; // Flag to indicate if in edit mode
+    $scope.normalizeCourseToMainCourse = (course) => {
+        if (course.course) {
+            return course.course;
+        }
+        return course;
+    };
 
-    $scope.courses = [];
-
-    $scope.viewCourse = (course_id) => {
-        $scope.api(
-            "/app/course/show",
-            {
-                course_id,
-            },
-            (res) => {
-                $scope.popUp("view_course");
-                $scope.view_course = res;
-            }
-        );
+    $scope.makeStaffAdvisor = (
+        staff_id,
+        session,
+        confirmed = null,
+        counter = 0
+    ) => {
+        return $timeout(function () {
+            return api(
+                "/app/moderator/make_staff_class_advisor",
+                {
+                    staff_id,
+                    session,
+                    confirmed,
+                },
+                (res) => {
+                    $scope.staff_in_view.classes = $scope.staff_in_view.classes.concat({name:session});
+                },
+                (err) => {
+                    const confirmed = $scope.Response(err, "confirm");
+                    counter++;
+                    if (confirmed) {
+                        $.confirm(confirmed, {
+                            acceptText: 'Continue',
+                            accept: () => {
+                                return $scope.makeStaffAdvisor(
+                                    staff_id,
+                                    session,
+                                    true,
+                                    counter
+                                );
+                            },
+                        });
+                    }
+                    console.error(err);
+                }
+            );
+        });
     };
 
     /**
-     * showStaff
-     * Retrieves and displays the details of a staff.
-     * @param {string} staff_id - The ID of the staff to display.
+     * staffInView
+     *  displays the details of a staff.
+     * @param {Object} staff - The staff to display.
      */
-    $scope.showStaff = (staff_id) => {
-        api("/staff", { staff_id })
-            .then((response) => {
-                $scope.show_staff = response;
-                $scope.popend("show_staff"); // Popend function (assumed to be defined elsewhere)
-                $scope.$apply();
-            })
-            .catch((error) => console.log(error));
+    $scope.staffInView = (staff) => {
+        $scope.allocation_list = [];
+        $scope.deallocation_list = [];
+        $scope.display_course_allocations = false;
+        $scope.staff_in_view = staff;
+        $scope.staff_id = staff.id;
+
+        $scope.staff_courses = staff.courses.map((course) =>
+            $scope.normalizeCourseToMainCourse(course)
+        );
+
+        $scope.popUp("display_staff");
     };
+
+    $scope.sortStaff = function() {
+        $scope.propertyName = $scope.sorting.attr;
+        $scope.reverse = $scope.sorting.order === 'DESC';
+        
+        return;
+        if ($scope.sorting.attr) {
+            $scope.api(
+                '/app/admin/staff/index',
+                {
+                    search: $scope.searchinput,
+                    page:$scope.page,
+                    sort: [$scope.sorting.attr, $scope.sorting.order]
+                },
+                res => {
+                    $scope.staffs = res.data;
+                }
+            )
+        }
+    }
+    $scope.reverseSort = () => {
+        $scope.reverse = $scope.sorting.order === 'DESC';
+    }
+
 
     /**
      * init
      * Initializes the controller by fetching data of the staff with the specified ID.
      */
-    $scope.init = () => {
-        if ($scope.staff_id) {
-            api("/staff", { staff_id: $scope.staff_id })
-                .then((response) => {
-                    $scope.staff = response;
-                    // Extract name parts from staff's name
-                    const nameParts = response.user.name.split(" ");
-                    $scope.image = "/profilepic/" + response.user.id; // Image URL
-                    $scope.firstname = nameParts[0]; // First name
-                    $scope.lastname = nameParts.length > 1 ? nameParts[1] : ""; // Last name
-                    $scope.middlename =
-                        nameParts.length > 2 ? nameParts[2] : ""; // Middle name
-                    $scope.staff_id = response.id; // Staff ID
-                    $scope.$apply();
-                })
-                .catch((error) => log(error)); // Assuming 'log' function is defined elsewhere
-        }
-    };
-
-    /**
-     * openEditor
-     * Sets the edit mode to true, allowing editing of staff details.
-     */
-    $scope.openEditor = () => {
-        $scope.edit = true;
-    };
-
-    /**
-     * closeEditor
-     * Sets the edit mode to false, exiting the editing mode.
-     */
-    $scope.closeEditor = () => {
-        $scope.edit = false;
-    };
-
-    /**
-     * back
-     * Clears the staff ID and data, and drops the staff ID from the location.
-     */
-    $scope.back = () => {
-        $scope.staff_id = null;
-        $scope.staff = null;
-        Location.drop("staff_id"); // Assuming 'Location' object with a 'drop' method
-    };
-
-    /**
-     * openAdder
-     * Sets the add mode to true, allowing addition of a new staff.
-     */
-    $scope.openAdder = () => {
-        $scope.add = true;
-    };
-
-    /**
-     * closeAdder
-     * Sets the add mode to false, exiting the adding mode.
-     */
-    $scope.closeAdder = () => {
-        $scope.remove = true;
-    };
-});
-
-app.controller("StaffLabResultsController", function ($scope) {
-    $scope.initializePage = () => {
+    $scope.loadStaffRecords = function () {
         $scope.api(
-            "/app/staff/lab_scores/index",
+            "/app/staff/index",
             {},
             (res) => {
-                $scope.pending_results = res.PENDING;
-                $scope.approved_results = res.APPROVED;
+                $scope.staff_members = res;
+                $scope.loaded = true;
+                $scope.currentPage = 1;
+            },
+            (err) => {
+                $scope.loaded = true;
             }
         );
     };
 
+    $scope.searchStaff = (search) => {
+        $scope.loaded = false;
+        $scope.api(
+            "/app/staff/index",
+            {
+                search,
+            },
+            (res) => {
+                $scope.loaded = true;
+                $scope.staff_members = Object.values(res);
+            },
+            (err) => {
+                $scope.loaded = true;
+                $scope.staff_members = null;
+            }
+        );
+    };
+
+    $scope.loadMore = () => {
+        $scope.api(
+            "/app/staff/index",
+            {
+                page: $scope.currentPage,
+            },
+            (res) => {
+                $scope.staff_members = $scope.staff_memebers.concat(res.data);
+                $scope.currentPage += 1;
+            }
+        );
+    };
+
+    $scope.getStaff = async (
+        id,
+        successCallback = () => {},
+        errorCallback = () => {}
+    ) => {
+        return $scope.api(
+            "/app/staff/show",
+            {
+                id,
+            },
+            successCallback,
+            errorCallback
+        );
+    };
+
+
+
+
+
+    
+    $scope.createStaffAccount = () => {
+        let courses = [];
+
+        $scope.courses_selected.forEach((course) => {
+            courses.push(course.id);
+        });
+
+        return $scope.api(
+            "/app/admin/staff/create",
+            {
+                courses,
+                ...$scope.staffData,
+            },
+            (response) => {
+                $scope.staff_members = [response.data].concat($scope.staff_members);
+            }
+        );
+    };
+
+
+    $scope.displayCoursesToBeAssigned = (course, designation) => {
+        $scope.api("/app/admin/courses", course, (res) => {
+            $scope.courses = $scope.courses_selected.concat(res);
+
+            if ( designation === 'technologist') {
+                $scope.courses =  $scope.courses.filter(course => course.has_practical == 1);
+            } 
+
+
+        });
+    };
+
+    $scope.courseIndex = (course_code) => {
+        let index = -1;
+        for (var i = 0; i < $scope.courses_selected.length; i++) {
+            if ($scope.courses_selected[i].code == course_code) {
+                index = i;
+            }
+        }
+        return index;
+    };
+
+    $scope.toggleSelectCourse = (course) => {
+        let index = $scope.courseIndex(course.code);
+
+        if (index >= 0) {
+            $scope.courses_selected.splice(index, 1);
+        } else {
+            $scope.courses_selected.push(course);
+        }
+    };
+});
+
+app.controller("StaffCourseAllocationController", function ($scope) {
+        $scope.allocation_courses = [];
+        $scope.deallocation_courses = [];
+        $scope.allocatables = [];
+
+        $scope.toggleDisplay = () => {
+            $scope.display_course_allocations =
+                !$scope.display_course_allocations;
+        };
+
+        $scope.get_course_index_from_list_of_courses = (course_id, courses) => {
+            for (var i = 0; i < courses.length; i++) {
+                if (courses[i].id === course_id) {
+                    return i;
+                }
+            }
+            return -1;
+        };
+
+        $scope.toggle_courses_for_deallocation = (course) => {
+            const index = $scope.get_course_index_from_list_of_courses(
+                course.id,
+                $scope.deallocation_list
+            );
+
+            if (index >= 0) {
+                $scope.deallocation_list.splice(index, 1);
+            } else {
+                $scope.deallocation_list.push(course);
+            }
+        };
+
+        $scope.toggle_courses_for_allocation = (course) => {
+            const index = $scope.get_course_index_from_list_of_courses(
+                course.id,
+                $scope.allocation_list
+            );
+
+            if (index >= 0) {
+                $scope.allocation_list.splice(index, 1);
+            } else {
+                $scope.allocation_list.push(course);
+            }
+        };
+
+        $scope.allocate_courses = () => {
+            const course_ids = $scope.allocation_list.map(
+                (course) => course.id
+            );
+
+            $scope.api(
+                "/app/staff/course_allocation/allocate",
+                {
+                    courses: course_ids,
+                    id: $scope.staff_id,
+                },
+                (res) => {
+                    $scope.deallocation_list = [];
+                    // add the course to staff courses
+                    $scope.staff_courses = $scope.staff_courses.concat(
+                        $scope.allocation_list
+                    );
+
+                    // remove the courses from allocation list
+                    $scope.allocation_list = $scope.allocation_list.filter(
+                        (course) => !course_ids.includes(course.id)
+                    );
+
+                    // remove the courses from allocatables list
+                    $scope.allocatables = $scope.allocatables.filter(
+                        (course) => !course_ids.includes(course.id)
+                    );
+                    $scope.$apply();
+                }
+            );
+        };
+
+        $scope.deallocate_courses = () => {
+            const course_ids = $scope.deallocation_list.map(
+                (course) => course.id
+            );
+            let course = course_ids.length > 1 ? "courses" : "course";
+
+            $.confirm(
+                `Are you sure you want to deallocate the selected ${course}?`,
+                {
+                    accept: () => {
+                        $scope.api(
+                            "/app/staff/course_allocation/deallocate",
+                            {
+                                id: $scope.staff_id,
+                                courses: course_ids,
+                            },
+                            (staff) => {
+                                //$scope.allocation_list
+                                // add the course to allocation list
+                                $scope.allocation_list =
+                                    $scope.allocation_list.concat(
+                                        $scope.deallocation_list
+                                    );
+
+                                // remove the courses from staff courses
+                                $scope.staff_courses =
+                                    $scope.staff_courses.filter(
+                                        (course) =>
+                                            !course_ids.includes(course.id)
+                                    );
+
+                                // remove the courses from deallocation list
+
+                                $scope.deallocation_list =
+                                    $scope.deallocation_list.filter(
+                                        (course) =>
+                                            !course_ids.includes(course.id)
+                                    );
+
+                                $scope.$apply();
+                            }
+                        );
+                    },
+                }
+            );
+        };
+
+        $scope.selected_for_deallocation = (course_id) => {
+            const index = $scope.get_course_index_from_list_of_courses(
+                course_id,
+                $scope.deallocation_list
+            );
+            return index >= 0;
+        };
+        $scope.selected_for_allocation = (course_id) => {
+            const index = $scope.get_course_index_from_list_of_courses(
+                course_id,
+                $scope.allocation_list
+            );
+            return index >= 0;
+        };
+
+        $scope.getAllocatableCourses = (data) => {
+            $scope.api(
+                "/app/staff/course_allocation/allocatable/all",
+                data,
+                (res) => {
+                    $scope.allocation_list = [];
+                    $scope.allocatables = res.allocatables.map((course) =>
+                        $scope.normalizeCourseToMainCourse(course)
+                    );
+                }
+            );
+        };
+    },
+);
+
+app.controller("StaffLabResultsController", function ($scope) {
+    $scope.initializePage = () => {
+        $scope.api("/app/staff/lab_scores/index", {}, (res) => {
+            $scope.pending_results = res.PENDING;
+            $scope.approved_results = res.APPROVED;
+        });
+    };
 
     $scope.approveLabScore = (result) => {
         return $scope.api(

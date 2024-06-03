@@ -19,4 +19,7 @@ class Announcement extends Model
     public function announcer() {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+
+    
 }

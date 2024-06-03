@@ -22,8 +22,6 @@ return new class extends Migration
             
             $table->timestamps();
 
-            $table->foreign('attendance_id')->references('id')->on('attendance_lists')->onDelete('cascade');
-            // $table->foreign('reg_no')->references('reg_no')->on('students')->onDelete('cascade');
 
         });
     }
@@ -35,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('students_attendances');
+         Schema::dropIfExists('students_attendances');
     }
 };

@@ -23,6 +23,100 @@ app.controller("RootController", [
         $scope.cache_memory = {};
         $scope.active_route = "index";
         $scope.token = null;
+        $scope.colorScheme = null;
+
+        $scope.loadAnnouncements = () => {
+            api(
+                '/app/annoucement/stream',
+                res => {
+                    
+                    if (res.length > 0) {
+                        for(let i = 0; i < res.length; i++) {
+                            const current = res[i];
+                            let options = {type:'alert', title: 'Notice', denyText: 'Close', accept:async()=>{}};
+
+                            if (current.id) {
+                                options = {
+                                    type: 'confirm',
+                                    acceptText: 'Mark as Seen',
+                                    title: 'Announcement',
+                                    accept: async () => {
+                                        return api(
+                                            '/app/annoucement/markAsSeen'
+                                        )
+                                    }
+                                }
+                            }
+                            if (current.message) {
+                                $.confirm(current.message, options)
+                            }
+                        }
+                    }
+                }
+            );
+        }
+
+
+        $scope.Response = (response, element) => {
+            response = parseResponse(response);
+            if (!element) {
+                return response;
+            }
+
+            return response[element];
+        }
+
+        $scope.range = (counter) => {
+            let arr = [];
+            for(var i = 0; i < counter; i++) {
+                arr.push(i);
+            }
+            return arr;
+        }
+
+
+        /**
+     * Generate academic sessions.
+     *
+     * @param int|null $from The starting year.
+     * @param int|null $to The ending year.
+     * @param string $separator The separator between years.
+     * @return array The generated academic sessions.
+     */
+    $scope.generateSessions = (gap, from, to) => {
+        let sessions = [];
+
+        const date = new Date();
+        if (typeof to != 'number') {
+            to = date.getFullYear();
+        }
+        if (typeof gap != 'number') {
+            gap = 1;
+        }
+
+        // Generate sessions for the last ten years
+        if (typeof from != 'number') {
+            to = date.getFullYear();
+            from = to - 5;
+        }
+
+        from = Math.min(from, to);
+        to = Math.max(from, to);
+
+        if (to == from) {
+            to += 1;
+        }
+
+        const diff = to - from;
+        for (let i = 0; i < diff; i++) {
+            const startSemester = from + i;
+            const endSemester = from + i + gap;
+
+            sessions.push(startSemester + '/' + endSemester);
+        }
+
+        return sessions;
+    }
 
         $scope.countDown = (callback, time) => {
             const padZero = (num) => (num < 10 ? "0" + num : num);
@@ -532,6 +626,25 @@ app.controller("RootController", [
             $scope.opensidebar = true;
         };
 
+        $scope.enterSidebar = () => {
+            const sidebar = angular.element(".sidebar");
+
+            sidebar.addClass("sidebar-hovered");
+            $scope.openSidebar();
+        };
+
+        $scope.leaveSidebar = () => {
+            const sidebar = angular.element(".sidebar");
+
+            if (
+                sidebar.hasClass("sidebar-hovered") &&
+                !sidebar.is(".sidebar-maximized")
+            ) {
+                sidebar.removeClass("sidebar-hovered");
+                $scope.closeSidebar();
+            }
+        };
+
         /**
          * Function to toggle the sidebar
          *
@@ -540,6 +653,12 @@ app.controller("RootController", [
          */
         $scope.toggleSidebar = () => {
             $scope.opensidebar = !$scope.opensidebar;
+            angular
+                .element(".sidebar")
+                .toggleClass("sidebar-minimized", !$scope.opensidebar);
+            angular
+                .element(".sidebar")
+                .toggleClass("sidebar-maximized", $scope.opensidebar);
         };
 
         /**
@@ -592,6 +711,32 @@ app.controller("RootController", [
             $scope.darkMode = theme;
             localStorage.setItem("darkMode", theme);
         };
+        $scope.changeMode = (theme) => {
+            $scope.darkMode = theme;
+            localStorage.setItem("darkMode", theme);
+        };
+
+        $scope.loadTheme = () => {
+
+        
+            $scope.colorScheme = localStorage.getItem('colorScheme') || 'system';
+            
+            let mode = 'light';
+            if ($scope.colorScheme === 'dark' || ($scope.colorScheme === 'system' && "function"==typeof window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)"))) {
+                mode = 'dark';
+            }
+            $scope.system_detect = "function"==typeof window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)") ? 'dark':'light';
+            $scope.theme = mode;
+        }
+
+        $scope.saveTheme = (theme) => {
+            if (theme && ['dark', 'light', 'system'].includes(theme)) {  
+                localStorage.setItem('colorScheme', theme);
+                $scope.loadTheme();
+            }
+        }
+
+       
 
         /**
          * Function to get the index of object item
@@ -637,6 +782,15 @@ app.controller("RootController", [
             );
         };
 
+        $scope.loadAssignableClassNames = () => {
+            api(
+                "/class/generate_name",
+                (res) => {
+                    $scope.assignable_class_names = res;
+                }
+            );
+        }
+
         /**
          * Function to initialize the application
          *
@@ -649,9 +803,12 @@ app.controller("RootController", [
             $scope.userRole = userRole;
             $scope.darkMode = localStorage.getItem("darkMode") == "true";
 
+            $scope.loadTheme();
+            $scope.loadAssignableClassNames();
             $scope.autoLogin();
 
             $scope.loadConfigurations();
+            $scope.loadAnnouncements();
         };
     },
 ]);
@@ -667,8 +824,39 @@ app.directive("infiniteScroll", function () {
                     raw.scrollHeight
                 ) {
                     scope.$apply(attrs.infiniteScroll);
-                } 
+                }
             });
         },
     };
 });
+
+app.run(function ($rootScope) {
+    $rootScope.model = { id: 2 };
+}).directive("convertToNumber", function () {
+    return {
+        require: "ngModel",
+        link: function (scope, element, attrs, ngModel) {
+            ngModel.$parsers.push(function (val) {
+                return parseInt(val, 10);
+            });
+            ngModel.$formatters.push(function (val) {
+                return "" + val;
+            });
+        },
+    };
+});
+
+app.controller("CacheController", [
+    "$scope",
+    "$cacheFactory",
+    function ($scope, $cacheFactory) {
+        $scope.keys = [];
+        $scope.cache = $cacheFactory("cacheId");
+        $scope.put = function (key, value) {
+            if (angular.isUndefined($scope.cache.get(key))) {
+                $scope.keys.push(key);
+            }
+            $scope.cache.put(key, angular.isUndefined(value) ? null : value);
+        };
+    },
+]);

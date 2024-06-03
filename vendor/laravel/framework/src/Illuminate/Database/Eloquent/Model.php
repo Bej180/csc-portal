@@ -506,6 +506,7 @@ abstract class Model implements Arrayable, ArrayAccess, CanBeEscapedWhenCastToSt
      */
     public function fill(array $attributes)
     {
+       
         $totallyGuarded = $this->totallyGuarded();
 
         $fillable = $this->fillableFromArray($attributes);
@@ -515,6 +516,7 @@ abstract class Model implements Arrayable, ArrayAccess, CanBeEscapedWhenCastToSt
             // which means only those attributes may be set through mass assignment to
             // the model, and all others will just get ignored for security reasons.
             if ($this->isFillable($key)) {
+                
                 $this->setAttribute($key, $value);
             } elseif ($totallyGuarded || static::preventsSilentlyDiscardingAttributes()) {
                 if (isset(static::$discardedAttributeViolationCallback)) {

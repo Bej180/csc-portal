@@ -6,6 +6,10 @@ use App\Models\Announcement;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
+use App\Models\Staff;
+use App\Models\Student;
+use App\Models\AcademicSession;
+
 class AnnouncementController extends Controller
 {
 
@@ -102,6 +106,50 @@ class AnnouncementController extends Controller
         });
 
         return $announcements;
+    }
+
+
+    public function unseen_announcements(Request $request)
+    {
+        if ($request->user()->is_admin()) {
+            $students = Student::count();
+            $staffs = Staff::count();
+            $advisors = Staff::where('is_class_advisor', true)->count();
+            $hod = Staff::where('is_hod', true)->count();
+            $academicSession = AcademicSession::count();
+
+            $notifications = [];
+
+            if (!$academicSession) {
+                $notifications[] = ['message' => 'No academic session has been created yet'];
+            }
+            if (!$hod) {
+                $notifications[] = ['message' => 'You have not create an account of HOD yet'];
+            }
+             if (!$staffs) {
+                $notifications[] = ['message' => 'No staff account has been created yet'];
+            } else if (!$advisors) {
+                $notifications[] = ['message' => 'No staff has been made class advisor of any class'];
+            }
+            if (!$students) {
+                $notifications[] = ['message' => 'No Student account has been created yet'];
+            }
+
+            return $notifications;
+        }
+        $announcements = Announcement::where('id', '>', $request->user()->last_seen_announcement)
+            ->where(function ($query) use ($request) {
+                $query->where('user_id', '=', $request->user()->id)
+                    ->orWhere('target', '=', $request->user()->role)
+                    ->orWhere('target', '=', 'everyone');
+            })
+            ->with('announcer')
+            ->paginate(10);
+
+        return $announcements->map(function ($ann) {
+            $ann->posted_at = timeago($ann->created_at);
+            return $ann;
+        });
     }
 
     /**

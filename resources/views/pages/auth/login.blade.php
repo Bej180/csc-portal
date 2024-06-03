@@ -1,32 +1,30 @@
-<!doctype html>
-<html lang="en" ng-cloak ng-app="cscPortal" ng-controller="RootController" ng-init="init('guest', '{{csrf_token()}}')">
-
+<x-app>
 <head>
     @include('layouts.head')
 </head>
 
 <body ng-controller="AuthController" ng-init="initAuth({{auth()->check()?'true':'false'}})"
-    class="bg-[#f7f7fa] text-[#333333] font-sans font-[16px] h-full overflow-x-hidden">
+    class="bg-[#f7f7fa] dark:bg-black text-[#333333] font-sans font-[16px] h-full overflow-x-hidden">
 
 
     <div class="grid place-items-center h-screen max-h-screen">
         <x-route name="index"
-            class="shadow-md flex max-w-[60%] md:max-w-[85%] lg:max-w-[800px] min-h-[500px] my-[2rem] mx-auto w-full bg-white rounded-md overflow-clip">
+            class="shadow-md flex max-w-[60%] md:max-w-[85%] lg:max-w-[800px] min-h-[500px] my-[2rem] mx-auto w-full bg-white dark:bg-[#0e0d0d] rounded-md overflow-clip">
             <!--left column-->
-            <div class="bg-[#1a7f64] flex-1 min-h-full hidden lg:flex flex-col justify-end items-center bg-blend-multiply relative">
+            <div class="bg-[#1a7f64] dark:bg-[#08261e] flex-1 min-h-full hidden lg:flex flex-col justify-end items-center bg-blend-multiply relative">
                 <div class="border-b-4 border-solid border-[#1a7f64] font-[600] text-[22px] primary-text">Welcome to <b>{{ config('app.name') }}</b></div>
-                <img class="max-w-full h-auto" src="{{ asset('img/login.png') }}" alt="Logo">
+                <img class="max-w-full h-auto dark:opacity-50" src="{{ asset('img/login.png') }}" alt="Logo">
             </div>
             <!--/left column-->
 
 
             <!--right column-->
             <div class="flex-1 min-h-full p-[38px] grid place-items-center relative border-t-8 border-[#1a7f64] lg:border-none">
-                <fieldset class="w-full relative z-10">
+                <div class="w-full relative z-10">
                     
 
                     <h2 class="text-2xl text-center primary-text font-bold">Log In</h2>
-                    <form ng-action="login('{{request()->get('callbackUrl')}}')" values="{sent:'Logged In', sending: 'Loggin In...', error: 'Failed'}" >
+                    <form>
                        
 
 
@@ -70,12 +68,13 @@
 
                         <div class="flex flex-col mt-3 gap-3">
                             
-                            <button type="submit" class="btn btn-primary transition w-full">Log in</button>
+                            
+                            <button values="{sent:'Logged In', sending: 'Loggin In...', error: 'Failed'}" controller="login('{{request()->get('callbackUrl')}}')" class="btn btn-primary transition w-full">Log in</button>
                             
                             <button type="button" ng-click="popend('activateAccount')" class="btn-secondary btn">Activate Account</button>
                         </div>
                     </form>
-                </fieldset>
+                </div>
                 <img src="{{ asset('svg/frame.svg') }}" alt="frame" class="absolute bottom-0 w-[350px] opacity-10 right-0">
             </div>
             <!--/right column-->
@@ -151,4 +150,4 @@
 </body>
 @include('layouts.footer')
 
-</html>
+</x-app>

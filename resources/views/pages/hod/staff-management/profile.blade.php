@@ -4,7 +4,7 @@
             class="w-28 sm:w-24 lg:w-28 aspect-square rounded-md object-cover" />
         <div class="text-center sm:text-left">
             <h1 class="text-2xl font-semibold" ng-bind="staff_in_view.user.name"></h1>
-            <p class="mt-1 text-lg px-2 py-1 uppercase bg-green-50/35 text-[--highlight-text-color]"
+            <p class="mt-1 text-lg px-2 py-1 uppercase bg-green-50/35 dark:bg-[#22242259] text-[--highlight-text-color]"
                 ng-bind="staff_in_view.designation"></p>
         </div>
     </div>
@@ -16,9 +16,9 @@
             ng-bind="staff_in_view.staff_id"></p>
 
         <p
-            class="px-2 rounded-l-md py-1 sm:py-2 text-center sm:text-left col-span-5 sm:col-span-1 bg-green-50/35 text-[--highlight-text-color]">
+            class="px-2 rounded-l-md py-1 sm:py-2 text-center sm:text-left col-span-5 sm:col-span-1 bg-green-50/35 dark:bg-[#22242259] text-[--highlight-text-color]">
             Sex:</p>
-        <p class="px-2 rounded-r-md py-1 sm:py-2 text-center sm:text-left col-span-5 sm:col-span-4 bg-green-50/35 text-[--highlight-text-color] font-semibold uppercase"
+        <p class="px-2 rounded-r-md py-1 sm:py-2 text-center sm:text-left col-span-5 sm:col-span-4 bg-green-50/35 dark:bg-[#22242259] text-[--highlight-text-color] font-semibold uppercase"
             ng-bind="staff_in_view.gender"></p>
 
         <p class="px-2 rounded-l-md py-1 sm:py-2 text-center sm:text-left col-span-5 sm:col-span-1">
@@ -27,9 +27,9 @@
             ng-bind="staff_in_view.user.phone"></p>
 
         <p
-            class="px-2 rounded-l-md py-1 sm:py-2 text-center sm:text-left col-span-5 sm:col-span-1 bg-green-50/35 text-[--highlight-text-color]">
+            class="px-2 rounded-l-md py-1 sm:py-2 text-center sm:text-left col-span-5 sm:col-span-1 bg-green-50/35 dark:bg-[#22242259] text-[--highlight-text-color]">
             Address:</p>
-        <p class="px-2 rounded-r-md py-1 sm:py-2 text-center sm:text-left col-span-5 sm:col-span-4 bg-green-50/35 text-[--highlight-text-color] font-semibold"
+        <p class="px-2 rounded-r-md py-1 sm:py-2 text-center sm:text-left col-span-5 sm:col-span-4 bg-green-50/35 dark:bg-[#22242259] text-[--highlight-text-color] font-semibold"
             ng-bind="staff_in_view.address"></p>
 
         <p class="px-2 rounded-l-md py-1 sm:py-2 text-center sm:text-left col-span-5 sm:col-span-1">

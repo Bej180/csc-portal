@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ClassAdvisorAssignment;
+use App\Models\AcademicSet;
 use App\Models\ActivityLog;
 use App\Models\Dean;
 use App\Models\Staff;
@@ -142,6 +144,68 @@ class ModeratorController extends Controller
         return response()->json([
             'success' => $staff->user->name . ' has been made the HOD of CSC',
             'hod' => $staff
+        ]);
+    }
+
+
+    public function makeStaffAdviser(Request $request)
+    {
+       
+        $validator = Validator::make($request->all(), [
+            'staff_id' => 'required|exists:staffs,id',
+            'session' => 'required',
+        ], [
+            'staff_id.required' => 'Staff id must be provided',
+            'staff_id.exists' => 'Invalid staff account',
+            'session.required' => 'Session must be provided',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors()
+            ], 401);
+        }
+        $session = $request->session;
+        $staff_id = $request->staff_id;
+        $staff = Staff::find($staff_id);
+        $class = AcademicSet::where('name', '=', $request->session)->with('advisor.user')->first();
+
+        // check if class already exists
+        if ($class) {
+            if ($class->advisor_id == $staff_id) {
+                return response()->json([
+                    'error' => $class->advisor->user->name . " is already the class advisor of " . $session,
+                ], 400);
+            }
+            else if ($class->advisor_id && !$request->confirmed) {
+                return response()->json([
+                    'confirm' => "**{$class->advisor->user->name}** is the class advisor of **$session class**. Continuing will remove {$class->advisor->user->pronoun('him')} and make **{$staff->user->name}** the new class advisor",
+                ], 400);
+            }
+
+            $class->update([
+                'advisor_id' => $staff_id
+            ]);
+        } else {
+            list($start_year, $end_year) = explode('/', $session);
+            
+            // create new class 
+            $class = AcademicSet::create([
+                'name' => $session,
+                'start_year' => $start_year,
+                'end_year' => $end_year,
+                'advisor_id' => $staff_id
+            ]);
+        }
+
+
+        // Send notification to staff about the new role assigned to him/her
+        Email(new ClassAdvisorAssignment($staff->user, $class), $staff->user);
+
+
+        return response()->json([
+            'success' => 'Successfully made '.$staff->user->name.' the Class Advisor of '.$session.' class',
+            'data' => $class
         ]);
     }
 }

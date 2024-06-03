@@ -55,6 +55,16 @@ class SessionController extends Controller
             $active_session = $sessions->first();
             $data = $session;
             $success = 'Session successfully created';
+
+
+            $user = $request->user();
+
+            if (!$user->activation_token) {
+                $user->fill([
+                    'activation_token' => generateToken('users.activation_token')
+                ])->save();
+            }
+    
             
             return response()
                 ->json(compact('data','success','session','sessions', 'active_session'));
@@ -62,8 +72,6 @@ class SessionController extends Controller
         }
 
         
-
-        return $this->show();
         return response()->json([
             'error' => 'Session could not be created'
         ], 401);

@@ -22,6 +22,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use PragmaRX\Google2FA\Google2FA;
+use Illuminate\Support\Carbon;
 //use Spatie\Permission\Traits\HasRoles;
 use stdClass;
 
@@ -43,9 +44,11 @@ class User extends Authenticatable
         'password',
         'username',
         'phone',
+        'gender',
         'role',
-        'unlockDuration',
-        'logAttempts',
+        'unlock_duration',
+        'log_attempts',
+        'activation_token',
         'rank',
         'two_factor_status',
         'two_factor_locked',
@@ -77,8 +80,7 @@ class User extends Authenticatable
         'two_factor_secret',
         'two_factor_locked',
         'token',
-        'unlockDuration',
-        'activation_token',
+        // 'activation_token',
 
     ];
 
@@ -88,6 +90,7 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
+        'unlock_duration' => 'datetime',
         'email_verified_at' => 'datetime',
         //'password' => 'hashed',
         'email_verified_at' => 'datetime',
@@ -120,6 +123,51 @@ class User extends Authenticatable
     }
 
 
+    public static function createAccount(array $data)
+    {
+        if (!array_key_exists('role', $data)) {
+            $data['role'] = 'student';
+        }
+        if (array_key_exists('phone', $data)) {
+            $data['phone'] = preg_replace('/\D+/', '', $data['phone']);
+        }
+        $data['password'] = Hash::make($data['password'] ?? $data['phone']);
+
+        if ($data['role'] !== 'student') {
+            $data['name'] = implode(' ', [$data['title'] ?? '', $data['name']]);
+        }
+        $profileObj = match ($data['role']) {
+            'student'   => new Student(),
+            'staff'     => new Staff(),
+            'admin'     => new Admin(),
+            'dean'      => new Dean(),
+            default     => null,
+        };
+        if (!$profileObj) {
+            throw Exception('Unknown role');
+        }
+
+        $authObj = new User();
+
+
+        foreach (Arr::only($data, $authObj->getFillable()) as $attribute => $value) {
+            $authObj->$attribute = $value;
+        }
+        $authObj->save();
+        $data['id'] = $authObj->id;
+
+
+        foreach (Arr::only($data, $profileObj->getFillable()) as $attribute => $value) {
+            $profileObj->$attribute = $value;
+        }
+
+        $profileObj->save();
+
+
+        return $profileObj;
+    }
+
+
 
     public function devices()
     {
@@ -131,6 +179,16 @@ class User extends Authenticatable
     public function getAuthPassword()
     {
         return $this->password;
+    }
+
+
+    public function hasPermissionTo(string $permission)
+    {
+        $permissions = [
+            'allocate_course' => $this->role === 'admin' || $this->staff?->is_hod == 1,
+        ];
+
+        return !empty($permissions[$permission]);
     }
 
     public function getHashedPassword()
@@ -210,6 +268,8 @@ class User extends Authenticatable
 
 
 
+
+
     public static function store_user(array $data)
     {
 
@@ -227,19 +287,21 @@ class User extends Authenticatable
 
         $account = self::$accounts[$role];
 
+
         // Create user account for authentification
         $authUser = User::_create($data);
+        dd($authUser);
 
 
-        $data['id'] = $authUser->id;
+        //    $data['id'] = $authUser->id;
 
-        // Add User to role table
-        $account::_create($data);
+        //     // Add User to role tablez
+        //     $account::_create($data);
 
         return $authUser;
     }
 
-  
+
 
 
     public static function active()
@@ -303,6 +365,17 @@ class User extends Authenticatable
 
 
         return redirect()->route($dashboard);
+    }
+
+    public function account()
+    {
+        $role = $this->role;
+        $table = $role . 's';
+        return User::join($table, function ($join) use ($table) {
+            $join->on("$table.id", '=', "users.id");
+        })
+            ->where('users.id', $this->id)
+            ->first();
     }
 
 
@@ -371,20 +444,27 @@ class User extends Authenticatable
     }
 
 
+    // Check if the user's account is locked
+    public function isAccountLocked()
+    {
+        return !empty($this->unlock_duration);
+    }
+
+
 
 
 
 
     public function picture()
     {
-        $image = $this->profile->image;
+        $image = $this->image;
         if ($image) {
             return asset('storage/' . $image);
         }
 
-        return asset(match ($this->profile->gender) {
-            'female' => 'images/avatar-f.png',
-            'male' => 'images/avatar-m.png',
+        return asset(match ($this->gender) {
+            'FEMALE' => 'images/avatar-f.png',
+            'MALE' => 'images/avatar-m.png',
             default => 'images/avatar-u.png',
         });
     }
@@ -493,30 +573,33 @@ class User extends Authenticatable
 
     public function incrementLogAttempts()
     {
-        $this->logAttempts++;
+        $this->log_attempts++;
 
         $this->update([
-            'logAttempts' => $this->logAttempts
+            'log_attempts' => $this->log_attempts
         ]);
+
+        return $this->log_attempts;
     }
 
-    public function lockAccount(int $unlockDuration)
+    public function lockAccount(Carbon | int $unlock_duration)
     {
-        $logAttempts = 4;
-        $this->update(compact('logAttempts', 'unlockDuration'));
+        $log_attempts = 4;
+        $this->update(compact('log_attempts', 'unlock_duration'));
     }
 
     public function unlockAccount()
     {
-        $unlockDuration = null;
-        $logAttempts = 0;
-        $this->update(compact('logAttempts', 'unlockDuration'));
+        $unlock_duration = null;
+        $log_attempts = 0;
+        $this->update(compact('log_attempts', 'unlock_duration'));
     }
 
 
     public function isLocked()
     {
-        return $this->unlockDuration && $this->unlockDuration > time();
+
+        return $this->unlock_duration; // && $this->unlock_duration > time();
     }
 
 
@@ -728,9 +811,9 @@ class User extends Authenticatable
         $gender = $this->$role->gender;
 
         return match ($type) {
-            'his' => $gender === 'female' ? 'her' : 'his',
-            'him' => $gender === 'female' ? 'her' : 'him',
-            'he' => $gender === 'female' ? 'she' : 'he',
+            'his' => $gender === 'FEMALE' ? 'her' : 'his',
+            'him' => $gender === 'FEMALE' ? 'her' : 'him',
+            'he' => $gender === 'FEMALE' ? 'she' : 'he',
             default => 'their',
         };
     }

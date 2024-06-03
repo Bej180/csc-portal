@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('activity_logs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id');
             $table->string('log_name');
             $table->text('description')->nullable();
             $table->string('ip_address');
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('activitylogs');
+        Schema::dropIfExists('activity_logs');
     }
 };

@@ -24,8 +24,11 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Validator;
 use PragmaRX\Google2FA\Google2FA;
 
+use Illuminate\Support\Carbon;
+
 class AuthController extends Controller
 {
+    const LOG_RETRY_LIMIT = 5;
 
     private function generateOTP()
     {
@@ -206,7 +209,7 @@ class AuthController extends Controller
 
         $formFields = $request->validate([
             'name' => 'required|regex:/^\s*([a-zA-Z]+)\s+([a-zA-Z]+)\s*([a-zA-Z]+)?\s*$/',
-            'gender' => 'in:female,male',
+            'gender' => 'in:FEMALE,MALE',
             'email' => ['required', 'email'],
             'password' => ['required', 'confirmed'],
             'phone' => 'sometimes|regex:/^\s*\d+\s*$/',
@@ -436,23 +439,55 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()->first()], 422);
+            return response()->json(['errors' => $validator->errors()], 422);
         }
 
         // Attempt to authenticate the user
-        $user = $this->authenticateUser($request);
+        $username = $this->credential();
+        $user = User::where($username, $request->input($username))->first();
 
-        
         if (!$user) {
-            return response()->json(['error' => 'Invalid credentials'], 401);
+            return response()->json([
+                'error' => "$username does not belong to any account"
+            ], 401);
         }
         
 
-        // Handle account lockout if necessary
-        if ($this->isAccountLocked($user)) {
-            return response()->json(['error' => 'Account has been locked'], 401);
+        // Handle account lockout
+        else if ($user->isLocked()) {
+            return response()->json([
+            'alert' => 'Your account has been locked. Check Your email for unlock link'
+            ], 401);
         }
 
+
+        else if (!Hash::check($request->password, $user->password)) {
+
+            $retries = $user->incrementLogAttempts();
+
+            if ($retries >= self::LOG_RETRY_LIMIT) {
+
+                $now = Carbon::now()->addMinutes(15);
+                
+
+                $user->lockAccount($now);
+                $mins = (int) $now->format('i');
+
+                return response()->json([
+                    'error' => 'You account has been locked, it will be unlocked in '.$mins.' '.str_plural('min', $mins). ' or you can check your email for unlock link'
+                ], 401);
+
+            }
+            else {
+                $countRetryLeft = self::LOG_RETRY_LIMIT - $retries;
+
+                return response()->json([
+                    'error' => 'Invalid credentials. You have '.$countRetryLeft. ' '. str_plural('retry', $countRetryLeft) . ' left',
+                ], 401);
+            }
+           
+
+        }
 
 
         // Check if 2FA is enabled
@@ -525,18 +560,8 @@ class AuthController extends Controller
     }
 
 
-    // Authenticate the user based on provided credentials
-    private function authenticateUser(Request $request)
-    {
-        $username = $this->credential();
-        return User::where($username, $request->input($username))->first();
-    }
 
-    // Check if the user's account is locked
-    private function isAccountLocked($user)
-    {
-        return $user && $user->isLocked();
-    }
+    
 
 
 

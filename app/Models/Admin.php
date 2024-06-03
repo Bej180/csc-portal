@@ -32,29 +32,12 @@ class Admin extends Model
         'admin_id',
         'birthdate',
         'address',
-        'gender',
-        'image',
         'title',
-        'staff_id'
+        'staff_id',
+        'id',
     ];
 
-    /**
-     * Get the fillable attributes of the model.
-     *
-     * @param array $data The data to filter.
-     * @return array The fillable attributes.
-     */
-    public static function getFillables(array $data = [])
-    {
-        $class = __CLASS__;
-        $obj = new $class;
-
-        $fillables = $obj->fillable;
-        if (count($data) === 0) {
-            return $fillables;
-        }
-        return Arr::only($data, $fillables);
-    }
+   
 
     /**
      * Get all academic sets.

@@ -57,9 +57,12 @@ app.controller("AdminStudentController", function ($scope) {
             "/app/students/index",
             {},
             (res) => {
-                $scope.students = res.data;
+                $scope.students = res.data.length > 0 ? res.data : null;
+
             },
-            (err) => console.error(err)
+            (err) => {
+                $scope.students = null;
+            }
         );
     };
 

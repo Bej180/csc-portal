@@ -128,55 +128,7 @@ class StaffController extends Controller
 
 
 
-    public function makeStaffAdviser(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'staff_id' => 'required|exists:staffs,id',
-            'session' => 'required',
-        ], [
-            'staff_id.required' => 'Staff id must be provided',
-            'staff_id.exists' => 'Invalid staff account',
-            'session.required' => 'Session must be provided',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'error' => $validator->errors()->first(),
-                'errors' => $validator->errors()
-            ], 401);
-        }
-        $session = $request->session;
-        $staff_id = $request->staff_id;
-
-        $class = AcademicSet::where('name', '=', $request->session)->first();
-
-        // check if class already exists
-        if ($class) {
-            $class->update([
-                'advisor_id' => $staff_id
-            ]);
-        } else {
-            list($start_year, $end_year) = explode('/', $session);
-            // create new class 
-            $class = AcademicSet::create([
-                'name' => $session,
-                'start_year' => $start_year,
-                'end_year' => $end_year,
-                'advisor_id' => $staff_id
-            ]);
-        }
-
-        $staff = Staff::find($staff_id);
-
-        // Send notification to staff about the new role assigned to him/her
-        Email(new ClassAdvisorAssignment($staff, $class), $class);
-
-
-        return response()->json([
-            'success' => 'Successfully made Class Advisor',
-            'data' => $class
-        ]);
-    }
+    
 
 
 

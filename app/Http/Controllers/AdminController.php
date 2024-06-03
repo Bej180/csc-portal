@@ -243,6 +243,7 @@ class AdminController extends Controller
             'title' => 'sometimes',
             'birthdate' => 'sometimes',
             'staff_id' => 'required',
+            'designation' => 'required',
         ], [
             'fullname.required' => 'Staff\'s name must be provided',
             'email.required' => 'Email address must be provided',
@@ -251,6 +252,7 @@ class AdminController extends Controller
             'phone.required' => 'Phone must be provided',
             'gender.required' => 'Gender must be provided',
             'staff_id.required' => 'Staff ID must be provided',
+            'designation.required' => 'Staff Designation is required',
         ]);
 
         if ($validator->fails()) {
@@ -284,7 +286,7 @@ class AdminController extends Controller
 
         // Make phone number the password if no password is provided
         if (!$request->has('password')) {
-            $formFields['password'] = $request->input('phone');
+            $formFields['password'] = $request->input('staff_id');
         }
         if ($image = UploaderController::uploadFile('image')) {
             $formFields['image'] = $image;
@@ -294,7 +296,7 @@ class AdminController extends Controller
         $formFields['role'] = 'staff';
 
         // user the staffs phone number as inital password
-        $formFields['password'] = bcrypt($formFields['phone']);
+        $formFields['password'] = bcrypt($formFields['password']);
 
 
         // Create Auth Account
@@ -316,8 +318,7 @@ class AdminController extends Controller
                 foreach ($request->courses as $course_id) {
                     $courses[] = [
                         'course_id' => $course_id,
-                        'staff_id' => $staff_id,
-                        'designation' => $request->get('designation', 'lecturer'),
+                        'staff_id' => $staff_id
                     ];
                 }
                 CourseAllocation::insert($courses);
@@ -325,11 +326,10 @@ class AdminController extends Controller
 
             // email the staff about the new account creation
             Email(new NewStaffAccount($authAccount), $authAccount);
-            $userController = new UserController();
-
+            
             return response()->json([
                 'success' => 'Staff account has been created',
-                'data' => $userController->apiGetUsers('staff', $request)
+                'data' => $authAccount->account()
             ]);
         }
 
@@ -518,14 +518,19 @@ class AdminController extends Controller
         return view('pages.admin.staff-management.edit-staff', compact('staff'));
     }
 
+
+
+    
     # API
 
-    public function reset_user_password(Request $request) {
+    public function resetLoginDetails(Request $request) {
         $validator = Validator::make($request->all(), [
-            'new_password' => 'required',
+            'email' => 'sometimes|email',
+            'username' => 'sometimes',
+            'reset_password' => 'sometimes',
             'id' => 'required|exists:users'
         ], [
-            'new_password.required' => 'New password must be provided',
+            'email.email' => 'You provided an invalid email address',
             'id.required' => 'User must be provided',
             'id.exists' => 'Account not found',
         ]);
@@ -536,13 +541,47 @@ class AdminController extends Controller
             ], 400);
         }
 
+        $validated = $validator->validated();
+
         $user = User::find($request->id);
-        $user->fill([
-            'password' => Hash::make($request->new_password)
-        ]);
+        $data = [];
+
+        foreach(['username', 'email'] as $field) {
+            if (Arr::exists($validated, $field)) {
+                if ($validated[$field] !== $user->$field) {
+                    $data[$field] = $validated[$field];
+                }
+            }
+        }
+        if ($request->reset_password) {
+            $data['password'] =  Hash::make(match($user->role) {
+                'student' => $user->reg_no, 
+                default => $user->staff_id,
+            });
+        }
+
+        $count_data = count($data);
+
+        if (!$count_data) {
+            return response()->json([
+                'error' => 'Nothing was updated because you changed nothing',
+            ], 400);
+        }
+        else {
+            $user->fill($data)->save();
+        }
+
+        $message = "Successfully reset {$user->name}'s ".Arr::join($data, ', ', ' and ');
+
+        if ($count_data === 1) {
+            $message = $user->name."'s ".ucfirst(array_keys($data)[0]) . " reset successfully";
+        }
+
+       
+
 
         return response()->json([
-            'success' => "Successfully reset {$user->name}'s passsword",
+            'success' => $message,
         ]);
     }
 

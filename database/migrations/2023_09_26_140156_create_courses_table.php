@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('code', 25);
             $table->longText('outline')->nullable();
             $table->enum('semester', ['RAIN', 'HARMATTAN']);
+            $table->unsignedBigInterger('cordinator')->nullable();
 
             $table->boolean('cordinator_input_lab_score')->default(false);
 

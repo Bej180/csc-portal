@@ -1,29 +1,10 @@
 @php
     
 $holders = ['success', 'error', 'warning', 'info', 'message', 'danger'];
-$icons = [
-  'success' => 'task_alt',
-  'error' => 'error',
-  'warning' => 'warning',
-  'info' => 'info',
-  'message' => 'feedback',
-  'danger' => 'dangerous',
-];
-$alert = 'null';
-foreach($holders as $holder) {
-  if (session()->has($holder)) {
-    $message = session()->get($holder);
-    $color = match($holder) {
-        'danger','error', 'red' => 'red',
-        'warning' => 'yellow',
-        'success', 'green' => 'green',
-        default => 'blue',
-    };
-    
-    $alert = "{message:'$message', type: '$holder', color: '$color'}";
-    break;
-  }
-}
+
+$alerts =  ['alert', 'alert_success', 'alert_danger', 'alert_info', 'alert_warning'];
+
+
 
 @endphp
 
@@ -36,3 +17,14 @@ toastr.{{$holder}}('{{ Session::get($holder) }}');
 @endif
 @endforeach
 </script>
+<script>
+  @foreach($alerts as $alert) 
+
+    @if (Session::get($alert)) 
+      $.confirm('{{ Session::get($alert) }}', {
+        type: 'alert'
+      });
+    @endif
+  @endforeach
+
+  </script>

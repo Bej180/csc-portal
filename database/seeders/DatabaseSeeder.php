@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
         ob_clean();
         echo "Populating tables\n";
         foreach($admins as $admin) {
-            User::store_user($admin);
+            User::createAccount($admin);
             echo "  Populated admin tables\n";
         }
 

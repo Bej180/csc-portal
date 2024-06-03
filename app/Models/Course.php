@@ -172,42 +172,7 @@ class Course extends Model
             ->orderBy('option', 'desc')->get();
     }
 
-    /**
-     * Generate academic sessions.
-     *
-     * @param int|null $from The starting year.
-     * @param int|null $to The ending year.
-     * @param string $separator The separator between years.
-     * @return array The generated academic sessions.
-     */
-    public static function generateSessions(?int $from = null, ?int $to = null, $separator = '/')
-    {
-        $sessions = [];
-        $to ??= date('Y');
-
-        // Generate sessions for the last ten years
-        if (!$from) {
-            $to = date('Y');
-            $from = $to - 10;
-        }
-
-        $from = min($from, $to);
-        $to = max($from, $to);
-
-        if ($to == $from) {
-            $to += 1;
-        }
-
-        $diff = $to - $from;
-        for ($i = 0; $i < $diff; $i++) {
-            $startSemester = $from + $i;
-            $endSemester = $from + $i + 1;
-
-            $sessions[] = $startSemester . $separator . $endSemester;
-        }
-
-        return $sessions;
-    }
+    
 
 
     public function lecturers()

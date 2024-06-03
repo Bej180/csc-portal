@@ -1,4 +1,5 @@
 <?php
+
 $role = auth()->check() ? auth()->user()->role : 'guest';
 $module = $module ?? 'page';
 $nav = $nav ?? 'all';
@@ -72,11 +73,12 @@ $nav = $nav ?? 'all';
 <script src="{{ asset('js/jquery-plugins.js') }}"></script>
 <script src="{{ asset('js/export-table.js') }}" type="module"></script>
 {{-- <script src="{{ mix('js/app.js') }}" defer></script> --}}
-
 @vite('resources/js/app.js')
+@if($script) 
+    <script type="module" src="{{ $script }}"></script>
+@endif
 <script type="module" src="{{ asset('scripts/main.js') }}"></script>
 
-<script type="module" src="{{ asset('js/modules/' . $role . '.modules.js') }}"></script>
 
 <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('js/scripts/feather.min.js') }}"></script>

@@ -5,25 +5,16 @@
     $image = 'images/avatar-u.png';
     if ($user) {
         $placeholder ??= 'image';
-        $gender = $user->gender;
-
-        // check if has role
-        if ($user->role) {
             $role = $user->role;
-            $profile = $user->$role;
-            $gender = $profile->gender;
-        }
-        else {
-            $profile = $user;
-        }
+            $gender = $user->gender;
 
 
 
             $image = match (true) {
-                !(!$profile->image) => 'storage/'.$profile->image,
+                !(!$user->image) => 'storage/'.$user->image,
                 !!$user->$placeholder =>  $user->$placeholder,
-                $gender === 'female' => 'images/avatar-f.png',
-                $gender === 'male' => 'images/avatar-m.png',
+                $gender === 'FEMALE' => 'images/avatar-f.png',
+                $gender === 'MALE' => 'images/avatar-m.png',
                 default => 'images/avatar-u.png',
             };
         

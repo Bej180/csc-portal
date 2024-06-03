@@ -1,4 +1,4 @@
-import './controllers/announcement.js';
+
 import './controllers/admin-controllers.js';
 import './controllers/admin-class.js';
 import './controllers/admin-course.js';
@@ -6,7 +6,7 @@ import './controllers/admin-cpanel.js';
 import './controllers/admin-moderator.js';
 import './controllers/admin-staff.js';
 import './controllers/admin-student.js';
-import './controllers/advisor-controller.js';
+// import './controllers/advisor-controller.js';
 import './controllers/advisor-student.js';
 import './controllers/advisor-class.js';
 import './controllers/technologist.controller.js';
