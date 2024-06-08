@@ -1,10 +1,12 @@
 import axios, { AxiosError } from "axios";
 
+const session_name = "auth_token";
+
 window.csrfToken = document
     .querySelector('meta[name="csrf_token"]')
     .getAttribute("content");
 window.bearerToken =
-    sessionStorage.getItem("authToken") || localStorage.getItem("authToken");
+    sessionStorage.getItem(session_name) || localStorage.getItem(session_name);
 
 if (bearerToken) {
     axios.defaults.headers.common["Authorization"] = "Bearer " + bearerToken;
@@ -21,21 +23,20 @@ const getHeaders = (session, customHeaders) => {
     return headers;
 };
 
-const handleResponse = (response, callback, init) => {
+const handleResponse = (response, success, init) => {
     response = parseResponse(response);
 
-    if (!init.silent)
-        document.getElementById("isLoading").classList.remove("show");
+    ENV.error(response);
 
     if (typeof response === "string") {
         throw response;
     }
-    if (callback) callback(response);
+    if (success) success(response);
     if (!init.silent && response.success) toastr.success(response.success);
     if (response.alert)
         $.confirm(response.alert, {
             type: "alert",
-            style: 'success',
+            style: "success",
         });
     if (response.redirect)
         setTimeout(() => (window.location.href = response.redirect), 2000);
@@ -43,29 +44,50 @@ const handleResponse = (response, callback, init) => {
     return response;
 };
 
-const handleError = (err, fallback, init) => {
+const handleError = (err, error, init, args) => {
     const errorData = parseResponse(err);
 
-    if (fallback) fallback(errorData, err);
-    if (!init.silent) {
-        ENV.error(err);
+    if (error) error(errorData, err);
+    ENV.error(errorData);
 
+    
         if ("error" in errorData || "errors" in errorData) {
+            if (
+                "errors" in errorData &&
+                "password_required" in errorData.errors
+            ) {
+                $.confirm("Enter your password to proceed", {
+                    type: "password",
+                    style: "info",
+                    accept: function () {
+                        args[1]["password_required"] = this.value;
+                        return api(...args);
+                    },
+                });
+            }
             toastr.error(
                 errorData.errors
                     ? Object.values(errorData.errors)[0]
                     : errorData.error
             );
-        }
-        else if ('alert' in errorData) {
+        } else if ("alert" in errorData) {
             $.confirm(errorData.alert, {
                 type: "alert",
-                style: 'danger',
+                style: "danger",
+            });
+        } else if ("password_required" in errorData) {
+            $.confirm("Enter your password to proceed", {
+                type: "password",
+                style: "info",
+                accept: function () {
+                    args[1]["password_required"] = this.value;
+                    return api(...args);
+                },
             });
         }
         if (errorData.redirect)
             setTimeout(() => (window.location.href = errorData.redirect), 2000);
-    }
+    
 
     throw errorData;
 };
@@ -92,24 +114,30 @@ const parseResponse = (axios) => {
     return { message: axios.toString() };
 };
 
-const api = async (url, data, callback, fallback, init = {}) => {
-    url = `/api/${url.replace(/^\//, "")}`;
-
-    if (typeof data === "function") {
-        [data, callback, fallback, init] = [
-            undefined,
-            data,
-            callback,
-            fallback || {},
-        ];
-    } else if (typeof callback === "object") {
-        init = callback;
-        [callback, fallback] = [undefined, fallback];
+const api = async (url, data, success, error, init = {}) => {
+    
+    if (typeof url === "object" && url !== null) {
+        ({ url, data, success, error, ...init } = url);
+    } else if (typeof data === "function") {
+        [data, success, error, init] = [undefined, data, success, error || {}];
+    } else if (typeof success === "object") {
+        init = success;
+        [success, error] = [undefined, error];
     }
 
+    if (url.indexOf("/api") === -1) {
+        url = `/api/${url.replace(/^\//, "")}`;
+    }
+
+    if (!init.silent) {
+        $("#isLoading").addClass("show");
+    }
+
+    const args = [url, data, success, error, init];
+
     const session =
-        localStorage.getItem("authToken") ||
-        sessionStorage.getItem("authToken");
+        localStorage.getItem(session_name) ||
+        sessionStorage.getItem(session_name);
 
     const headers = getHeaders(session, init.headers);
     delete init.headers;
@@ -122,7 +150,7 @@ const api = async (url, data, callback, fallback, init = {}) => {
     try {
         const response = await Promise.race([
             axios.post(url, data, init),
-            new Promise((_, reject) => 
+            new Promise((_, reject) =>
                 setTimeout(
                     () => init.timeout && reject(new Error("Request Timeout")),
                     init.timeout || 5000
@@ -130,150 +158,14 @@ const api = async (url, data, callback, fallback, init = {}) => {
             ),
         ]);
 
-        return handleResponse(response, callback, init);
+        return handleResponse(response, success, init);
     } catch (err) {
-        return handleError(err, fallback, init);
+        return handleError(err, error, init, args);
+    }
+    finally {
+        $("#isLoading").removeClass("show");
     }
 };
 
 window.parseResponse = parseResponse;
 window.api = api;
-
-// import axios from "axios";
-
-// export async function api(url, dataCallback, callback, fallback, init) {
-//     url = url.replace(/^\//, "");
-//     url = "/api/" + url;
-//     let data = dataCallback;
-
-//     if (typeof dataCallback === "function") {
-//         // url, callback, fallback init
-//         init = callback;
-//         if (typeof callback === "function") {
-//             init = fallback;
-//             fallback = callback;
-//         }
-//     } else if (typeof dataCallback === "object" && dataCallback !== null) {
-//         data = dataCallback;
-//     } else if (typeof callback === "object") {
-//         init = callback;
-//     }
-
-//     const defaultInit = {
-//         silent: false,
-//         headers: {
-//             "Content-Type": "application/json",
-//         },
-//     };
-
-//     const session = "88|ZgpAXuUQm2hkQc58L6ess0K15x5Kc9oVIdwuLt1d20722092"; //sessionStorage.getItem("auth_token");
-
-//     if (session) {
-//         defaultInit.headers.Authorization = "Bearer " + session;
-//     }
-//     if (typeof init !== "object" || !init) {
-//         init = {};
-//     }
-//     init = { ...defaultInit, ...init };
-
-//     return axios
-//         .post(url, data, init)
-//         .then(async (response) => {
-//             if (!init.silent) {
-//                 $("#isLoading").removeClass("show");
-//             }
-
-//             if (!response.ok) {
-//                 throw response.data;
-//             }
-//             return response.data;
-//         })
-//         .then(async (response) => {
-//             ENV.log(response);
-//             $("#isLoading").removeClass("show");
-
-//             if (typeof callback === "function") {
-//                 callback(response);
-//             }
-
-//             if (init.silent) {
-//                 return response;
-//             }
-
-//             if ("success" in response) {
-//                 toastr.success(response.success);
-//             }
-
-//             if ("redirect" in response) {
-//                 setTimeout(() => {
-//                     window.location.href = response.redirect; // Redirect user
-//                 }, 2000);
-//             }
-
-//             return resolve(response);
-//         })
-//         .catch(async (err) => {
-//             if (typeof fallback === "function") {
-//                 let data = {};
-//                 let xhr = err;
-
-//                 if (typeof err === "string") {
-//                     data = { message: err };
-//                 } else if (
-//                     typeof err === "object" &&
-//                     err !== null &&
-//                     "response" in err &&
-//                     "data" in err.response
-//                 ) {
-//                     data = err.response.data;
-//                 }
-//                 fallback(data, err);
-//             }
-//             console.log(err);
-
-//             if (init.silent) {
-//                 return err;
-//             }
-
-//             ENV.error(err);
-
-//             if (
-//                 typeof err === "object" &&
-//                 err !== null &&
-//                 "response" in err &&
-//                 "data" in err.response
-//             ) {
-//                 err = err.response.data;
-//                 if (
-//                     "errors" in err &&
-//                     typeof err.errors === "object" &&
-//                     err.errors !== null
-//                 ) {
-//                     const errors = Object.values(err.errors);
-
-//                     toastr.error(errors[0]);
-//                 } else if ("error" in err && err.error.length > 0) {
-//                     toastr.error(err.error);
-//                 }
-//                 if ("redirect" in err) {
-//                     setTimeout(() => {
-//                         window.location.href = err.redirect;
-//                     }, 2000);
-//                 }
-//             }
-
-//             throw err;
-//         });
-// }
-
-// api(
-//     "/testtter",
-//     { john: "Bright" },
-//     function (res) {
-//         console.log(res);
-//     },
-//     (err) => {
-//         console.error(err);
-//     },
-//     false
-// );

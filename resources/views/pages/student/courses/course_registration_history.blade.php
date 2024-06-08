@@ -5,6 +5,7 @@
 
         <x-route class="one-column">
             <section>
+              
 
                 <div ng-if="enrolled.enrollments.length > 0">
 

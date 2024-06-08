@@ -244,6 +244,7 @@ class AdminController extends Controller
             'birthdate' => 'sometimes',
             'staff_id' => 'required',
             'designation' => 'required',
+            'password_required' => 'password'
         ], [
             'fullname.required' => 'Staff\'s name must be provided',
             'email.required' => 'Email address must be provided',
@@ -254,6 +255,12 @@ class AdminController extends Controller
             'staff_id.required' => 'Staff ID must be provided',
             'designation.required' => 'Staff Designation is required',
         ]);
+
+        if (!$request->password_required) {
+            return response()->json([
+                'password_required' => true,
+            ], 400);
+        }
 
         if ($validator->fails()) {
             return response()->json([
@@ -524,16 +531,26 @@ class AdminController extends Controller
     # API
 
     public function resetLoginDetails(Request $request) {
+       
         $validator = Validator::make($request->all(), [
             'email' => 'sometimes|email',
             'username' => 'sometimes',
             'reset_password' => 'sometimes',
+            'password_required' => 'password',
             'id' => 'required|exists:users'
         ], [
             'email.email' => 'You provided an invalid email address',
             'id.required' => 'User must be provided',
             'id.exists' => 'Account not found',
+            'password_required.password' => 'Passwords did not match'
         ]);
+
+
+        if (!$request->password_required) {
+            return response()->json([
+                'password_required' => true,
+            ], 400);
+        }
 
         if ($validator->fails()) {
             return response()->json([
@@ -553,10 +570,11 @@ class AdminController extends Controller
                 }
             }
         }
+        $account = $user->account();
         if ($request->reset_password) {
-            $data['password'] =  Hash::make(match($user->role) {
-                'student' => $user->reg_no, 
-                default => $user->staff_id,
+            $data['password'] =  Hash::make(match($account->role) {
+                'student' => $account->reg_no, 
+                default => $account->staff_id,
             });
         }
 
@@ -571,10 +589,22 @@ class AdminController extends Controller
             $user->fill($data)->save();
         }
 
-        $message = "Successfully reset {$user->name}'s ".Arr::join($data, ', ', ' and ');
+        $user_name = $user->name;
+        $columns = array_keys($data);
+        $message = "Successfully reset {$user_name}'s ".Arr::join($columns, ', ', ' and ');
 
         if ($count_data === 1) {
-            $message = $user->name."'s ".ucfirst(array_keys($data)[0]) . " reset successfully";
+            $message = $user_name."'s ".ucfirst($columns[0]) . " reset successfully";
+
+            if (Arr::exists($data, 'password')) {
+                $usedPassword = 'StaffID';
+                if ($user->role === 'student') {
+                    $usedPassword = 'Registration Number';
+                }
+                $his = $user->pronoun('his');
+
+                $message = "$user_name's password has been reset to $his $usedPassword successfully";
+            }
         }
 
        

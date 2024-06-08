@@ -54,9 +54,9 @@
                                         <h1 class="font-medium text-4xl"></h1>
                                     </div>
                                     <div>
-                                        <p class="text-sm">Session: <span class="text-lg font-medium" ng-bind="configuration.active_session"></span>
+                                        <p class="text-sm">Session: <span class="text-lg font-medium" ng-bind="config.active_session.name"></span>
                                         </p>
-                                        <p class="text-sm">Semester: <span class="text-lg font-medium" ng-bind="configuration.active_semester"></span></p>
+                                        <p class="text-sm">Semester: <span class="text-lg font-medium" ng-bind="config.active_session.active_semester"></span></p>
                                     </div>
                                 </div>
 
@@ -91,13 +91,12 @@
                         <div class="overflow-y-scroll" style="height: calc(-12.5rem + 100dvh);">
                             <div class="list">
                                 @foreach ($courses as $course)
-                                    <div class="card border w-full">
+                                    <div class="card panel">
                                         <div class="card-body">
                                             <div class="card-caption">
                                                 <div class="card-title">
                                                     <div class="flex items-center gap-1 w-full">
-                                                        <div class="avatar avatar-circle avatar-lg shrink-0"
-                                                            style="background-color: rgb(222, 233, 252); color: rgb(26, 37, 81);">
+                                                        <div class="avatar avatar-circle avatar-lg shrink-0">
                                                             <span
                                                                 class="p-avatar-text">{{ substr($course->course->code, 0, 1) }}</span>
                                                         </div>
@@ -121,14 +120,12 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="card-content">
-                                                <div class="flex flex-wrap items-center gap-3"><button
-                                                        class="btn btn-primary" type="button"
-                                                        aria-label="Add result"><span class="p-button-label">Add
-                                                            result</span></button>
-                                                            <button class="btn btn-secondary" ng-click="viewCourse({{$course->id}})"><i
-                                                            class="fa fa-eye"></i> View
-                                                            details</button></div>
+                                            <div class="card-content mt-2">
+                                                <div class="flex flex-wrap items-center gap-3">
+                                                    
+                                                    <button class="btn btn-secondary" ng-click="viewCourse({{$course->id}})"><i
+                                                    class="fa fa-eye"></i> View
+                                                    details</button></div>
                                             </div>
                                         </div>
                                     </div>

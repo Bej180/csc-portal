@@ -131,12 +131,15 @@ class UserController extends Controller
     /***Displays dashboard view to user based on role*/
     public function dashboard()
     {
+        
         if (!auth()->check()) {
             return view('pages.auth.login');
         }
         $user = auth()->user();
         $role = $user->role;
 
+        return view("pages.$role.dashboard", compact('user'));
+        
         if ($user->activation_token) {
             return view("pages.$role.dashboard", compact('user'));
         } 
@@ -518,7 +521,7 @@ class UserController extends Controller
 
 
     public function index_students(Request $request) {
-// return $request->all();
+    
         $student_query = Student::query();
         $student_query->join('users', 'users.id', '=', 'students.id');
 
@@ -533,11 +536,8 @@ class UserController extends Controller
         if ($request->sort && is_array($request->sort)) {
             $student_query->orderBy(...$request->sort);
         }
-        $student = $student_query->paginate(10);
-        return $student;
-
-
-
+        return $student_query->paginate(10)->map(fn($student)=>$student->user->account());
+        
     } 
 
 
@@ -692,14 +692,22 @@ class UserController extends Controller
  
          $validator = Validator::make($request->all(), [
              'id' => 'required|exists:staffs',
-             'courses' => 'required'
+             'courses' => 'required',
+             'password_required' => 'password'
          ], [
              'id.numeric' => 'Invalid Staff Id',
              'id.required' => 'Staff ID must be provided',
              'id.exists' => 'Staff Account is unavailable at the moment',
              'courses.required' => 'Courses to deallocate must be provided',
              'courses.array' => 'Course to be deallocated is missing',
+             'password_required.password' => 'The password you provided did not match the password stored in the database'
          ]);
+
+         if (!$request->password_required) {
+            return response()->json([
+                'password_required' => true,
+            ], 400);
+        }
 
          if (!$request->user()->hasPermissionTo('allocate_course')) {
             return response()->json([
@@ -761,13 +769,22 @@ class UserController extends Controller
  
          $validator = Validator::make($request->all(), [
              'id' => 'required|exists:staffs',
-             'courses' => 'required|array'
+             'courses' => 'required|array',
+             'password_required' => 'password'
          ], [
              'id.required' => 'Staff ID must be provided',
              'id.exists' => 'Staff Account is unavailable at the moment',
              'courses.required' => 'Courses to deallocate must be provided',
              'courses.array' => 'Course to be deallocated is missing',
+             'password_required.password' => 'The password you provided did not match the password stored in the database'
          ]);
+
+         if (!$request->password_required) {
+            return response()->json([
+                'password_required' => true,
+            ], 400);
+        }
+
          if (!$request->user()->hasPermissionTo('allocate_course')) {
             return response()->json([
                 'error' => "You do not have the permission to deallocate course",

@@ -2,8 +2,8 @@
 
     $classes = \App\Models\AcademicSet::get()->unique('name');
 @endphp
-<x-template nav="students" title="Admin - Students Manager" style="admin-list" ng-controller="AdminStudentController"
-    ng-init="boot()">
+<x-template nav="students" title="Admin - Students Manager" style="admin-list" controller="AdminStudentController"
+    ng-init="bootStudentAccounts()">
 
     <div class="columns">
 
@@ -11,7 +11,24 @@
 
             <div class="card">
 
-                <div ng-if="students === null" class="card-body">
+                <div ng-if="!loaded" class="placeholder-glow grid lg:grid-flow-row gap-5 grid-cols-1 lg:grid-cols-4 md:!mt-8">
+                    <div class="col-span-1 flex flex-col" ng-repeat="n in [1,2,3,4]">
+                        <div class=" h-full relative cursor-not-allowed">
+                            <div class="flex flex-col items-center justify-end">
+                                <div class="gap-2 w-full flex lg:flex-col items-center">
+                                    <div class="w-[70px] h-[70px] placeholder rounded-full shrink-0">
+                                    </div>
+                                    <div class="w-full flex flex-col lg:items-center gap-3">
+                                        <div class="placeholder w-36"></div>
+                                        <div class="placeholder w-28"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-cloak ng-if="loaded && students.length === 0" class="card-body">
                     <div class="grid place-items-center">
                         <img src="{{ asset('svg/404.svg') }}" class="w-52" />
                         <div class="text-zinc-200">
@@ -19,7 +36,7 @@
                         </div>
                     </div>
                 </div>
-                <div ng-if="students !== null">
+                <div ng-cloak ng-if="loaded && students.length > 0">
                     <div class="card-header flex md:!flex-row items-center justify-between">
                         <div class="page-title">
                             Students
@@ -67,36 +84,19 @@
 
                         <div class="p-5">
 
-                            <div ng-if="students.length === 0"
-                                class="placeholder-glow grid lg:grid-flow-row gap-5 grid-cols-1 lg:grid-cols-4">
-                                <div class="col-span-1 flex flex-col" ng-repeat="n in [1,2,3,4]">
-                                    <div class=" h-full relative cursor-not-allowed">
-                                        <div class="flex flex-col items-center justify-end">
-                                            <div class="gap-2 w-full flex lg:flex-col items-center">
-                                                <div class="w-[70px] h-[70px] placeholder rounded-full shrink-0">
-                                                </div>
-                                                <div class="w-full flex flex-col lg:items-center gap-3">
-                                                    <div class="placeholder w-36"></div>
-                                                    <div class="placeholder w-28"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            
 
-                            <div ng-if="students.length > 0"
-                                class="grid lg:grid-flow-row gap-5 gap-x-5 gap-y-8 grid-cols-1 lg:grid-cols-4">
+                            <div class="grid lg:grid-flow-row gap-5 gap-x-5 gap-y-8 grid-cols-1 lg:grid-cols-4">
                                 <div ng-show="students" class="col-span-1 flex flex-col"
                                     ng-repeat="account in students">
                                     <div class="cardx h-full relative group cursor-pointer"
-                                        ng-click="showStudent(account.id)">
+                                        ng-click="showStudent(account)">
                                         <div class="cardx-body flex flex-col items-center justify-end">
                                             <div class="gap-2 w-full flex lg:flex-col items-center">
                                                 <div class="student-img lg:h-24">
-                                                    <img src="/profilepic/{% account.id %}"
+                                                    <avatar user="account"
                                                         class="w-24 lg:h-24 object-cover rounded-full"
-                                                        alt="Students Info" />
+                                                        alt="Students Info"></avatar>
                                                 </div>
                                                 <div class="w-full flex flex-col lg:items-center">
                                                     <h5 class="text-[18px] lg:text-center font-semibold"
@@ -124,6 +124,8 @@
                     </div>
 
                 </div>
+
+                
 
             </div>
 

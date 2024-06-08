@@ -148,6 +148,7 @@ class ModeratorController extends Controller
     }
 
 
+
     public function makeStaffAdviser(Request $request)
     {
        
@@ -183,9 +184,29 @@ class ModeratorController extends Controller
                 ], 400);
             }
 
+            if ($class->advisor_id) {
+                $has_class = AcademicSet::whereNot('id', $class->id)->where('advisor_id', $class->advisor_id)->exists();
+
+                // Reset previous class advisor record
+
+                $class->advisor->update([
+                    'is_class_adivsor' => $has_class
+                ]);
+
+
+            }
+
+            return [$staff];
+            // update is_class_advisor in Staff record
+            $staff->update([
+                'is_class_advisor' => true
+            ]);
+
+            // update advisor_id in Set record
             $class->update([
                 'advisor_id' => $staff_id
             ]);
+
         } else {
             list($start_year, $end_year) = explode('/', $session);
             

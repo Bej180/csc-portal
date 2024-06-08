@@ -1,0 +1,7 @@
+<div class="{{ class }}">
+    <span ng-repeat="item in items"
+    ng-click="toggle(item)"
+    ng-class="{'chip-selected': selected(set)}"
+        class="chip chip-{{severity}} text-center whitespace-nowrap" ng-bind="item[label]"></span>
+
+</div>

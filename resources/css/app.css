@@ -76,56 +76,97 @@ fieldset > legend {
         margin-bottom: 0.375rem;
     @apply dark:text-zinc-400;
 }
-
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 28px;
-  height: 14px;
+.dot-blue {
+    --dot-pulse-color: #10a37f;
+}
+.dot-red {
+    --dot-pulse-color: #d9342b;
+}
+.dot-orange {
+    --dot-pulse-color: #d46213;
+}
+.dot-pulse {
+    position: relative;
+    left: -9999px;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: var(--dot-pulse-color, #10a37f);
+    color: var(--dot-pulse-color, #10a37f);
+    box-shadow: 9999px 0 0 -5px var(--dot-pulse-color, #10a37f);
+    animation: dotPulse 1.5s infinite linear;
+    animation-delay: .25s;
+}
+@keyframes dotPulse {
+    0% {
+        box-shadow: 9999px 0 0 -5px var(--dot-pulse-color, #10a37f);
+    }
+    
+    30% {
+        box-shadow: 9999px 0 0 2px var(--dot-pulse-color, #10a37f);
+    }
+    60%, 100% {
+        box-shadow: 9999px 0 0 -5px var(--dot-pulse-color, #10a37f);
+    }
+}
+.dot-pulse::before, .dot-pulse::after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: var(--dot-pulse-color, #10a37f);
+    color: var(--dot-pulse-color, #10a37f);
 }
 
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
+.dot-pulse::before {
+    box-shadow: 9984px 0 0 -5px var(--dot-pulse-color, #10a37f);
+    animation: dotPulseBefore 1.5s infinite linear;
+    animation-delay: 0s;
 }
 
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  transition: .4s;
+.dot-pulse::after {
+    box-shadow: 10014px 0 0 -5px var(--dot-pulse-color, #10a37f);
+    animation: dotPulseAfter 1.5s infinite linear;
+    animation-delay: .5s;
+}
+@keyframes dotPulseAfter {
+    0% {
+        box-shadow: 10014px 0 0 -5px var(--dot-pulse-color, #10a37f);
+    }
+    
+    30% {
+        box-shadow: 10014px 0 0 2px var(--dot-pulse-color, #10a37f);
+    }
+    60%, 100% {
+        box-shadow: 10014px 0 0 -5px var(--dot-pulse-color, #10a37f);
+    }
+}
+@keyframes dotPulseBefore {
+    0% {
+        box-shadow: 9984px 0 0 -5px var(--dot-pulse-color, #10a37f);
+    }
+    
+    30% {
+        box-shadow: 9984px 0 0 2px var(--dot-pulse-color, #10a37f);
+    }
+    60%, 100% {
+        box-shadow: 9984px 0 0 -5px var(--dot-pulse-color, #10a37f);
+    }
+}
+.typing {
+    font-family: monospace;
+    white-space: pre;
 }
 
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 10px;
-  width: 10px;
-  left: 3px;
-  bottom: 3px;
-  background-color: white;
-  transition: .4s;
+.theme-toggler {
+    @apply flex gap-2 items-center justify-center rounded-full bg-[#08362b] text-zinc-100 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800 dark:hover:text-zinc-200 p-2;
 }
 
-.switch input:checked + .slider {
-  background-color: #2196F3;
-}
-
-.switch input:checked + .slider:before {
-  transform: translateX(14px);
-}
-
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
+.closed-sidebar .theme-toggler label {
+    @apply hidden;
 }
 .spinner-icon {
   border: 5px solid rgba(255,255,255, 0.1);
@@ -681,7 +722,7 @@ input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
-
+input[type=password][autocomplete=off], 
 input[type="number"] {
     -moz-appearance: textfield;
     appearance: none;
@@ -793,7 +834,7 @@ button.btn-blue,
     @apply col-span-5 border-l border-l-black pl-1 text-left;
 }
 #isLoading {
-    @apply fixed text-white top-0 left-0 z-[1044] w-dvw h-dvh bg-black/25 hidden place-content-center;
+    @apply cursor-wait select-none fixed text-white top-0 left-0 z-[1044] w-dvw h-dvh bg-black/45 hidden place-content-center;
 }
 .show#isLoading {
     @apply grid;
@@ -807,10 +848,11 @@ button.btn-secondary,
     background: #f1f5f9;
     border: 1px solid  #cbd5e154;
     box-shadow: none;
-    @apply focus:ring-[#e7edf3] font-[600] focus:font-[700] focus:border-zinc-400;
+    @apply focus:ring-[#e7edf3] font-[600] focus:font-[700] focus:border-zinc-400 dark:bg-zinc-800 dark:border-none dark:text-zinc-300;
 }
 .input-disabled, input:disabled, select:disabled {
-    background-color: #eef1f35e !important;
+    background-color: #eef1f35e;
+    @apply dark:bg-[#0c0c0cc7];
 }
 
 
@@ -927,12 +969,67 @@ button.has-indicators {
 
 
 .state-error {
-    @apply !bg-red-600 !text-white;
+    @apply !text-red-600 !text-white;
 }
-.state-sent {
-    @apply !bg-green-600 !text-white;
+.mode-toggler {
+    text-decoration: none;
+    padding: 10px;
+    line-height: 1;
+    font-size: .875rem;
+    letter-spacing: .0107142857em;
+    font-weight: 500;
+    text-transform: none;
+    border-radius: 50%;
+    flex-shrink: 0;
+    text-align: center;
+    @apply focus:bg-[#5f63680a] focus:text-[#202124];
+}
+.icon-sm, .icon-sm-heavy {
+    flex-shrink: 0;
+    height: 1rem;
+    width: 1rem;
 }
 
+.icon-sm {
+    stroke-width: 2;
+}
+
+.icon-md, .icon-md-heavy {
+    flex-shrink: 0;
+    height: 18px;
+    width: 18px;
+}
+
+.icon-md {
+    stroke-width: 1.5;
+}
+.icon-sm-heavy {
+    stroke-width: 2.5;
+}
+.icon-xl {
+    stroke-width: 1.5;
+    flex-shrink: 0;
+    height: 1.75rem;
+    width: 1.75rem;
+}
+.icon-xl-heavy {
+    stroke-width: 2;
+    flex-shrink: 0;
+    height: 24px;
+    width: 24px;
+}
+.icon-lg {
+    stroke-width: 1.5;
+    flex-shrink: 0;
+    height: 1.5rem;
+    width: 1.5rem;
+}
+.icon-lg-heavy {
+    stroke-width: 2;
+    flex-shrink: 0;
+    height: 22px;
+    width: 22px;
+}
 .card-title {
     font-size: 1.25rem;
     font-weight: 700;
@@ -1344,7 +1441,7 @@ table.excelGrid {
 }
 .profile-pic {
     border-width: 9px;
-    @apply rounded-full w-[140px] h-[140px] object-cover border-white;
+    @apply rounded-full w-[140px] h-[140px] object-cover border-white dark:border-zinc-900 aspect-square;
 }
 .hide-uploader {
     position: relative;
@@ -1615,16 +1712,17 @@ table.excelGrid {
     @apply dark:bg-zinc-800 flex items-center shadow-md;
 }
 .sidebar-section {
-    color: #ffffffb0;
+    color: #fff;
     padding: 20px;
     padding-bottom: 0;
-    font-weight: bold;
+    margin-top: 20px;
+    opacity: 0.2;
 }
 .sidebar.closed-sidebar .sidebar-section {
     display: none !important;
 }
 
-.sidebar i.material-symbols-rounded, 
+.sidebar i.faIcon, 
 .sidebar i.fas,
 .sidebar i.fa,
 .sidebar i.far {
@@ -2252,7 +2350,12 @@ fieldset.input.focused legend {
     -webkit-animation: .75s linear infinite spinning-btn;
     animation: .75s linear infinite spinning-btn;
 }
- 
+.spinner-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+} 
 @-webkit-keyframes spinning-btn{
     to {
         transform: rotate(360deg)
@@ -2322,7 +2425,7 @@ fieldset.input.focused legend {
 .popend {
     top: 0;
     right: 0;
-    border-left: 1px solid rgba(0, 0, 0, .2);
+    /* border-left: 1px solid rgba(0, 0, 0, .2); */
     transform: translateX(100%);
     position: fixed;
     bottom: 0;
@@ -2336,7 +2439,7 @@ fieldset.input.focused legend {
     transition: transform .5s ease-in-out;
     outline: 0;
     visibility: hidden;
-    @apply w-full dark:bg-[#0c0c0d];
+    @apply w-full dark:bg-[#0c0c0d] shadow-md;
 }
 .popend.popend-half {
     @apply lg:w-[50%]
@@ -2390,6 +2493,7 @@ fieldset.input.focused legend {
     height: 100vh;
     background-color: #000;
     display: none;
+    @apply dark:bg-zinc-100;
 }
 
 .dropdown-backdrop.show + .dropdown {
@@ -3144,10 +3248,13 @@ fieldset.profile-fieldset legend {
     padding: 1.6em;
     font-size: 1.125em;
     font-weight: 400;
-    line-height: normal;
     text-align: center;
     word-wrap: break-word;
 }
+.confirm-content.justify-start {
+    justify-content: flex-start;
+}
+
 .confirm-title {
     display: flex;
     opacity: 0.5;
@@ -4281,14 +4388,14 @@ button[data-ui=shuffle] {
     background-color: #ffffff;
     @apply dark:border-[#0c0c0c] dark:bg-[#1c1c1e];
 }
-.panel-active {
-    @apply shadow-md bg-zinc-50;
+.panel.panel-active {
+    @apply shadow-md bg-zinc-50 dark:bg-zinc-950;
 }
 .advisor-badge {
     @apply font-semibold bg-red-500 text-white px-1.5 py-0.5 rounded-md opacity-70 text-xs absolute top-1 right-1;
 }
 .status-indicator {
-    @apply rounded-full w-3 h-3 bg-zinc-300 shrink-0 inline-block;
+    @apply rounded-full w-2 h-2 bg-zinc-300 dark:bg-zinc-600 shrink-0 inline-block;
 }
 .status-indicator.status-active {
     animation: blink 1s linear infinite alternate;

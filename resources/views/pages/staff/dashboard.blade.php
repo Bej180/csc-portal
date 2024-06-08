@@ -20,6 +20,8 @@
     }
 @endphp
 <div ng-controller="StaffController">
+    
+    
     @if (auth()->user()->is('advisor'))
         @include('pages.staff.advisor-dasbhoard')
     @elseif (auth()->user()->staff->is_hod)
@@ -28,5 +30,5 @@
         @include('pages.staff.staff-dashboard')
     @endif
 
-    @include('pages.staff.course-management.view-course')
+    @include('pages.courses.view-course')
 </div>

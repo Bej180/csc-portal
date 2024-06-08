@@ -25,17 +25,17 @@ class StudentController extends Controller
         return view('pages.student.profile');
     }
 
-    public function course_registration()
+    public function course_enrollment()
     {
         $sessions = AcademicSession::get('name')->unique('name');
-        return view('pages.student.course-registration', compact('sessions'));
+        return view('pages.student.courses.enroll', compact('sessions'));
     }
 
     /**
      * Save courses selected by students
      */
 
-    public function course_registration_history_page()
+    public function enrollment_history_page()
     {
         $user = auth()->user();
         $student = $user->student;
@@ -49,7 +49,7 @@ class StudentController extends Controller
 
         $sessions = \App\Models\AcademicSession::get();
 
-        return view('pages.student.courses.course_registration_history', compact('title', 'hasEnrolled', 'enrollments', 'sessions'));
+        return view('pages.student.courses.enrollment_history', compact('title', 'hasEnrolled', 'enrollments', 'sessions'));
     }
 
 
@@ -132,9 +132,9 @@ class StudentController extends Controller
         }
 
 
-        // Make phone number the password if no password is provided
+        // Make Registration Number the password if no password is provided
         if (!$request->has('password')) {
-            $formFields['password'] = $formFields['phone'];
+            $formFields['password'] = $formFields['reg_no'];
         }
         $formFields['role'] = $role;
 
@@ -152,10 +152,10 @@ class StudentController extends Controller
         }
 
         Student::create($formFields);
-        $students = Student::with('user')->latest()->get();
+        $students = Student::with('user')->latest()->get()->map(fn($student) => $student->user->account());
 
         return response()->json([
-            'success' => 'Successfully created account.',
+            'success' => 'Successfully created student account.',
             'data' => $students
         ]);
     }
@@ -566,7 +566,7 @@ class StudentController extends Controller
 
 
 
-    public function course_registration_details(Request $request)
+    public function enrollment_details(Request $request)
     {
 
         $validator = Validator::make($request->all(), [

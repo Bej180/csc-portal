@@ -15,19 +15,19 @@
 <header id="mainheader" class="print:hidden">
     <div class="flex items-center">
         @auth
-            <span ng-click="toggleSidebar()"
-                class="sidebar-toggler material-symbols-rounded text-body-800 cursor-pointer hover:text-[var(--primary-700)] transition">
-                menu
-            </span>
+            <x-icon name="menu" ng-click="toggleSidebar()"
+                class="sidebar-toggler text-body-800 cursor-pointer hover:text-[var(--primary-700)] transition"/>
         @endauth
         <div class="login--top flex items-center gap-1 text-green-700">
             <a href="/home" class="inline-block">
                 <img src="{{ asset('svg/logo.svg') }}" alt="logo" width="30">
             </a>
             <div class="text-xm hidden lg:block text-sm">
-                <p class="font-size-2 text-body-600 dark:text-white font-bold relative -bottom-[2px]">Department of
+                <p class="font-size-2 text-body-600 dark:text-white font-bold relative -bottom-[2px]" typing-effect="'Department of
+                Computer Science'">Department of
                     Computer Science</p>
-                <p class="font-size-1 text-body-400 dark:text-white/60 font-semibold  relative -top-[2px]">Federal
+                <p class="font-size-1 text-body-400 dark:text-white/60 font-semibold  relative -top-[2px]" typing-effect="'Federal
+                University of Technology, Owerri'">Federal
                     University of Technology, Owerri</p>
             </div>
         </div>
@@ -73,27 +73,25 @@
                     </div>
                 </div>
             </span>
-            <label class="switch">
-                <input type="checkbox" name="theme_toggler" value="true" ng-model="theme_toggler" ng-change="changeMode(theme_toggler)" id="theme-toggler" ng-checked="darkMode">
-                <span class="slider round"></span>
-            </label>
+            
             <i class="material-symbols-rounded text-green-500" id="page-tips">help</i> 
 
             @auth
                 <div class="relative flex items-center" ng-controller="ProfileCardController">
                     <x-profile-pic :user="$authUser" alt="user_img" class="w-10 h-10 object-cover rounded-full" />
                     <div class="center">
-                        <span ng-click="toggleProfileCard()" ng-bind="open ? 'expand_less' : 'expand_more'"
-                            class="material-symbols-rounded text-body-800 cursor-pointer select-none hover:text-[var(--primary-700)]">
-                            expand_more
+                        <span ng-click="toggleProfileCard()"
+                            class="text-body-800 cursor-pointer select-none hover:text-[var(--primary-700)]">
+                            <x-icon name="expand_less" ng-if="!open"/>
+                            <x-icon name="expand_more" ng-if="open"/>
                         </span>
                     </div>
                     <div class="profile-card-overlay" ng-class="{'show':open}" ng-click="toggleProfileCard()"></div>
                     <div class="profile-card" ng-class="{'show':open}">
                         <div class="profile-card-body">
                             <x-profile-pic :user="$authUser" alt="user_img" class="w-14 h-14 object-cover rounded-full" />
-                            <h1 class="flex flex-col items-center">
-                                <div class="text-2xl">{{ $authUser->name }}</div>
+                            <h1 class="flex flex-col items-center text-center justify-center">
+                                <div class="font-bold">{{ $authUser->name }}</div>
                                 <div>
                                     @if ($authUser->role == 'student')
                                         {{ $authUser->student->reg_no }}
@@ -123,17 +121,17 @@
                         <div class="profile-card-footer">
                             <x-tooltip label="Account">
                                 <a href="#" class="flex justify-center">
-                                    <i class="material-symbols-rounded">account_circle</i>
+                                    <x-icon name="account_circle"/>
                                 </a>
                             </x-tooltip>
                             <x-tooltip label="Setting">
                                 <a href="#" class="flex justify-center">
-                                    <i class="material-symbols-rounded">settings</i>
+                                    <x-icon name="settings"/>
                                 </a>
                             </x-tooltip>
                             <x-tooltip label="Logout">
                                 <a href="#" class="flex justify-center">
-                                    <i class="material-symbols-rounded">logout</i>
+                                    <x-icon name="logout"/>
                                 </a>
                             </x-tooltip>
                         </div>

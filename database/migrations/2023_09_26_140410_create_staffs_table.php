@@ -20,7 +20,6 @@ return new class extends Migration
             $table->date('birthdate')->nullable();
             $table->string('address')->nullable();
             $table->string('staff_id')->nullable();
-            $table->longText('courses')->nullable();
             $table->boolean('is_class_advisor')->default(false);
             $table->boolean('is_hod')->default(false);
             $table->enum('designation', ['lecturer', 'technologist']);

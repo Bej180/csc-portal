@@ -22,7 +22,6 @@ class Student extends Model
         'gender',
         'image',
         'set_id',
-        'phone',
         'id',
         'reg_no',
         'lga',

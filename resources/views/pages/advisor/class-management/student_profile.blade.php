@@ -14,7 +14,7 @@
                           class="w-24 aspect-square rounded-md">
 
                       <div class="flex flex-col gap-2">
-                          <h1 class="font-bold lg:text-lg" ng-bind="show_student.user.name"></h1>
+                          <h1 class="font-bold lg:text-lg" ng-bind="show_student.name"></h1>
 
                           <p
                               class="text-sm lg:text-base text-[--highlight-text-color] rounded-full py-1 px-3">

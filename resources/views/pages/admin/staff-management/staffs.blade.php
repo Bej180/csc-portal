@@ -4,7 +4,7 @@ auth()->user()->account();
     $classes = \App\Models\AcademicSet::get()->unique('name');
 @endphp
 
-<x-template nav="staffs" title="Admin - Staffs Manager" style="admin-list"  ng-controller="AdminStaffController">
+<x-template nav="staffs" title="Admin - Staffs Manager" style="admin-list" controller="AdminStaffController">
 
     <div class="columns" ng-controller="StaffController" ng-init="loadStaffRecords()">
         
@@ -65,7 +65,7 @@ auth()->user()->account();
                     </div>
                 </div>
                 
-                <div ng-init="src_url='http://127.0.0.1:8000/profilepic/45'" ng-if="loaded && staff_members.length > 0" ng-cloak class="card-body md:h-[calc(100dvh-16rem)]" infinite-scroll="loadMore()">
+                <div ng-init="src_url='http://127.0.0.1:8000/profilepic/45'" ng-if="loaded && staff_members.length > 0" ng-cloak class="card-body" infinite-scroll="loadMore()">
                     
                     <div class="grid grid-cols-1 lg:grid-cols-4 py-5 gap-5">
                         <div ng-show="staff_members" class="col-span-1 flex flex-col"
@@ -152,20 +152,20 @@ auth()->user()->account();
                                     ng-model="staffData.fullname" />
                             </div>
                             <div class="flex flex-col">
-                                <input type="number" class="input" placeholder="Staff ID"
+                                <input type="number" ng-disabled="!staffData.fullname" class="input" placeholder="Staff ID"
                                     ng-model="staffData.staff_id" />
                             </div>
                             <div class="flex flex-col">
-                                <input type="text" class="input" placeholder="Email Address"
+                                <input type="text" ng-disabled="!staffData.staff_id" class="input" placeholder="Email Address"
                                     ng-model="staffData.email" />
                             </div>
                             <div class="md:flex gap-4">
-                                <input type="text" class="input mk-phonex" placeholder="Phone Number"
+                                <input type="text" ng-disabled="!staffData.email" class="input mk-phonex" placeholder="Phone Number"
                                     ng-model="staffData.phone" input-mask="9999 999 9999"
                                     autocomplete="off" />
                                 <div>
                                     <label>Gender</label>
-                                    <select name="gender" drop="bottom-right" class="input"
+                                    <select name="gender" ng-disabled="!staffData.phone" drop="bottom-right" class="input"
                                         ng-model="staffData.gender">
                                         <option value="male">Male</option>
                                         <option value="female">Female</option>
@@ -173,13 +173,13 @@ auth()->user()->account();
                                 </div>
                             </div>
                             <div>
-                                <textarea class="input h-24" ng-model="staffData.address" placeholder="Contact Address"></textarea>
+                                <textarea class="input h-24" ng-disabled="!staffData.gender" ng-model="staffData.address" placeholder="Contact Address"></textarea>
 
                             </div>
                             <div class="md:flex gap-4">
 
                                 <input type="date" class="input grid-span-1"
-                                    ng-model="student.birthdate" />
+                                    ng-model="student.birthdate"/>
 
                                 <div>
                                     <label>Academic Class</label>
@@ -193,7 +193,7 @@ auth()->user()->account();
 
                             <div>
                                 <label>Designation</label>
-                                <select drop="top" ng-model="staffData.designation">
+                                <select ng-disabled="!staffData.gender" drop="top" ng-model="staffData.designation">
                                     <option value="lecturer">Lecturer</option>
                                     <option value="technologist">Technologist</option>
                                 </select>
@@ -264,7 +264,7 @@ auth()->user()->account();
                 </div>
 
                 <div class="card-footer flex gap-2 justify-end">
-                    <button ng-disabled="!checked" controller="createStaffAccount()" type="button"
+                    <button ng-disabled="!checked || !staffData.email || !staffData.fullname || !staffData.gender || !staffData.staff_id || !staffData.designation || !staffData.phone" controller="createStaffAccount()" type="button"
                         values="{sending:'Creating Account...', sent: 'Created Account', error: 'Failed'}"
                         class="btn-primary">Create Staff Account</button>
                 </div>

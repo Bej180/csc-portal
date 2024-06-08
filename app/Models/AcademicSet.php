@@ -173,4 +173,18 @@ class AcademicSet extends Model
         }
         return null;
     }
+
+
+    public function is_active()
+    {
+
+        $session = AcademicSession::latest()->first();
+
+        if ($session && preg_match('/^(\d+)\/(\d+)$/', $session->name, $match)) {
+            list(, $start_year, $end_year) = $match;
+            $end_year = (int) $end_year;
+            return $this->end_year >= $end_year;
+        }
+        return false;
+    }
 }

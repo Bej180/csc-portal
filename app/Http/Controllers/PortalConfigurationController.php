@@ -21,11 +21,12 @@ class PortalConfigurationController extends Controller
         $students = Student::count();
         $courses = Course::count();
         $staffs = Staff::count();
+        $account = $request->user()?->account();
 
         $count = compact('students', 'courses', 'staffs', 'advisors');  
 
         
-        return compact('sessions', 'active_session', 'open_semesters', 'count');
+        return compact('sessions', 'active_session', 'open_semesters', 'count', 'account');
     }
 
     public function close_semester_course_registration(Request $request) {

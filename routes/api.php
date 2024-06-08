@@ -207,12 +207,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     /**ADMIN CONTROLLERS END */
 
-    /**ADVISOR CONTROLLERS */
-    Route::post('/generateInviteLink', [ClassController::class, 'apiGenerateInviteLink'])
-        ->middleware('role:staff');
-    Route::post('/withdrawInviteLink', [ClassController::class, 'apiWithdrawInvite'])
-        ->middleware('role:staff');
-    /**ADVISOR CONTROLLERS END */
+    
 });
 
 
@@ -244,7 +239,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/app/admin/staff/create', [AdminController::class, 'store_staff']);
     Route::post('/app/admin/staff/index', [AdminController::class, 'index_staff']);
     Route::post('/app/admin/user/resetlogins', [AdminController::class, 'resetLoginDetails']);
-    Route::post('/admin/user/reset_password', [AdminController::class, 'reset_user_password']);
 
 
     // Moderators (Dean & HOD) routes    
@@ -258,11 +252,17 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 
     Route::post('/app/advisor/dashboard', [AdvisorController::class, 'dashboard_api_data']);
+    Route::post('/app/advisor/classes', [AdvisorController::class, 'index_classes']);
     Route::post('/app/advisor/student/generate_transcript', [AdvisorController::class, 'generate_transcript']);
     Route::post('/advisor/student/enrollments', [AdvisorController::class, 'studentEnrollments']);
 
     Route::post('/app/advisor/load_more_courses', [AdvisorController::class, 'getCourses']);
     Route::post('/app/advisor/load_more_students', [AdvisorController::class, 'getStudents']);
+   
+    Route::post('/app/class/generateInviteLink', [ClassController::class, 'apiGenerateInviteLink'])
+        ->middleware('role:staff');
+    Route::post('/app/class/withdrawInviteLink', [ClassController::class, 'apiWithdrawInvite'])
+        ->middleware('role:staff');
     
 
     Route::post('/app/search/{role}', [UserController::class, 'apiGetUsers']);

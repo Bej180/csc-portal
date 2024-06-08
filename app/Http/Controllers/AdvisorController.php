@@ -24,6 +24,23 @@ class AdvisorController extends Controller
 
 
 
+    public function index_classes(Request $request) {
+        $advisor = $request->user()->advisor;
+        $active_class = $advisor->class;
+       
+
+        $invitationLink = invitation_url($active_class->token);
+        $classes = $advisor->classes()->paginate(10, ['*'])->map(function($item) {
+            $item->active = $item->is_active();
+            $item->students = $item->students->map(fn($student) => $student->user->account());
+            return $item;
+        });
+
+        $active_class->students = $active_class->students->map(fn($student) => $student->user->account());
+
+        return compact('classes', 'active_class', 'invitationLink');
+    }
+
     public function show_students_course_reg()
     {
         $auth = auth()->user();
@@ -156,10 +173,10 @@ class AdvisorController extends Controller
         $myAccount = $auth->staff;
         $students = $myAccount->students()->orderBy('cgpa', 'desc')->with('user');
 
-        $my_students = $students->paginate(5, ['*'], 'more_students')->map(fn($item)=>$item);
+        $students = $students->paginate(5, ['*'], 'more_students')->map(fn($student)=>$student->user->account());
         $count_students = $students->count();
 
-        return compact('my_students', 'count_students');
+        return compact('students', 'count_students');
     }
 
 
@@ -172,7 +189,5 @@ class AdvisorController extends Controller
         
 
         return array_merge($courses, $students);
-
-        return compact('courses', 'myAccount', 'count_students', 'count_courses', 'my_students');
     }
 }

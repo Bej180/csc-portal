@@ -6,6 +6,10 @@
 
     $htmlClass = Cookie::get('darkMode') === 'true' ? 'dark' : '';
 
+    if (isset($title)) {
+        $title .= ' | '. config('app.title', 'Futo CSC Portal');
+    }
+
     $defaults = [
         'title' => config('app.title', 'Futo CSC Portal'), 
         'nav' => '',
@@ -20,9 +24,10 @@
     }
     $script = null;
     if (isset($controller)) {
-        $controller = preg_replace('/Controller$/', '', $controller);
-        $controller = strtolower(preg_replace('/([a-z_])([A-Z]+)/', '$1-$2', $controller));
-        $script = asset('/js/modules/'.$controller.'.js');
+        $controller_part = preg_replace('/Controller$/', '', $controller);
+        $controller_part = strtolower(preg_replace('/([a-z_])([A-Z]+)/', '$1-$2', $controller_part));
+        $script = asset('/js/angular/modules/'.$controller_part.'.js');
+        $attributes['ng-controller'] = $controller;
     }
     
 

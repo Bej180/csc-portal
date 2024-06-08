@@ -25,7 +25,8 @@ use App\Http\Controllers\ {
     MaterialController,
     TechnologistController,
     TestController,
-    PortalConfigurationController
+    PortalConfigurationController,
+    QrCodeController
 };
 use App\Http\Controllers\ForgotPasswordController;
 use Illuminate\Http\Request;
@@ -33,7 +34,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
-use PhpParser\Builder\ClassConst;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +52,7 @@ Route::get('/', function() {
     PortalConfigurationController::initializeAdminAccount();
     return redirect(auth()->check()?'/home':'/login');
 });
+Route::get('/icons', fn()=>view('components.icon'));
 Route::get('/home', [UserController::class, 'dashboard'])->name('home');
 
 
@@ -62,6 +63,7 @@ Route::get('/api/notifications/stream', [AnnouncementController::class, 'announc
     Route::get('/calender', fn() => view('components.calendar'));
     Route::get('/export', [DBExportController::class, 'exportToJson']);
     Route::get('/tester', function(Request $request) {
+        return view('pages.test');
         $results = Result::get();
         
         foreach($results as $result) {
@@ -149,7 +151,7 @@ Route::post('/2fa/verify', [TwoFactorController::class, 'postVerify'])->name('2f
 
 
 
-
+    Route::get('/generate-qr-code', [QrCodeController::class, 'generate']);
 
 /***AUTHENTICATED USERS ROUTES***/
 
@@ -382,13 +384,13 @@ Route::post('/2fa/verify', [TwoFactorController::class, 'postVerify'])->name('2f
                 ->name('student.results')
                 ->middleware('role:student');
 
-            Route::get('/student/course_reg_history', [StudentController::class, 'course_registration_history_page'])
-                ->name('student.course_history')
+            Route::get('/course/enrollments', [StudentController::class, 'enrollment_history_page'])
+                ->name('student.enrollments')
                 ->middleware('role:student');
             
-            Route::get('/course-registration', [StudentController::class, 'course_registration'])->middleware('role:student');
-            
-            Route::post('/course_registration', fn()=>view('pages.student.course_registration-post'))->middleware('role:student');
+            Route::get('/course/enroll', [StudentController::class, 'course_enrollment'])
+                ->name('course.enroll')
+                ->middleware('role:student');
             
             Route::get('/course-registration-details', [CourseController::class, 'viewEnrollments'])->name('view.enrollment')->middleware('role:student');
             

@@ -19,6 +19,7 @@
             });
         });
         // }, 8000);
+        
 
         $(window).on("resize", function (e) {
             $(".dropdown-container.show").each(function () {

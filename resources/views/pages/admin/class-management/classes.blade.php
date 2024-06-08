@@ -90,20 +90,9 @@
                                             Advisor:
                                             <span class="font-bold" ng-bind="class.advisor.user.name"></span>
                                         </div>
-                                        <div ng-if="!class.advisor" class="input-group !w-48"
-                                            ng-init="class.advisor=''">
+                                        <div ng-if="!class.advisor">
 
-                                            <select drop="top" class="ignore !border-none input !rounded-l-md"
-                                                ng-model="choose_advisor" placeholder="Choose Class Advisor">
-                                                <option value="">Select Class advisor</option>
-                                                @foreach ($staffs as $staff)
-                                                    <option value="{{ $staff->id }}">{{ $staff->user->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                            <button type="button" ng-click="saveCourseAdvisor(class, choose_advisor)"
-                                                ng-disabled="!choose_advisor"
-                                                class="btn btn-primary btn-adaptive">Save</button>
+                                            No Class Advisor
 
                                         </div>
 
@@ -129,7 +118,7 @@
 
                                             <p>Status:
                                                 <span class="font-bold"
-                                                    ng-bind="class.active==1?'Active':'Inactive'"></span>
+                                                    ng-bind="class.inactive?'Inactive':'Active'"></span>
                                             </p>
 
                                         </div>
@@ -143,7 +132,7 @@
                         </div>
 
                         <div ng-if="!initiated && classes.length == 0" ng-repeat="n in [1, 2, 3]"
-                            class="placeholder-glow panel mt-4">
+                            class="placeholder-glow panel p-4">
                             <div class="panel-header">
                                 <div class="flex items-center gap-2 flex-wrap">
                                     <div class="h-12 w-12 mr-2 rounded-full placeholder"></div>

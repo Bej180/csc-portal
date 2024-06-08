@@ -207,46 +207,79 @@ class AuthController extends Controller
     public function doRegister(Request $request)
     {
 
-        $formFields = $request->validate([
-            'name' => 'required|regex:/^\s*([a-zA-Z]+)\s+([a-zA-Z]+)\s*([a-zA-Z]+)?\s*$/',
+        $validator = Validator::make($request->all(), [
+            // 'surname' => 'required',
+            // 'othernames' => 'required',
+            // 'name' => 'required|regex:/^\s*([a-zA-Z]+)\s+([a-zA-Z]+)\s*([a-zA-Z]+)?\s*$/',
             'gender' => 'in:FEMALE,MALE',
             'email' => ['required', 'email'],
             'password' => ['required', 'confirmed'],
-            'phone' => 'sometimes|regex:/^\s*\d+\s*$/',
+            'phone' => 'required',
             'checkpolicy' => 'required',
-            'role' => 'sometimes|in:admin,student, staff',
             'regno' => 'sometimes|regex:/^\s*\d+\s*$/'
         ], [
-            'name.regex' => 'Requires only alphabet characters',
+            // 'surname.required' => 'Surname required',
+            // 'othernames.required' => 'Othernames required',
+            // 'name.regex' => 'Requires only alphabet characters',
             'checkpolicy.required' => 'You must accept terms and conditions to proceed',
-            'phone.regex' => 'Enter a valid phone number',
-            'role.in' => 'You selected an invalid role',
+            'phone.required' => 'Phone number is required',
             'regno.regex' => 'Reg Number of be a number'
         ]);
 
+        if ($validator->fails()) {
+            return response()->json([
+                'errors'=> $validator->errors(),
+                ], 400);
+        }
+        if (!$request->surname||!$request->othernames) {
+            $message = 'Your surname is required';
+            if (!$request->othernames) {
+                $message = 'Your other names are required';
+            }
+            return response()->json([
+                'error' => $message
+            ], 400);
+        }
+        $formFields = $validator->validated();
+        
+
         // if invitation token exists add student to the set
-        if ($request->has('jtoken')) {
-            $set = AcademicSet::where('token', $request->input('jtoken'));
+        $token_is_valid = false;
+        if ($join_token = $request->jtoken) {
+            $set = AcademicSet::where('token', $join_token)->first();
             if ($set) {
-                $formFields['set_id'] = $set->first()->id;
+                $token_is_valid = true;
             }
         }
+        if (!$token_is_valid) {
+            return response()->json([
+                'error' => 'The invitation token is invalid',
+            ], 400);
+        }
 
-        list($firstname, $lastname) = preg_split('/\s+/', $formFields['name']);
+        $formFields['set_id'] = $set->id;
+        $formFields['phone'] = preg_replace('/\s+/', '', $formFields['phone']);
 
-        $formFields['username'] = $this->generateUsername($firstname, $lastname);
+        $formFields['name'] = implode(' ', [$request->surname, $request->othernames]);
+
+        $formFields['username'] = $this->generateUsername($request->surname, $request->othernames);
 
         // Remove white spaces 
         $formFields = array_map(fn ($value) => trim($value), $formFields);
 
         $formFields['password'] = bcrypt($formFields['password']);
-        request()->merge($formFields);
-
+        $formFields['approved'] = false;
+        
         $user = User::saveUser($formFields);
 
         auth()->login($user);
+        $token = $user->createToken($user->role)->plainTextToken;
 
-        return redirect('/')->with('success', 'Account Created');
+        return response()->json([
+            'persistent_session' => $token,
+            'redirect' => route('home'),
+            'success' => 'Your account has been account Created'
+        ]);
     }
 
 
@@ -518,7 +551,8 @@ class AuthController extends Controller
 
         $tokenHolder = !empty($request->rememberme) ? 'persistent_session' : 'temporary_session';
 
-        Auth::login($user, $request->rememberme ?? false);
+        // Auth::login($user, $request->rememberme ?? false);
+        auth()->login($user);
 
         $token = $user->createToken($user->role)->plainTextToken;
 
@@ -530,7 +564,8 @@ class AuthController extends Controller
             'email'  => $user->email,
             'name' => $user->name,
             'redirect' => '/home',
-            'role' => $user->role
+            'role' => $user->role,
+            'auth' => auth()->user()
         ];
 
         // Optionally set redirect URL if provided
@@ -554,7 +589,6 @@ class AuthController extends Controller
             $field = 'email';
         }
         
-        // $field = ctype_digit($login) ? 'phone' : ('email');
         request()->merge([$field => $login]);
         return $field;
     }

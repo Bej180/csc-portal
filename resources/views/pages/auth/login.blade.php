@@ -1,3 +1,4 @@
+
 <x-app>
 <head>
     @include('layouts.head')
@@ -30,24 +31,24 @@
 
                         <div class="flex flex-col gap-4 mt-3">
                             <div class="custom-input">
-                                <span class='material-symbols-rounded'>account_circle</span>
+                                <x-icon name="account_circle" class="icon-md"/>
                                 <input type="text" class="input-bottom" placeholder="Email or Phone"
                                     name="credential" ng-model="loginData.usermail" />
 
                             </div>
 
                             <div class="custom-input" ng-init="visible=false">
-                                <span class='material-symbols-rounded'>lock</span>
-                                <input type="{% visible?'text':'password' %}" class="input-bottom" placeholder="Password" name="password"
+                                <x-icon name="lock" class="icon-md"/>
+                                <input type="{% visible?'text':'password' %}" class="input-bottom appearance-none" placeholder="Password" name="password"
                                     ng-model="loginData.password" autocomplete="off"/>
                                     <i class="fa" ng-class="{'fa-eye-slash':!visible, 'fa-eye':visible}" ng-click="visible=!visible"></i>
                             </div>
-
+                            
                             <div class="flex mb-[15px] justify-between">
                                 <div class="remember-me">
                                     <label class="flex items-center gap-1">
 
-                                        <input type="checkbox" ng-model="loginData.rememberme" name="rememberme" value="remember" class="checkbox">
+                                        <input type="checkbox" ng-model="loginData.rememberme" name="rememberme" value="remember" class="switch">
                                         <span class="checkmark peer-checked:font-semibold">Remember me</span>
                                     </label>
                                 </div>
@@ -69,7 +70,7 @@
                         <div class="flex flex-col mt-3 gap-3">
                             
                             
-                            <button values="{sent:'Logged In', sending: 'Loggin In...', error: 'Failed'}" controller="login('{{request()->get('callbackUrl')}}')" class="btn btn-primary transition w-full">Log in</button>
+                            <button type="button" values="{sent:'Logged In', sending: 'Loggin In...', error: 'Failed'}" controller="login('{{request()->get('callbackUrl')}}')" class="btn btn-primary transition w-full">Log in</button>
                             
                             <button type="button" ng-click="popend('activateAccount')" class="btn-secondary btn">Activate Account</button>
                         </div>
@@ -148,6 +149,8 @@
     @include('pages.auth.request_account_activation')
 
 </body>
-@include('layouts.footer')
+@include('layouts.footer', [
+    'script' => asset('/js/angular/modules/auth.js')
+])
 
 </x-app>

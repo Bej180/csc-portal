@@ -67,16 +67,21 @@ $nav = $nav ?? 'all';
     </div>
 @endif
 <div id="isLoading" class="">
-    <div><span class="btn-spinning"></span> Loading...</div>
+    <div class="flex items-center gap-1">
+        <div class="dot-pulse"></div>
+        <div class="text-2xl ml-[20px]">
+            Loading...
+        </div>
+    </div>
 </div>
 <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
 <script src="{{ asset('js/jquery-plugins.js') }}"></script>
 <script src="{{ asset('js/export-table.js') }}" type="module"></script>
 {{-- <script src="{{ mix('js/app.js') }}" defer></script> --}}
 @vite('resources/js/app.js')
-@if($script) 
+@isset($script)
     <script type="module" src="{{ $script }}"></script>
-@endif
+@endisset
 <script type="module" src="{{ asset('scripts/main.js') }}"></script>
 
 

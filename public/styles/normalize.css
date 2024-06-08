@@ -19,6 +19,10 @@
   }
     
 }
+audio, canvas, embed, iframe, img, object, svg, video {
+  display: block;
+  vertical-align: middle;
+}
 .dark {
   --input-color: rgb(156 161 171);
   --input-bg-color: #22222499;;
@@ -57,28 +61,66 @@ select {
     
     padding: var(--input-padding);
 }
+input[type=radio].radio, input[type=checkbox].checkbox, input[type=checkbox].switch {
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 20px;
+  aspect-ratio: 1/1;
+  background-repeat: no-repeat;
+  background-color: transparent !important;
+}
 
 input[type=checkbox].checkbox {
-    cursor: pointer;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    width: 20px;
-    aspect-ratio: 1/1;
-    background: url(../checkboxes/checkbox-unchecked.svg);
+    background: url(../svg/checkboxes/checkbox-unchecked.svg);
     background-repeat: no-repeat;
+    @apply bg-[url(../svg/checkboxes/checkbox-unchecked-dark.svg)];
 }
+
+input[type=checkbox].switch {
+  width: 24px;
+  background: url(../svg/checkboxes/toggle-off.svg);
+  background-repeat: no-repeat;
+  /* @apply bg-[url(../svg/checkboxes/checkbox-unchecked-dark.svg)]; */
+}
+
+input[type=radio].radio {
+  width: 24px;
+    background: url(../svg/radios/unchecked-light.svg);
+    background-repeat: no-repeat;
+    @apply dark:bg-[url(../svg/radios/unchecked-dark.svg)];
+}
+
+
 
 input[type=checkbox].checkbox:checked:not([checked=false]) {
-    background: url(../checkboxes/checkbox-checked.svg);
+    background: url(../svg/checkboxes/checkbox-checked.svg);
     background-repeat: no-repeat;
+}
+input[type=checkbox].switch:checked:not([checked=false]) {
+  background: url(../svg/checkboxes/toggle-on.svg);
+  background-repeat: no-repeat;
+}
+input[type=radio].radio:checked:not([checked=false]) {
+  background: url(../svg/radios/checked-light.svg);
+  background-repeat: no-repeat;
+  @apply dark:bg-[url(../svg/radios/checked-dark.svg)]
 }
 
-input[type=checkbox].checkbox:disabled {
-    background: url(../checkboxes/checkbox-disabled.svg);
+input[type=radio].radio:disabled {
+    background: url(../svg/radios/unchecked-disabled-light.svg);
     background-repeat: no-repeat;
     cursor: not-allowed;
+    @apply dark:bg-[url(../svg/radios/unchecked-disabled-dark.svg)]
 }
+input[type=radio].radio:checked:disabled {
+  background: url(../svg/radios/checked-disabled-light.svg);
+    background-repeat: no-repeat;
+    cursor: not-allowed;
+    @apply dark:bg-[url(../svg/radios/checked-disabled-dark.svg)]
+}
+
 
 .checkbox-sm {
     cursor: pointer;
@@ -87,17 +129,17 @@ input[type=checkbox].checkbox:disabled {
     appearance: none;
     width: 15px;
     aspect-ratio: 1/1;
-    background: url(../checkboxes/checkbox-small-unchecked.svg);
+    background: url(../svg/checkboxes/checkbox-small-unchecked.svg);
     background-repeat: no-repeat;
 }
 
 .checkbox-sm:checked {
-    background: url(../checkboxes/checkbox-small-checked.svg);
+    background: url(../svg/checkboxes/checkbox-small-checked.svg);
     background-repeat: no-repeat;
 }
 
 .checkbox-sm:disabled {
-    background: url(../checkboxes/checkbox-small-disabled.svg);
+    background: url(../svg/checkboxes/checkbox-small-disabled.svg);
     background-repeat: no-repeat;
     cursor: not-allowed;
 }

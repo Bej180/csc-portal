@@ -22,8 +22,8 @@ app.directive("controller", [
                     return;
                 }
                 const newButton = angular.element(
-                    `<button type="button" class="${scope.class} flex gap-1 items-center justify-center">
-                        <i id="btnIcon" class="btn-spinning"></i>
+                    `<button type="button" class="${scope.class} relative flex gap-1 items-center justify-center">
+                        <span class="spinner-wrapper"><i id="btnIcon" class="btn-spinning"></i></span>
                         <span class="button-label flex items-center justify-center gap-1 font-semibold"></span>
                     </button>`
                 );
@@ -50,7 +50,7 @@ app.directive("controller", [
 
                         if (state === "sending") {
                             spinner.attr("class", "btn-spinning").show();
-                            label.hide();
+                             label.find('i').hide();
 
                             if (values.sending) {
                                 label.text(values.sending).show();
@@ -76,6 +76,7 @@ app.directive("controller", [
                             }
                         } else if (state === "initial") {
                             spinner.attr("class", "btn-spinning").hide();
+                            label.find('i').show();
                             label.html(content).show();
                             newButton.prop("disabled", false);
                         }
@@ -230,3 +231,39 @@ app.directive('avatar', function(){
         }
     }
 });
+
+app.directive('typingEffect', ['$timeout', function($timeout) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            let text = '';
+            let index = 0;
+            let isDeleting = false;
+
+            function type() {
+                let fullText = scope.$eval(attrs.typingEffect);
+
+                if (!isDeleting && index < fullText.length) {
+                    text += fullText.charAt(index);
+                    index++;
+                    element.text(text);
+                    $timeout(type, 100); // Adjust typing speed here
+                } else if (isDeleting && index > 0) {
+                    text = text.substring(0, text.length - 1);
+                    index--;
+                    element.text(text);
+                    $timeout(type, 50); // Adjust deleting speed here
+                } else if (index === fullText.length) {
+                    isDeleting = true;
+                    $timeout(type, 500); // Pause before starting to delete
+                } else if (index === 0 && isDeleting) {
+                    isDeleting = false;
+                    $timeout(type, 500); // Pause before starting to type again
+                }
+            }
+
+            // Initial typing effect
+            type();
+        }
+    };
+}]);

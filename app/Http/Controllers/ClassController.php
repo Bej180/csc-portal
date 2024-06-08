@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AcademicSet;
+use App\Models\AcademicSession;
 use App\Models\Staff;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -112,14 +113,20 @@ class ClassController extends Controller
 
         $validator = Validator::make($request->all(), [
             'class_id' => 'required|exists:sets,id',
+            'type' => 'sometimes'
         ], [
             'class_id.required' => 'Class id is required',
             'class_id.exists' => 'Class does not exist',
         ]);
+        $type = $request->type;
+        if ($request->type === 'regenerate') {
+            $type = 'generate';
+        }
+
 
         if ($validator->fails()) {
             return response()->json([
-                'message' => $validator->errors()->first(), 'errors' => $validator->errors()
+                'errors' => $validator->errors()
             ], 401);
         }
 
@@ -133,7 +140,8 @@ class ClassController extends Controller
         $class->update(compact('token'));
 
         return response()->json([
-            'link' => url('/register?invite='.$token)
+            'link' => url('/register?invite='.$token),
+            'success' => "Invitation link {$type}d"
         ]);
     }
 
@@ -147,7 +155,7 @@ class ClassController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'message' => $validator->errors()->first(), 'errors' => $validator->errors()
+                'errors' => $validator->errors()
             ], 401);
         }
 
@@ -159,9 +167,9 @@ class ClassController extends Controller
         ]);
 
         if ($withdrawn) {
-            return response()->json(['message' => 'Invitation link withdrawn. Students cant access it anymore']);
+            return response()->json(['success' => 'Invitation link withdrawn. Students cant access it anymore']);
         }
-        return response()->json(['message' => 'Failed to withdraw invitation link']);
+        return response()->json(['error' => 'Failed to withdraw invitation link'], 400);
 
     }
 
@@ -250,6 +258,17 @@ class ClassController extends Controller
 
     public function classes() {
         $classes = AcademicSet::with(['students.user', 'advisor.user'])->latest()->get();
+        $session = AcademicSession::latest()->first();
+        $classes = $classes->map(function($class) use ($session) {
+            $class->inactive = true;
+
+            if ($session && preg_match('/^(\d+)\/(\d+)$/', $session->name, $match)) {
+                list(, $start_year, $end_year) = $match;
+                $end_year = (int) $end_year;
+                $class->inactive = $class->end_year < $end_year;
+            }
+            return $class;
+        });
 
         return compact('classes');
 
@@ -281,12 +300,12 @@ class ClassController extends Controller
             'is_class_advisor' => true
         ]);
 
-        $class = AcademicSet::with('advisor')->first();
+        $class = AcademicSet::with('advisor.user')->first();
 
         
         return response()->json([
             'success' => $staff->user->name.' has been made the Class Advisor of '.$academicClass->name,
-            'class' => $class
+            'data' => $class
         ]);
     }
 }

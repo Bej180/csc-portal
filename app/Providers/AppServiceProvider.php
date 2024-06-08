@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Hash;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,6 +26,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+     //   ini_set('max_execution_time', 300);
+
         Blade::directive('role', function ($role) {
             return "<?php if(auth()->check() && auth()->user()->role == '{$role}'): ?>";
         });
@@ -52,6 +55,20 @@ class AppServiceProvider extends ServiceProvider
             return "<?php endif; ?>";
         });
         
+
+
+        # hod 
+        Blade::directive('hod', function () {
+            return "<?php if(auth()->check() && auth()->user()->staff->is_hod): ?>";
+        });
+        Blade::directive('elsehod', function () {
+            return "<?php elseif(auth()->check() && auth()->user()->staff->is_hod): ?>";
+        });
+        Blade::directive('endhod', function () {
+            return "<?php endif; ?>";
+        });
+
+
 
 
         Blade::directive('student', function () {
@@ -113,34 +130,57 @@ class AppServiceProvider extends ServiceProvider
         });
 
 
-        Validator::extend('session', function ($attribute, $value, $parameters, $validator) {
-            // Check if the format is correct
-            if (!preg_match('/^\d{4}\/\d{4}$/', $value)) {
-                return false;
-            }
-            $limit = (int) ($parameters[0] ?? 5);
-    
-            // Extract admission year and graduation year
-            [$admissionYear, $graduationYear] = explode('/', $value);
-    
-            // Check if years have a 5-year interval
-            if (($graduationYear - $admissionYear) !== $limit) {
-                return false;
-            }
-    
-            return true;
+
+
+
+
+
+        # CHECK_PASSWORD
+        Validator::extend('password', function ($attribute, $value, $parameters, $validator) {
+           $user = request()->user();
+            return Hash::check($value, $user->password);
         });
-    
-        // Custom error message for the rule
-        Validator::replacer('session', function ($message, $attribute, $rule, $parameters) {
-            return str_replace([
-                ':attribute', 
-                ':parameter'
-            ], [
-                 $attribute,
-                 $parameters[0]
-            ], 'The :attribute must be in the format "YYYY/YYYY" with a :parameter-year interval.');
+        Validator::replacer('password', function ($message, $attribute, $rule, $parameters) {
+            return $message ?? 'Passwords did not match';
         });
+
+
+
+
+
+
+
+
+        
+        # SESSION
+       Validator::extend('session', function ($attribute, $value, $parameters, $validator) {
+    // Check if the format is correct
+    if (!preg_match('/^\d{4}\/\d{4}$/', $value)) {
+        return false;
+    }
+    $limit = (int) ($parameters[0] ?? 1); // Default to 1 if no parameter is provided
+
+    // Extract admission year and graduation year
+    [$admissionYear, $graduationYear] = explode('/', $value);
+
+    // Check if years have the specified interval
+    if (($graduationYear - $admissionYear) !== $limit) {
+        return false;
+    }
+
+    return true;
+});
+
+Validator::replacer('session', function ($message, $attribute, $rule, $parameters) {
+    return str_replace([
+        ':attribute', 
+        ':parameter'
+    ], [
+         $attribute,
+         $parameters[0]
+    ], 'The :attribute must be in the format "YYYY/YYYY" with a :parameter-year interval.');
+});
+
 
        
     }

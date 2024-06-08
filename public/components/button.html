@@ -1,0 +1,9 @@
+<button 
+        type="button"
+        ng-disabled="disabled || submitting"
+        ng-click="handleClick()"
+        ng-class="{'spinner': submitting}">
+          <span ng-if="!submitting" ng-transclude class="flex gap-1"></span>
+          <span ng-if="submitting" class="spinner-icon"></span>
+      </button>
+    

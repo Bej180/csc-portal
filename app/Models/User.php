@@ -367,16 +367,37 @@ class User extends Authenticatable
         return redirect()->route($dashboard);
     }
 
+    public function active_session() {
+        $session = AcademicSession::latest()->first();
+
+        if ($session) {
+            
+        }
+    }
+
+  
+
     public function account()
     {
         $role = $this->role;
         $table = $role . 's';
-        return User::join($table, function ($join) use ($table) {
+        $account = User::join($table, function ($join) use ($table) {
             $join->on("$table.id", '=', "users.id");
         })
             ->where('users.id', $this->id)
             ->first();
+        if ($account && $account->set_id) {
+            $_class = AcademicSet::query()->where('id', $account->set_id);
+            if ($account->role === 'student') {
+                $_class->with('advisor.user');
+            }
+            $account->class = $_class->first();
+            
+        }
+        return $account;
     }
+
+    
 
 
 
@@ -669,6 +690,7 @@ class User extends Authenticatable
 
     public function is_advisor()
     {
+        
         if ($this->role !== 'staff') {
             return null;
         }

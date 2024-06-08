@@ -21,7 +21,7 @@
                     Register your courses before the deadline to ensure you can view them when they become available.
                 </p>
 
-                <a href="/course-registration">
+                <a href="{{ route('course.enroll') }}">
                     <button type="button" class="btn btn-primary transition">
                         Register Courses
                     </button>

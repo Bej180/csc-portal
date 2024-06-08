@@ -25,6 +25,17 @@ app.controller("RootController", [
         $scope.token = null;
         $scope.colorScheme = null;
 
+        $scope.logout = () => {
+            $.confirm('Are you sure you want to log out?', {
+                accept: () => {
+                    sessionStorage.removeItem("access_token");
+                    localStorage.removeItem("access_token");
+                    window.location.href = "/logout";
+                },
+                acceptText: 'Log Me out',
+            });
+        }
+
         $scope.loadAnnouncements = () => {
             api(
                 '/app/annoucement/stream',
@@ -56,6 +67,14 @@ app.controller("RootController", [
             );
         }
 
+        $scope.get_index = (items, value, holder = 'id') => {
+            for (var i = 0; i < items.length; i++) {
+                if (items[i][holder] === value) {
+                    return i;
+                }
+            }
+            return -1;
+        };
 
         $scope.Response = (response, element) => {
             response = parseResponse(response);
@@ -626,14 +645,17 @@ app.controller("RootController", [
             $scope.opensidebar = true;
         };
 
-        $scope.enterSidebar = () => {
+        $scope.enterSidebar = (event) => {
+            const target = angular.element(event.target)
             const sidebar = angular.element(".sidebar");
 
-            sidebar.addClass("sidebar-hovered");
-            $scope.openSidebar();
+            if(!target.is('.sidebar-footer') && target.closest('.sidebar-footer').length === 0) {
+                sidebar.addClass("sidebar-hovered");
+                $scope.openSidebar();
+            }
         };
 
-        $scope.leaveSidebar = () => {
+        $scope.leaveSidebar = (event) => {
             const sidebar = angular.element(".sidebar");
 
             if (
@@ -707,14 +729,10 @@ app.controller("RootController", [
          * Toggles the application theme between light and dark mode.
          */
         $scope.toggleTheme = () => {
-            const theme = !(localStorage.getItem("darkMode") == "true");
-            $scope.darkMode = theme;
-            localStorage.setItem("darkMode", theme);
+            $scope.theme = $scope.theme === 'dark' ? 'light':'dark';
+            localStorage.setItem("colorScheme", $scope.theme);
         };
-        $scope.changeMode = (theme) => {
-            $scope.darkMode = theme;
-            localStorage.setItem("darkMode", theme);
-        };
+        
 
         $scope.loadTheme = () => {
 
@@ -774,6 +792,12 @@ app.controller("RootController", [
             }
         };
 
+        $scope.viewCourse = (course) => {
+            console.log(course);
+            $scope.view_course = course;
+            $scope.popUp('view_course');
+        };
+
         $scope.loadConfigurations = () => {
             $scope.api(
                 "/app/admin/session/show",
@@ -801,7 +825,6 @@ app.controller("RootController", [
         $scope.init = (userRole, token) => {
             $scope.token = token;
             $scope.userRole = userRole;
-            $scope.darkMode = localStorage.getItem("darkMode") == "true";
 
             $scope.loadTheme();
             $scope.loadAssignableClassNames();
@@ -812,6 +835,17 @@ app.controller("RootController", [
         };
     },
 ]);
+
+app.directive('toggle_mode', function(){
+    return {
+        restrict: 'A',
+        controller: 'RootController',
+        templateUrl: '/components/dark_mode_toggler.html',
+        link: function(scope, element, attr) {
+            
+        }
+    }
+})
 
 app.directive("infiniteScroll", function () {
     return {

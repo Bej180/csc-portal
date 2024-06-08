@@ -1,3 +1,4 @@
+
 <x-popend title="Staff Profile" name="display_staff" ng-controller="AccountSetting">
     <div class="flex flex-col gap-3 items-center sm:flex-row">
         <img src="/profilepic/{% staff_in_view.id %}"
@@ -145,10 +146,21 @@
                 <fieldset class="p-fieldset" ng-if="staff_in_view.classes.length > 0">
                     <legend class="p-legend opacity-50 mb-2">Class Advisor of::</legend>
 
+                    <chip-select items="staff_in_view.classes" label="name" ngModel="remove_class_list"></chip-select>
+
                     <div class="grid gap-2 grid-cols-2">
                         <span ng-repeat="set in staff_in_view.classes"
-                            class="text-center chip chip-green whitespace-nowrap" ng-bind="set.name+' class'"></span>
+                        ng-click="toggle_mark_class(set)"
+                        ng-class="{'chip-selected chip-danger': selected_for_class_removal(set.id)}"
+                            class="text-center chip whitespace-nowrap" ng-bind="set.name+' class'"></span>
 
+                    </div>
+
+                    <div class="mt-2">
+                        <button ng-click="update_advisory_list()" type="button" class="w-full btn btn-danger"
+                            ng-if="remove_class_list.length > 0">
+                            Remove from Class
+                        </button>
                     </div>
 
                 </fieldset>
@@ -165,7 +177,7 @@
                                 placeholder="Select Class"></select>
                         </div>
 
-                        <button class="btn btn-primary shrink-0"
+                        <button bg-if="session" class="btn btn-primary shrink-0"
                             controller="makeStaffAdvisor(staff_in_view.id, session)">Make Class
                             Advisor</button>
                     </form>
@@ -198,7 +210,7 @@
         
             </div>
             <label class="flex gap-1 items-center"><input class="checkbox" type="checkbox" ng-model="staff_in_view.reset_password"/> <span class="peer-checked:font-semibold">Reset Password</span></label>
-            <div class="info !p-3 !rounded-md" ng-if="staff_in_view.reset_password">Password will be reset to <span ng-bind="staff_in_view.gender | pronounce_his">staff's</span> <b>StaffID</b></div>
+            <div class="info !p-3 !rounded-md" ng-if="staff_in_view.reset_password">Password will be reset to <span ng-bind="staff_in_view.gender | his">staff's</span> <b>StaffID</b></div>
             <button type="button" class="btn btn-primary" controller="updateUserLogins(staff_in_view)">Save Changes</button>
         </form>
     </div>

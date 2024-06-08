@@ -172,23 +172,12 @@
     <script src="{{ asset('js/jchart.js') }}"></script>
     <script>
         chart('#barChart', {
-            A: 4,
-            B: 3,
-            C: 10,
-            D: 20,
-            E: 5,
-            F: 2
-        }, 'bar')
-        chart('#pieChart', {
-            A: 4,
-            B: 3,
-            C: 10,
-            D: 20,
-            E: 5,
-            F: 2
-        }, 'pie')
-
-
-        //chart.pieChart('#gradeChart');
+            '100 LEVEL': 50,
+            '200 LEVEL': 100,
+            '300 LEVEL': 110,
+            '400 LEVEL': 80,
+            '500 LEVEL': 35
+        }, 'bar');
+       
     </script>
 </x-template>
