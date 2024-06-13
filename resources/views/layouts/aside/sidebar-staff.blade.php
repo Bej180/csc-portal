@@ -1,4 +1,4 @@
-<li data-nav="announcement" ng-class="{'active': nav == 'announcement'}">
+<li data-nav="announcement" ng-class="{'active': isActiveNav('announcement')}">
     <a href="/home">
         <i class="material-symbols-rounded">notifications_rounded</i>
         <label>Announcement</label>
@@ -14,14 +14,14 @@
         </a>
     </li>
 
-    <li data-nav="class" ng-class="{'active': nav == 'class'}">
+    <li data-nav="class" ng-class="{'active': isActiveNav('class')}">
         <a href="{{ route('advisor.show-class') }}">
             <i class="material-symbols-rounded">school_class_rounded</i>
             <label>My Class</label>
         </a>
     </li>
 @elseif (auth()->user()?->is('hod'))
-    <li data-nav="results" ng-class="{'active': nav == 'results'}">
+    <li data-nav="results" ng-class="{'active': isActiveNav('results')}">
         <a href="/hod/results">
             <i class="material-symbols-rounded">checklist_rounded</i>
             <label>Results</label>
@@ -29,7 +29,7 @@
     </li>
 
 
-    <li data-nav="courses" ng-class="{'active': nav == 'courses'}">
+    <li data-nav="courses" ng-class="{'active': isActiveNav('courses')}">
         <a href="/hod/courses">
             <i class="material-symbols-rounded">assignment_ind_rounded</i>
             <label>Course Allocation</label>
@@ -37,7 +37,7 @@
     </li>
 
 
-    <li data-nav="staff" ng-class="{'active': nav == 'staff'}">
+    <li data-nav="staff" ng-class="{'active': isActiveNav('staff')}">
         <a href="/hod/staff">
             <i class="material-symbols-rounded">people_rounded</i>
             <label>Staff</label>
@@ -46,7 +46,7 @@
 @endif
 
 @if (auth()->user()->staff->eitherOfMyCoursesHasPractical())
-    <li data-nav="courses" ng-class="{'active': nav == 'courses'}">
+    <li data-nav="courses" ng-class="{'active': isActiveNav('courses')}">
         <a href="{{ route('staff.lab_score_results')}}">
             <i class="material-symbols-rounded">computer</i>
             <label>Lab Results</label>
@@ -55,21 +55,21 @@
 @endif
 
 @if (auth()->user()->staff->is('technologist'))
-    <li data-nav="courses" ng-class="{'active': nav == 'courses'}">
+    <li data-nav="courses" ng-class="{'active': isActiveNav('courses')}">
         <a href="/technologist/lab_results
     ">
             <i class="material-symbols-rounded">checklist_rounded</i>
             <label>Lab Results</label>
         </a>
     </li>
-    <li data-nav="courses" ng-class="{'active': nav == 'courses'}">
+    <li data-nav="courses" ng-class="{'active': isActiveNav('courses')}">
         <a href="/technologist/eattendance">
             <i class="material-symbols-rounded">description</i>
             <label>eAttendance</label>
         </a>
     </li>
 @elseif (count(auth()->user()->staff->courses))
-    <li data-nav="courses" ng-class="{'active': nav == 'courses'}">
+    <li data-nav="courses" ng-class="{'active': isActiveNav('courses')}">
         <a href="{{ route('staff.results') }}">
             <i class="material-symbols-rounded">checklist_rounded</i>
             <label>Results</label>
@@ -79,7 +79,7 @@
 
 
 
-{{-- <li class="has-menu" ng-class="{'active': nav == 'results'}">
+{{-- <li class="has-menu" ng-class="{'active': isActiveNav('results')}">
     <a href="#" ng-click="toggle('results')">
         <i class="material-symbols-rounded">local_library</i>
         <label>Results</label>
@@ -93,7 +93,7 @@
 </li>
 
 
-<li class="has-menu" ng-class="{'active': nav == 'results'}">
+<li class="has-menu" ng-class="{'active': isActiveNav('results')}">
     <a href="#" ng-click="toggle('results')">
         <i class="material-symbols-rounded">poll</i>
         <label>Results</label>

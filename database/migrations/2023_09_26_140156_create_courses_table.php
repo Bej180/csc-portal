@@ -35,7 +35,7 @@ return new class extends Migration
             $table->integer('prerequisite')->default(0);
             $table->string('image')->nullable();
 
-            
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
     }

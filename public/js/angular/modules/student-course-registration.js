@@ -1,31 +1,46 @@
 // Student COntrollers
 app.controller("StudentCourseRegistrationController", function ($scope) {
     $scope.reg_courses = [];
+    $scope.reg_courses2 = [];
+
     $scope.regData = {
         level: Location.get("level", ""),
         session: Location.get("session", ""),
         semester: Location.get("semester", ""),
     };
+    $scope.loaded = false;
     $scope.selection = [];
+    $scope.enrolled = null;
     $scope.registeredCourseDetails = {};
     $scope.borrowingCourses = [];
+    $scope.selectedUnits = 0;
 
-    $scope.viewCourseRegistrationDetails = (level, semester, session) => {
-        $scope.api(
-            "/app/student/course_registration_details",
-            { level, semester, session },
-            (res) => {
-                console.log(res);
-                $scope.route("course_registration_details");
+    $scope.viewCourseRegistrationDetails = ({ level, semester, session }) => {
+        $scope.http({
+            auth: true,
+            cacheId: true,
+            url: "/app/student/enrollments/show",
+            data: { level, semester, session },
+            success(res){
+                
+                $scope.route("enrollment_details");
                 $scope.course_reg = res;
+            },
             }
+            
         );
+    };
+    $scope.viewEnrollmentDetails = (enrollments) => {
+        $scope.route("enrollment_details");
+        $scope.course_reg = enrollments;
     };
 
     $scope.loadEnrollments = () => {
-        $scope.api("/app/student/enrollments/index", {}, (res) => {
+        api("/app/student/enrollments/index", (res) => {
             $scope.enrolled = res;
-            $scope.route("index");
+        }).finally(() => {
+            $scope.loaded = true;
+            $scope.$apply();
         });
     };
 
@@ -35,22 +50,29 @@ app.controller("StudentCourseRegistrationController", function ($scope) {
         const session = $scope.regData.session;
 
         if (level && session && session) {
-            Location.set({
-                level: $scope.regData.level,
-                semester: $scope.regData.semester,
-                session: $scope.regData.session,
-            });
-
             return $scope.api(
                 "/app/student/course_registration/courses",
                 $scope.regData,
-                (response) => {
-                    $scope.reg_courses = response;
+                ({ courses, maxUnits, minUnits }) => {
+                    $scope.reg_courses = courses;
+                    $scope.regCourses();
+                    $scope.maxUnits = maxUnits;
+                    $scope.minUnits = minUnits;
                     $scope.route("reg_courses");
                 }
             );
         }
     };
+
+    $scope.gotoIndex = () => {
+        $scope.route('index');
+        $scope.route('index', 'Enrollments');
+    }
+
+    $scope.displayCourseRegistrationForm = () => {
+        $scope.title('Register Courses');
+        $scope.route('register_form');
+    }
 
     /**
      * @method registerCourse
@@ -65,13 +87,17 @@ app.controller("StudentCourseRegistrationController", function ($scope) {
                 data.courses.push(course.id);
             }
         });
-        
+
         return $scope.api(
             "/app/student/courses/register",
             data,
             ({ level, semester, session }) => {
                 $scope.loadEnrollments();
-                $scope.viewCourseRegistrationDetails(level, semester, session);
+                $scope.viewCourseRegistrationDetails({
+                    level,
+                    semester,
+                    session,
+                });
                 $scope.regData = {};
             },
             (err) => console.error(err)
@@ -82,8 +108,17 @@ app.controller("StudentCourseRegistrationController", function ($scope) {
         $scope.popUp("open_borror_panel");
     };
 
+    $scope.regCourses = () => {
+        let courses = [];
+        for(let index in $scope.reg_courses) {
+            courses = courses.concat($scope.reg_courses[index]);
+        }
+        $scope.reg_courses2 = courses;
+    }
+
     $scope.reloadUnits = () => {
-        const selectedCourses = $scope.reg_courses.filter(
+        // const total = $scope.reg_courses.reduce((carry, item) =>
+        const selectedCourses = $scope.reg_courses2.filter(
             (course) => course.checked === true
         );
         let units = 0;
@@ -98,16 +133,16 @@ app.controller("StudentCourseRegistrationController", function ($scope) {
         const units = parseInt(course.units);
         const sum = units + $scope.selectedUnits;
         const index = $scope.findIndex(
-            $scope.reg_courses,
+            $scope.reg_courses2,
             (item) => item.id === id
         );
-        console.log($scope.selection);
+        console.log(course);
 
         if (id in $scope.selection) {
             // $scope.selectedUnits -= units;
             $scope.selection.splice(id, 1);
             if (index >= 0) {
-                $scope.reg_courses[index].checked = false;
+                $scope.reg_courses2[index].checked = false;
             }
         } else {
             if (sum > $scope.maxUnits && event.target.checked) {
@@ -122,7 +157,7 @@ app.controller("StudentCourseRegistrationController", function ($scope) {
             } else {
                 // $scope.selectedUnits += units;
                 $scope.selection[id] = course;
-                $scope.reg_courses[index].checked = true;
+                $scope.reg_courses2[index].checked = true;
             }
         }
 
@@ -138,7 +173,7 @@ app.controller("StudentCourseRegistrationController", function ($scope) {
         if (id in $scope.selection) {
             $scope.selectedUnits -= units;
             $scope.selection.splice(id, 1);
-            $scope.reg_courses = $scope.reg_courses.filter(
+            $scope.reg_courses2 = $scope.reg_courses2.filter(
                 (item) => item.id !== id
             );
         } else {
@@ -156,7 +191,7 @@ app.controller("StudentCourseRegistrationController", function ($scope) {
                 // $scope.selectedUnits += units;
                 const currentCourse = { checked: true, ...course };
                 $scope.selection[id] = currentCourse;
-                $scope.reg_courses.push(currentCourse);
+                $scope.reg_courses2.push(currentCourse);
             }
         }
         $scope.reloadUnits();

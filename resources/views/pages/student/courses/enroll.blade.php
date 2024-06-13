@@ -15,9 +15,7 @@
     $courses = Course::getCourses($_GET['level'] ?? null, $_GET['semester'] ?? null);
 
 @endphp
-<x-template nav='courses' title="Course Registration">
-    <x-wrapper>
-        <div ng-controller="StudentCourseRegistrationController" ng-init="initiate_courses()">
+<x-template nav='courses' title="Course Registration" controller="StudentCourseRegistrationController" ng-init="initiate_courses()">
             
                 @include('pages.student.courses.form')
             
@@ -30,7 +28,5 @@
                     padding: 0px;
                 }
             </style>
-        </div>
-    </x-wrapper>
 
 </x-template>

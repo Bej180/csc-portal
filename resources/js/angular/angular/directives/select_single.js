@@ -10,6 +10,8 @@ app.directive("select", [
                 drop: "@",
                 options: "=",
                 customize: "=",
+                disabled: '<',
+                ngDisabled: '<',
                 mask: "@",
             },
             link: function (scope, element, attrs) {
@@ -85,6 +87,7 @@ app.directive("select", [
                             `<li class="dropdown-header">${placeholder}</li>`
                         );
                 }
+                
 
                 const insertInput = () => {
                     const input = angular.element("<input>");
@@ -323,12 +326,16 @@ app.directive("select", [
                 function adjustDropdownPosition() {
                     if (scope.drop || !customContainer.hasClass("show")) return;
 
-                    const containerRect = trigger
+                    let containerRect = trigger
                         .parent()[0]
                         .getBoundingClientRect();
+                    let innerHeight = window.innerHeight;
+                    if (scope.relative) {
+                        innerHeight = angular.element(scope.relative)[0].innerHeight;
+                    }
                     const listRect = optionsList[0].getBoundingClientRect();
                     const availableSpace =
-                        window.innerHeight - containerRect.bottom;
+                        innerHeight - containerRect.bottom;
 
                     if (listRect.height > availableSpace) {
                         optionsList.css(
@@ -376,6 +383,14 @@ app.directive("select", [
                         });
                     }
                 );
+
+                scope.$watch('ngDisabled', function(newValue, oldValue) {
+                    trigger.prop('disabled', !newValue === false);
+                });
+
+                scope.$watch('disabled', function(newValue, oldValue) {
+                    trigger.prop('disabled', !newValue === false);
+                });
 
                 scope.$watch(
                     function () {

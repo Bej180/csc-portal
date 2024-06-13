@@ -1,5 +1,5 @@
 @php
-    $authUser = \App\Models\User::active();
+    $authUser = auth()->user();
 
     $announcements = auth()->user()?->notifications();
 

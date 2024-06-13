@@ -135,7 +135,8 @@ class UserController extends Controller
         if (!auth()->check()) {
             return view('pages.auth.login');
         }
-        $user = auth()->user();
+        $user = auth()->user()->account();
+       
         $role = $user->role;
 
         return view("pages.$role.dashboard", compact('user'));

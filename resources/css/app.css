@@ -448,12 +448,20 @@ body {
     background-color: var(--inherit-color);
     transition: all .5s;
     font-family: Roboto, "Hanken Grotesk", sans-serif;
+
     @apply lg:max-h-screen text-[0.9rem] lg:overflow-hidden;
 }
 body {
     background-color: #f7f7fa;
     color: #333;
+    background-position: 50%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     @apply bg-green-50 dark:bg-[#101010] dark:text-[var(--body-text-color)];
+}
+.dark body {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='30' height='30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.227 0c.687 0 1.227.54 1.227 1.227s-.54 1.227-1.227 1.227S0 1.914 0 1.227.54 0 1.227 0z' fill='rgba(255,255,255,0.07)'/%3E%3C/svg%3E")
 }
 .header1 {
     font-weight: 600;
@@ -823,6 +831,11 @@ button.btn-blue,
 .btn-blue {
     @apply bg-blue-700 hover:bg-blue-800 focus:ring-blue-700 font-[600];
 }
+#app {
+    @apply lg:flex items-stretch h-dvh relative;
+}
+
+
 
 .cell-1 {
     @apply col-span-1 border-l border-l-black;
@@ -833,10 +846,10 @@ button.btn-blue,
 .cell-5 {
     @apply col-span-5 border-l border-l-black pl-1 text-left;
 }
-#isLoading {
+#isLoading, .isLoading {
     @apply cursor-wait select-none fixed text-white top-0 left-0 z-[1044] w-dvw h-dvh bg-black/45 hidden place-content-center;
 }
-.show#isLoading {
+.show#isLoading, .isLoading.show {
     @apply grid;
 }
 .btn-secondary[type=button],
@@ -848,8 +861,11 @@ button.btn-secondary,
     background: #f1f5f9;
     border: 1px solid  #cbd5e154;
     box-shadow: none;
-    @apply focus:ring-[#e7edf3] font-[600] focus:font-[700] focus:border-zinc-400 dark:bg-zinc-800 dark:border-none dark:text-zinc-300;
+    @apply focus:ring-[#e7edf3] font-[600] focus:font-[700] focus:border-zinc-400 dark:bg-zinc-800 dark:border-none dark:text-zinc-300 hover:dark:text-white hover:dark:bg-[#424247];
 }
+.text-mute {
+    @apply text-[#999999] dark:text-[#777777];
+    }
 .input-disabled, input:disabled, select:disabled {
     background-color: #eef1f35e;
     @apply dark:bg-[#0c0c0cc7];
@@ -968,9 +984,7 @@ button.has-indicators {
 }
 
 
-.state-error {
-    @apply !text-red-600 !text-white;
-}
+
 .mode-toggler {
     text-decoration: none;
     padding: 10px;
@@ -1312,7 +1326,6 @@ table.excelGrid {
     @apply bg-blue-100 dark:bg-blue-500 text-blue-300;
 }
 
-.student-list {}
 
 .student-list .student {
     @apply flex cursor-pointer gap-2 lg:gap-4 p-3 items-center mb-4 last:mb-0;
@@ -2175,7 +2188,7 @@ fieldset.input.focused legend {
     border-width:0px;
     outline: none;
     color: var(--input-color);
-    @apply border-b-2 border-b-zinc-800/35 focus-within:border-b-2  focus-within:border-b-primary flex items-center gap-2 px-3 py-2 placeholder:text-sm text-sm text-zinc-500 focus-within:bg-white/35 focus-within:bg-white/10 dark:border-[#48484b];
+    @apply border-b-2 border-b-zinc-800/35 focus-within:border-b-2  focus-within:border-b-primary flex items-center gap-2 px-3 py-2 placeholder:text-sm text-sm text-zinc-500 focus-within:bg-white/35 dark:focus-within:bg-white/10 dark:border-[#48484b];
 }
 .custom-input:focus-within > i {
     @apply text-zinc-600;
@@ -2845,6 +2858,10 @@ fieldset.profile-fieldset legend {
 }
 
 @media print {
+    .print\:exact {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
     body {
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
@@ -3399,11 +3416,17 @@ fieldset.profile-fieldset legend {
 .popup.popup-inverse {
     background: rgba(var(--inherit-rgb), 0.5);
 }
+.popup-wrapper:is(.dark *) {
+    --input-bg-color: rgb(39,39,39);
+
+}
 
 .popup-wrapper {
+   
     background: var(--inherit-color);
     @apply w-full lg:w-[90%] lg:max-w-[500px] max-h-[calc(100vh-8rem)] relative -top-[2rem] translate-y-[2rem] shadow-lg rounded-lg flex flex-col overflow-clip dark:bg-zinc-800 border border-gray-300 dark:border-black;
 }
+
 
 .popup .fieldset {
     @apply border border-slate-300 dark:border-zinc-600 p-4 rounded-lg my-4;
@@ -3584,7 +3607,7 @@ input:-webkit-autofill {
 }
 
 .dropdown-toggle {
-    @apply flex justify-between items-center gap-2;
+    @apply flex justify-between items-center gap-2 bg-[--dropdown-bg-color];
 }
 .dropdown-toggle-text {
     @apply whitespace-nowrap;
@@ -3607,11 +3630,11 @@ input:-webkit-autofill {
     color: #212529;
     text-align: left;
     list-style: none;
-    background-color: var(--inherit-color);
+    background-color: var(--dropdown-bg-color);
     border: 1px solid rgba(0, 0, 0, 0.15);
     border-radius: 4px;
-    max-height: 200px;
-    overflow-y: scroll;
+    max-height: 150px;
+    overflow-y: auto;
     @apply shadow-lg text-sm;
 }
 
@@ -4281,13 +4304,18 @@ button[data-ui=shuffle] {
 .responsive-table tbody tr:nth-child(even) {
   @apply dark:bg-zinc-800 bg-zinc-50/45; 
 }
-
 .responsive-table th,
 .responsive-table td {
   padding: 8px;
   text-align: left;
+  @apply dark:border-zinc-800 align-middle;
+}
+.responsive-table tbody > tr:first-child td {
+  border-top: 1px solid #ddd; 
+}
+
+.responsive-table td {
   border-bottom: 1px solid #ddd; 
-  @apply dark:border-zinc-900 align-middle;
 }
 .responsive-table tr:last-child td {
   border-bottom: none;
@@ -4407,7 +4435,7 @@ button[data-ui=shuffle] {
     @apply p-3;
 }
 .section {
-    @apply border rounded-lg overflow-clip cursor-pointer dark:border-gray-700 group-hover:bg-slate-500 relative dark:!bg-zinc-950 gap-3 dark:border-black;
+    @apply border rounded-lg overflow-clip cursor-pointer dark:border-gray-700 group-hover:bg-slate-500 relative dark:!bg-zinc-950 gap-3;
 }
 
 .panel-header {

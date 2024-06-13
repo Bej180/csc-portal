@@ -6,9 +6,9 @@ namespace App\Models;
 
 use App\Mail\TwoFAMail;
 use App\Models\{
-    Advisor,
     Student,
-    Admin
+    Admin,
+    AccessToken
 };
 use Exception;
 use Emargareten\TwoFactor\TwoFactorAuthenticatable;
@@ -123,7 +123,9 @@ class User extends Authenticatable
     }
 
 
-    public static function createAccount(array $data)
+
+
+    public static function _createAccount(array $data)
     {
         if (!array_key_exists('role', $data)) {
             $data['role'] = 'student';
@@ -144,7 +146,7 @@ class User extends Authenticatable
             default     => null,
         };
         if (!$profileObj) {
-            throw Exception('Unknown role');
+            throw \Exception('Unknown role');
         }
 
         $authObj = new User();
@@ -166,6 +168,44 @@ class User extends Authenticatable
 
         return $profileObj;
     }
+
+    public static function active () {
+        return auth()->user()->account();
+    }
+
+    public function profile()
+    {
+        return $this->morphTo();
+    }
+
+    
+    public static function createAccount(array $data)
+{
+    $role = $data['role'] ?? 'student';
+    $profileClasses = [
+        'student' => new Student(),
+        'staff' => new Staff(),
+        'admin' => new Admin(),
+        'dean' => new Dean(),
+    ];
+
+    if (!isset($profileClasses[$role])) {
+        throw new \Exception('Unknown role');
+    }
+
+    $user = User::create($data);
+
+    $profileClass = $profileClasses[$role];
+    $profileData = Arr::only($data, $profileClass->getFillable());
+    $profile = $profileClass::create($profileData);
+
+    // Associate profile with user via morph relationship
+    $user->profile()->associate($profile);
+    $user->save();
+
+    return $user->fresh(); // Return user with loaded profile
+}
+
 
 
 
@@ -191,48 +231,8 @@ class User extends Authenticatable
         return !empty($permissions[$permission]);
     }
 
-    public function getHashedPassword()
-    {
-        if (request()->has('password')) {
-            $request = request();
-            $password = $request->get('password');
-            $old_password = $request->get('old_password');
-
-            // check if the user is the owner, if not unset password field
-            // because only the owner can change it
-            $auth_id = auth()->id();
-            $user_id = $this->id;
-
-            if ($auth_id != $user_id) {
-                return null;
-            } else if (!$request->has('old_password')) {
-                throw new Exception('Current password is required');
-            }
-            if (!Hash::compare($password, $this->password)) {
-                throw new Exception('Passwords do not match');
-            }
-            return Hash::make($password);
-        }
-
-        return null;
-    }
-
-    public static function getFullnameFromRequest()
-    {
-        $request = request();
-        $firstname = $request->get('firstname', '');
-        $lastname = $request->get('lastname', '');
-        $middlename = $request->get('middlename', '');
-
-        if (!$firstname && !$lastname) {
-            return null;
-        }
 
 
-        $fullname = [$firstname, $lastname, $middlename];
-
-        return implode(' ', $fullname);
-    }
 
     public function getFullnameAttribute($value)
     {
@@ -245,70 +245,6 @@ class User extends Authenticatable
         $obj->middlename = count($nameParts) > 2 ? $nameParts[2] : '';
         return $obj;
     }
-
-
-
-
-
-
-
-    public function generateId($role, $prefix = null)
-    {
-        $prefix ??= strtoupper(substr($role, 0, 3));
-        do {
-            $randomNumber = mt_rand(10000, 99999);
-            $uniqueId = "$prefix-$randomNumber";
-        } while (User::where('unique_id', $uniqueId)->exists());
-
-        return $uniqueId;
-    }
-
-
-
-
-
-
-
-
-    public static function store_user(array $data)
-    {
-
-
-        // Default rolr
-        $data['role'] ??= 'student';
-
-        if (!array_key_exists($data['role'], self::$accounts)) {
-            return null;
-        }
-
-        // dd($data);
-
-        $role = $data['role'];
-
-        $account = self::$accounts[$role];
-
-
-        // Create user account for authentification
-        $authUser = User::_create($data);
-        dd($authUser);
-
-
-        //    $data['id'] = $authUser->id;
-
-        //     // Add User to role tablez
-        //     $account::_create($data);
-
-        return $authUser;
-    }
-
-
-
-
-    public static function active()
-    {
-        return auth()->user();
-    }
-
 
 
 
@@ -367,15 +303,8 @@ class User extends Authenticatable
         return redirect()->route($dashboard);
     }
 
-    public function active_session() {
-        $session = AcademicSession::latest()->first();
 
-        if ($session) {
-            
-        }
-    }
 
-  
 
     public function account()
     {
@@ -392,26 +321,31 @@ class User extends Authenticatable
                 $_class->with('advisor.user');
             }
             $account->class = $_class->first();
-            
+        }
+        if ($account) {
+            $gender = strtolower($account->gender);
+
+            $account->his = 'his';
+            $account->him = 'him';
+            $account->he = 'he';
+            $account->avatar = asset('images/avatar-m.png');
+
+            if ($gender === 'female') {
+                $account->his = 'her';
+                $account->him = 'her';
+                $account->he = 'she';
+                $account->avatar = asset('images/avatar-f.png');
+            }
+            if (is_null($account->image)) {
+                $account->image = $account->avatar;
+            }
         }
         return $account;
     }
 
-    
 
 
 
-
-    public function profile()
-    {
-
-        return match ($this->role) {
-            'student' => $this->hasOne(Student::class, 'id'),
-            'admin' => $this->hasOne(Admin::class, 'id'),
-            'staff' => $this->hasOne(Staff::class, 'id', 'id'),
-            default => null,
-        };
-    }
 
 
 
@@ -476,19 +410,7 @@ class User extends Authenticatable
 
 
 
-    public function picture()
-    {
-        $image = $this->image;
-        if ($image) {
-            return asset('storage/' . $image);
-        }
 
-        return asset(match ($this->gender) {
-            'FEMALE' => 'images/avatar-f.png',
-            'MALE' => 'images/avatar-m.png',
-            default => 'images/avatar-u.png',
-        });
-    }
 
 
     /**
@@ -690,7 +612,7 @@ class User extends Authenticatable
 
     public function is_advisor()
     {
-        
+
         if ($this->role !== 'staff') {
             return null;
         }
@@ -825,6 +747,27 @@ class User extends Authenticatable
         });
     }
 
+    protected static function booted()
+    {
+        static::deleting(function ($user) {
+            if ($user->isForceDeleting()) {
+                $user->staff()->forceDelete();
+                $user->admin()->forceDelete();
+                $user->student()->forceDelete();
+            } else {
+                $user->staff()->delete();
+                $user->admin()->delete();
+                $user->student()->delete();
+            }
+        });
+
+        static::restored(function ($user) {
+            $user->staff()->restore();
+            $user->admin()->restore();
+            $user->student()->restore();
+        });
+    }
+
 
 
     public function pronoun($type)
@@ -846,5 +789,11 @@ class User extends Authenticatable
         $role = $this->role;
         $this->$role->image = $imagePath;
         $this->$role->save();
+    }
+
+
+    public function accessTokens()
+    {
+        return $this->morphMany(AccessToken::class, 'tokenable');
     }
 }

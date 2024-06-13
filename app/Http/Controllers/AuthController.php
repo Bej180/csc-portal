@@ -12,6 +12,7 @@ use App\Models\ActivityLog;
 use App\Models\Admin;
 use App\Models\Advisor;
 use App\Models\Device;
+use App\Models\AccessToken;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -38,23 +39,89 @@ class AuthController extends Controller
 
     public function authenticate(Request $request)
     {
+        
+
         // Validate the request data (token)
         $request->validate([
             'token' => 'required|string',
         ]);
 
-        
-        $token = $request->token;
+
+        $raw_token = $request->token;
+
         
 
-        // Attempt to authenticate the user using Sanctum's token
-        if (Auth::onceUsingId($token)) {
-            // Authentication successful
-            return response()->json(['message' => 'Authentication successful'], 200);
-        } else {
-            // Authentication failed
-            return response()->json(['message' => 'Invalid token'], 401);
+        $split_token = explode('|', $raw_token);
+
+        if (count($split_token) < 2) {
+            return response()->json([
+                'error' => 'Token is invalid.',
+            ], 400);
         }
+
+        list($id, $token) = $split_token;
+        $accessToken = AccessToken::find($id);
+
+        if (!$accessToken->exists()) {
+            return response()->json([
+                'error' => 'Token has expired',
+            ], 400);
+        }
+
+      
+
+        if ($accessToken->hasExpired()) {
+            return response()->json([
+                'error' => 'Access Token has expired',
+            ], 400);
+        }
+        else if (!$accessToken->equals($token)) {
+            
+            return response()->json([
+                'token' => $token,
+                'raw_token' => $accessToken,
+                'message' => $accessToken->match($token),
+                'error' => 'Token is invalid..',
+            ], 400);
+
+        }
+
+        $user = User::where('id', $accessToken->tokenable_id)
+            ->where('role', $accessToken->name);
+
+
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'Authentication failed'
+            ], 401);
+        }
+       
+        
+        auth()->login($user);
+    
+
+        if (auth()->check()) {
+            $token = $user->createToken($accessToken->name)->plainTextToken;
+
+            $response = [
+                'persistent_session' => $token,
+                'redirect' => '/home',
+                'success' => 'Welcome back',
+            ];
+
+            if ($request->callbackUrl) {
+                $response['redirect'] = $request->callbackUrl;
+            }
+
+            return response()->json($response, 200);
+
+        }
+
+        return response()->json([
+            'message' => 'Failed to authenticate your session'
+        ], 400);
+        
     }
     public function verifyOTP(Request $request)
     {
@@ -65,7 +132,7 @@ class AuthController extends Controller
             'tokens.required' => 'OTP tokens must be provided',
             'email.required' => 'email address is missing',
             'email.exists' => 'User account not found',
-            
+
         ]);
 
         if ($validator->fails()) {
@@ -115,6 +182,8 @@ class AuthController extends Controller
         return view('pages.auth.registered');
     }
 
+   
+
 
 
 
@@ -124,7 +193,7 @@ class AuthController extends Controller
 
 
         return $this->attemptLogin($request, function ($user) {
-            $token = $user->createToken('myApp')->plainTextToken;
+            $token = $user->createToken($user->role)->plainTextToken;
             return compact('token');
         });
     }
@@ -173,6 +242,25 @@ class AuthController extends Controller
             $jointoken = $request->input('invite');
         }
         return view('pages.auth.register', compact('jointoken', 'invitation', 'title'));
+    }
+
+    public function api_logout(Request $request) {
+        
+        auth()->logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        if (auth()->check()) {
+            return response()->json([
+                "error" => "Failed to log out account, try again. If this persists's contact administrator for help",
+            ], 400);
+        }
+
+        return response()->json([
+            'redirect' => '/login',
+            'success' => 'You have been logged out successfully',
+        ]);
     }
 
 
@@ -228,10 +316,10 @@ class AuthController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'errors'=> $validator->errors(),
-                ], 400);
+                'errors' => $validator->errors(),
+            ], 400);
         }
-        if (!$request->surname||!$request->othernames) {
+        if (!$request->surname || !$request->othernames) {
             $message = 'Your surname is required';
             if (!$request->othernames) {
                 $message = 'Your other names are required';
@@ -241,7 +329,7 @@ class AuthController extends Controller
             ], 400);
         }
         $formFields = $validator->validated();
-        
+
 
         // if invitation token exists add student to the set
         $token_is_valid = false;
@@ -269,7 +357,7 @@ class AuthController extends Controller
 
         $formFields['password'] = bcrypt($formFields['password']);
         $formFields['approved'] = false;
-        
+
         $user = User::saveUser($formFields);
 
         auth()->login($user);
@@ -475,7 +563,6 @@ class AuthController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        // Attempt to authenticate the user
         $username = $this->credential();
         $user = User::where($username, $request->input($username))->first();
 
@@ -484,42 +571,35 @@ class AuthController extends Controller
                 'error' => "$username does not belong to any account"
             ], 401);
         }
-        
+
 
         // Handle account lockout
         else if ($user->isLocked()) {
             return response()->json([
-            'alert' => 'Your account has been locked. Check Your email for unlock link'
+                'alert' => 'Your account has been locked. Check Your email for unlock link'
             ], 401);
-        }
-
-
-        else if (!Hash::check($request->password, $user->password)) {
+        } else if (!Hash::check($request->password, $user->password)) {
 
             $retries = $user->incrementLogAttempts();
 
             if ($retries >= self::LOG_RETRY_LIMIT) {
 
                 $now = Carbon::now()->addMinutes(15);
-                
+
 
                 $user->lockAccount($now);
                 $mins = (int) $now->format('i');
 
                 return response()->json([
-                    'error' => 'You account has been locked, it will be unlocked in '.$mins.' '.str_plural('min', $mins). ' or you can check your email for unlock link'
+                    'error' => 'You account has been locked, it will be unlocked in ' . $mins . ' ' . str_plural('min', $mins) . ' or you can check your email for unlock link'
                 ], 401);
-
-            }
-            else {
+            } else {
                 $countRetryLeft = self::LOG_RETRY_LIMIT - $retries;
 
                 return response()->json([
-                    'error' => 'Invalid credentials. You have '.$countRetryLeft. ' '. str_plural('retry', $countRetryLeft) . ' left',
+                    'error' => 'Invalid credentials. You have ' . $countRetryLeft . ' ' . str_plural('retry', $countRetryLeft) . ' left',
                 ], 401);
             }
-           
-
         }
 
 
@@ -551,8 +631,8 @@ class AuthController extends Controller
 
         $tokenHolder = !empty($request->rememberme) ? 'persistent_session' : 'temporary_session';
 
-        // Auth::login($user, $request->rememberme ?? false);
-        auth()->login($user);
+         Auth::login($user, $request->rememberme ?? false);
+        // auth()->login($user);
 
         $token = $user->createToken($user->role)->plainTextToken;
 
@@ -584,18 +664,17 @@ class AuthController extends Controller
         $field = 'username';
         if (ctype_digit($login)) {
             $field = 'phone';
-        }
-        elseif (preg_match('/^([^@]+)@([^@]+)$/', $login)) {
+        } elseif (preg_match('/^([^@]+)@([^@]+)$/', $login)) {
             $field = 'email';
         }
-        
+
         request()->merge([$field => $login]);
         return $field;
     }
 
 
 
-    
+
 
 
 
@@ -772,7 +851,7 @@ class AuthController extends Controller
 
         // Log the user in and generate token
         $auth = Auth::login($user);
-        $token = $auth->createToken($auth->role)->plainTextToken;
+        $token = $user->createToken($user->role)->plainTextToken;
 
         // Prepare success response
         $response = [

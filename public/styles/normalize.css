@@ -7,6 +7,7 @@
   --input-padding: .2em 0.6em;
     --input-color: #333;
     --input-bg-color: #fff;
+    --dropdown-bg-color: #fff;
     --td-border-color: rgb(51, 51, 51, 0.1);
 }
 * {
@@ -25,7 +26,8 @@ audio, canvas, embed, iframe, img, object, svg, video {
 }
 .dark {
   --input-color: rgb(156 161 171);
-  --input-bg-color: #22222499;;
+  --input-bg-color: #222224;
+  --dropdown-bg-color: #222224;
   --input-border-color: transparent;
   --td-border-color: #aaa;
   

@@ -10,7 +10,7 @@
                         <fieldset class="p-fieldset p-component">
                             <legend class="p-fieldset-legend">
                                 <div class="flex items-center">
-                                    <span class="material-symbols-rounded">school</span>
+                                    <x-icon name="school"/>
                                     <p>School Details</p>
                                 </div>
                             </legend>
@@ -148,7 +148,7 @@
 
 
 
-                                        <form ng-action="reOpenCourseRegistration()" class="px-2 mt-8">
+                                        <form class="px-2 mt-8">
                                             <div class="font-semibold mt-2">
                                                 Enter the Session and Semester you want to reopen
                                             </div>
@@ -165,7 +165,7 @@
                                                         <option>RAIN</option>
                                                     </select>
                                                 </div>
-                                                <button class="btn-icon btn-primary"><i
+                                                <button type="button" controller="reOpenCourseRegistration()" class="btn-icon btn-primary"><i
                                                         class="fa fa-lock-open"></i></button>
                                             </div>
 
@@ -179,7 +179,7 @@
                                             <div class="flex flex-col gap-3">
                                                 <button
                                                     type="button"ng-repeat="(index, open_semester) in open_semesters"
-                                                    class="uppercase rounded-md px-2 py-0.5 border hover:bg-red-100 hover:text-red-600 border-zinc-200 bg-zinc-100 flex justify-between items-center"
+                                                    class="uppercase rounded-md px-2 py-0.5  btn btn-secondary flex justify-between items-center"
                                                     ng-click="closeSemester($event, open_semester, index)"
                                                     title="Click to Close Course Registration">
                                                     <span>{% open_semester.semester%}</span>

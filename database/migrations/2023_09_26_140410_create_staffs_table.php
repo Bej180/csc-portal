@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('staff_id')->nullable();
             $table->boolean('is_class_advisor')->default(false);
             $table->boolean('is_hod')->default(false);
+            
             $table->enum('designation', ['lecturer', 'technologist']);
             
             

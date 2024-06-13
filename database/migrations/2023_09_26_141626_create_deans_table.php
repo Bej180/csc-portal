@@ -20,8 +20,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->enum('gender', ['MALE', 'FEMALE']);
             $table->string('address');
-            
-            
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
     }

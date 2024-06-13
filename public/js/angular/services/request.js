@@ -1,31 +1,30 @@
 import axios, { AxiosError } from "axios";
 
-const session_name = "access_token";
-
-window.csrfToken = document
+app.service('HttpService', function(){
+    this.session_name = 'access_token';
+    this.csrfToken = document
     .querySelector('meta[name="csrf_token"]')
     .getAttribute("content");
-window.bearerToken =
-    sessionStorage.getItem(session_name) || localStorage.getItem(session_name);
+    this.bearerToken = sessionStorage.getItem(this.session_name) || localStorage.getItem(this.session_name);
 
-
-if (bearerToken) {
-    axios.defaults.headers.common["Authorization"] = "Bearer " + bearerToken;
-}
-axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
-
-const getHeaders = (session, customHeaders) => {
-    const headers = {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        ...(session && { Authorization: `Bearer ${session}` }),
-        ...customHeaders,
+    this.getHeaders = (session, customHeaders) => {
+        const headers = {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            ...(session && { Authorization: `Bearer ${session}` }),
+            ...customHeaders,
+        };
+        
+        return headers;
     };
-    
-    return headers;
-};
 
-const handleResponse = (response, success, init) => {
+
+
+
+    
+
+
+this.handleResponse = (response, success, init) => {
     response = parseResponse(response);
 
     ENV.log(response);
@@ -43,10 +42,16 @@ const handleResponse = (response, success, init) => {
         });
     if (response.redirect)
         setTimeout(() => (window.location.href = response.redirect), 2000);
-    
 
     return response;
 };
+
+
+
+
+
+})
+
 
 const handleError = (err, error, init, args) => {
     const errorData = parseResponse(err);
@@ -132,23 +137,12 @@ const api = async (url, data, success, error, init = {}) => {
     if (url.indexOf("/api") === -1) {
         url = `/api/${url.replace(/^\//, "")}`;
     }
-    const args = [url, data, success, error, init];
-
-    if (init.auth) {
-        delete init.auth;
-        return $.confirm("Enter your password to proceed", {
-            type: "password",
-            style: "info",
-            accept: function () {
-                args[1]["password_required"] = this.value;
-                return api(...args);
-            },
-        });
-    }
 
     if (!init.silent) {
         $("#isLoading").addClass("show");
     }
+
+    const args = [url, data, success, error, init];
 
     const session =
         localStorage.getItem(session_name) ||

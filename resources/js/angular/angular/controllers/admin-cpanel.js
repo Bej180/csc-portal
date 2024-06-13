@@ -92,9 +92,6 @@ app.controller("AdminControlPanelController", function ($scope) {
             {},
             (res) => {
                 $scope.processResponse(res);
-            },
-            (err) => {
-                console.log(err);
             }
         );
     };
@@ -111,7 +108,7 @@ app.controller("AdminControlPanelController", function ($scope) {
     };
 
     $scope.saveCourseRegistrationState = (obj, success, error) => {
-        return $scope.api(
+        return api(
             "/app/admin/session/course_registration_status/update",
             obj,
             success,

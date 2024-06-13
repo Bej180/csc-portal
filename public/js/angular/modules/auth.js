@@ -1,4 +1,6 @@
 import '../services/students.js';
+// import '../services/auth_services.js';
+
 const session_name = "access_token";
 
 /**
@@ -10,7 +12,8 @@ app.controller("AuthController", [
     "$scope",
     "$timeout",
     "StudentService",
-    function ($scope, $timeout, StudentService) {
+    'AuthService',
+    function ($scope, $timeout, StudentService, AuthService) {
         // Initialize variables
         $scope.credential = null; // User credential (email or username)
         $scope.password = null; // User password
@@ -23,7 +26,6 @@ app.controller("AuthController", [
             $scope.resetPassword = false;
             $scope.activateAccount = false;
             $scope.otp = [];
-            $scope.autoLog(is_logged);
         };
 
         $scope.storeTokenFromResponse = (response) => {
@@ -45,57 +47,14 @@ app.controller("AuthController", [
 
 
 
-        $scope.is_logged = function() {
-            const tokenInSession = sessionStorage.getItem(session_name);
-            const tokenInLocal = localStorage.getItem(session_name);
-
-            if (tokenInSession) {
-                // If token found in sessionStorage, move it to localStorage
-                localStorage.setItem(session_name, tokenInSession);
-                sessionStorage.removeItem(session_name);
-                return tokenInSession;
-            } else if (tokenInLocal) {
-                return tokenInLocal;
-            } else {
-                return false;
-            }
-        };
-
+        
 
 
 
 
         
 
-        $scope.autoLog = function (logged) {
-            return;
-            const tokenInSession = sessionStorage.getItem(session_name);
-            const tokenInLocal = localStorage.getItem(session_name);
-           
-
-            const token = tokenInLocal || tokenInLocal;
-            if (tokenInSession && tokenInLocal && !logged) {
-                localStorage.removeItem(session_name);
-                sessionStorage.removeItem(session_name);
-                return;
-            }
-
-            if (tokenInSession && !tokenInLocal) {
-                localStorage.setItem(session_name, tokenInSession);
-            }
-           
-
-            if (!tokenInSession && tokenInLocal && token) {
-                api("/authenticate", { token: token })
-                    .then(function (res) {
-                        $scope.storeTokenFromResponse(res);
-                    })
-                    .catch(function (error) {
-                        localStorage.removeItem(session_name);
-                        sessionStorage.removeItem(session_name);
-                    });
-            }
-        };
+        
 
         /**
          * login
@@ -104,6 +63,7 @@ app.controller("AuthController", [
          */
         $scope.login = (callbackUrl) => {
             $scope.loginData.callbackUrl = callbackUrl;
+            return AuthService.login( $scope.loginData);
 
             return $timeout(function(){
                 return api(

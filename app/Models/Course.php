@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Course
@@ -27,7 +28,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Course extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -127,11 +128,15 @@ class Course extends Model
     {
         $reg_no ??= auth()->user()->student->reg_no;
 
-        return Enrollment::where('semester', $semester)
-            ->with('course')
+       
+
+        return Enrollment::where('enrollments.semester', $semester)
+            ->join('courses', 'courses.id', '=', 'enrollments.id')
             ->where('session', $session)
             ->where('reg_no', $reg_no)
-            ->get();
+            // ->sum('units')
+            ->get()
+            ;
     }
 
     /**
@@ -199,5 +204,35 @@ class Course extends Model
             ->where('course_id', '=', $this->id)
             ->with('user')
             ->get();
+    }
+
+
+    public function maxUnits(string $semester) {
+        $HARMATTAN = [
+            'max' => 21,
+            'min' => 19
+        ];
+        $levels = [
+            100 => [
+                'HARMATTAN' => ['max' => 21, 'min' => 19],
+                'RAIN'      => ['max' => 21, 'min' => 19],
+            ],
+            200 => [
+                'HARMATTAN' => ['max' => 21, 'min' => 19],
+                'RAIN'      => ['max' => 21, 'min' => 19],
+            ],
+            300 => [
+                'HARMATTAN' => ['max' => 21, 'min' => 19],
+                'RAIN'      => ['max' => 21, 'min' => 19],
+            ],
+            400 => [
+                'HARMATTAN' => ['max' => 21, 'min' => 19],
+                'RAIN'      => ['max' => 21, 'min' => 19],
+            ],
+            500 => [
+                'HARMATTAN' => ['max' => 21, 'min' => 19],
+                'RAIN'      => ['max' => 21, 'min' => 19],
+            ],
+        ];
     }
 }

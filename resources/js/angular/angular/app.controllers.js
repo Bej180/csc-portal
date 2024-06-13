@@ -11,5 +11,5 @@ import './controllers/technologist.controller.js';
 import './controllers/hod-controller.js';
 import './controllers/staff-result.js';
 // import './controllers/staff-controller.js';
-import './controllers/student-controller.js';
+
 import './controllers/profile-controller.js';

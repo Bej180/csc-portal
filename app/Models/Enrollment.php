@@ -30,6 +30,10 @@ class Enrollment extends Model
 
 
 
+    
+
+
+
     public static function getFillables(array $data = [])
     {
         $class = __CLASS__;

@@ -20,7 +20,7 @@ $styles = [
   $styles = array_unique($styles);
 @endphp
 <meta charset="UTF-8" />
-<title>{{ $title??'Futo CSC Portal' }}</title>
+<title ng-bind="app_title">{{ $title??'Futo CSC Portal' }}</title>
 <meta name="theme-color" content="#000000"/>
 @if (isset($description)) 
   <meta name="description" content="{!!$description!!}"/>

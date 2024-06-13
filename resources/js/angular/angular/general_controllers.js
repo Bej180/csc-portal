@@ -1,3 +1,6 @@
+import { startCase } from 'lodash';
+import '../../../../public/js/angular/services/auth_services.js';
+import '../../../../public/js/angular/services/cache_services.js';
 /**
  * RootController
  * Controller responsible for managing global application state and utility functions.
@@ -7,8 +10,15 @@
 app.controller("RootController", [
     "$scope",
     "$window",
-    function ($scope, $window) {
+    '$cacheFactory',
+    'AuthService',
+    'CacheService',
+    function ($scope, $window, $cacheFactory, AuthService, CacheService) {
         // Initialize scope variables
+
+
+
+        $scope.app_title = 'Futo CSC Portal';
         $scope.open = false;
         $scope.alert = false;
         $scope.opensidebar = false;
@@ -20,54 +30,60 @@ app.controller("RootController", [
         $scope.data = null;
         $scope.userRole = "";
         $scope.errors = {};
-        $scope.cache_memory = {};
         $scope.active_route = "index";
         $scope.token = null;
         $scope.colorScheme = null;
+        $scope.session_name = "access_token";
 
         $scope.logout = () => {
-            $.confirm('Are you sure you want to log out?', {
-                accept: () => {
-                    sessionStorage.removeItem("access_token");
-                    localStorage.removeItem("access_token");
-                    window.location.href = "/logout";
-                },
-                acceptText: 'Log Me out',
-            });
+            return AuthService.logout();
+        };
+
+        $scope.title = (title) => {
+            if (!title) return;
+            const splitTitle = $scope.app_title.split('|');
+            splitTitle[0] = title;
+            $scope.app_title = splitTitle.join('|');
+        }
+
+        $scope.cache = (key, value) => {
+            if (angular.isUndefined(value)) {
+                return CacheService.get(key);
+            }
+            return CacheService.put(key, value);
         }
 
         $scope.loadAnnouncements = () => {
-            api(
-                '/app/annoucement/stream',
-                res => {
-                    
-                    if (res.length > 0) {
-                        for(let i = 0; i < res.length; i++) {
-                            const current = res[i];
-                            let options = {type:'alert', title: 'Notice', denyText: 'Close', accept:async()=>{}};
+            api("/app/annoucement/stream", (res) => {
+                if (res.length > 0) {
+                    for (let i = 0; i < res.length; i++) {
+                        const current = res[i];
+                        let options = {
+                            type: "alert",
+                            title: "Notice",
+                            denyText: "Close",
+                            accept: async () => {},
+                        };
 
-                            if (current.id) {
-                                options = {
-                                    type: 'confirm',
-                                    acceptText: 'Mark as Seen',
-                                    title: 'Announcement',
-                                    accept: async () => {
-                                        return api(
-                                            '/app/annoucement/markAsSeen'
-                                        )
-                                    }
-                                }
-                            }
-                            if (current.message) {
-                                $.confirm(current.message, options)
-                            }
+                        if (current.id) {
+                            options = {
+                                type: "confirm",
+                                acceptText: "Mark as Seen",
+                                title: "Announcement",
+                                accept: async () => {
+                                    return api("/app/annoucement/markAsSeen");
+                                },
+                            };
+                        }
+                        if (current.message) {
+                            $.confirm(current.message, options);
                         }
                     }
                 }
-            );
-        }
+            });
+        };
 
-        $scope.get_index = (items, value, holder = 'id') => {
+        $scope.get_index = (items, value, holder = "id") => {
             for (var i = 0; i < items.length; i++) {
                 if (items[i][holder] === value) {
                     return i;
@@ -83,59 +99,74 @@ app.controller("RootController", [
             }
 
             return response[element];
-        }
+        };
 
-        $scope.range = (counter) => {
-            let arr = [];
-            for(var i = 0; i < counter; i++) {
-                arr.push(i);
+        // (500) 500 -> 400 -> 300 -> 200 -> 100;
+        // (3)   300 -> 200 -> 100
+        // (3)   3 -> 2 -> 1
+        // (100, 500) -> 101 -> 102 -> 103 ... -> 500
+        // (100, 500, 100) -> 100 -> 200 -> ... -> 500
+
+        $scope.range = (start, end) => {
+            const min = Math.min(start, end);
+            const offset = Math.pow(10, min.toString().length - 1);
+            const increase = end > start;
+            let newArray = [];
+
+            console.log({start, end, increase, offset, min});
+            let counter = start;
+            while((increase && counter < end) || (!increase && counter > end)) {
+                newArray.push(counter);
+                counter = counter + ((increase ? 1: -1) * offset);
             }
-            return arr;
+
+            return newArray;
+            
         }
 
+        
 
         /**
-     * Generate academic sessions.
-     *
-     * @param int|null $from The starting year.
-     * @param int|null $to The ending year.
-     * @param string $separator The separator between years.
-     * @return array The generated academic sessions.
-     */
-    $scope.generateSessions = (gap, from, to) => {
-        let sessions = [];
+         * Generate academic sessions.
+         *
+         * @param int|undefined from The starting year.
+         * @param int|undefined to The ending year.
+         * @return array The generated academic sessions.
+         */
+        $scope.generateSessions = (gap, from, to) => {
+            let sessions = [];
 
-        const date = new Date();
-        if (typeof to != 'number') {
-            to = date.getFullYear();
-        }
-        if (typeof gap != 'number') {
-            gap = 1;
-        }
+            const date = new Date();
+            if (typeof to != "number") {
+                to = date.getFullYear();
+            }
+            if (typeof gap != "number") {
+                gap = 1;
+            }
 
-        // Generate sessions for the last ten years
-        if (typeof from != 'number') {
-            to = date.getFullYear();
-            from = to - 5;
-        }
+            // Generate sessions for the last ten years
+            if (typeof from != "number") {
+                to = date.getFullYear();
+                from = to - 5;
+            }
 
-        from = Math.min(from, to);
-        to = Math.max(from, to);
+            from = Math.min(from, to);
+            to = Math.max(from, to);
 
-        if (to == from) {
-            to += 1;
-        }
+            if (to == from) {
+                to += 1;
+            }
 
-        const diff = to - from;
-        for (let i = 0; i < diff; i++) {
-            const startSemester = from + i;
-            const endSemester = from + i + gap;
+            const diff = to - from;
+            for (let i = 0; i < diff; i++) {
+                const startSemester = from + i;
+                const endSemester = from + i + gap;
 
-            sessions.push(startSemester + '/' + endSemester);
-        }
+                sessions.push(startSemester + "/" + endSemester);
+            }
 
-        return sessions;
-    }
+            return sessions;
+        };
 
         $scope.countDown = (callback, time) => {
             const padZero = (num) => (num < 10 ? "0" + num : num);
@@ -221,21 +252,24 @@ app.controller("RootController", [
             );
         };
 
-        // $scope.route = (route = "index") => {
-        //     $scope.active_route = route;
-        //     Location.set({ view: route });
-        // };
-        $scope.route = function (route) {
+       
+        $scope.route = function (route, title) {
             $scope.active_route = route;
+            $scope.title(title);
+            
             $window.history.pushState({ route: route }, "", "");
         };
         $window.onpopstate = function (event) {
+            event.preventDefault();
+            console.log(event)
             $scope.$apply(function () {
                 if ($scope.active_route !== "index") {
                     $scope.active_route = "index";
                 }
             });
         };
+
+        
 
         $scope.is_active_route = (route) => {
             if (route === "index" && !$scope.active_route) {
@@ -244,21 +278,8 @@ app.controller("RootController", [
             return $scope.active_route === route;
         };
 
-        $scope.confirmLogout = () => {
-            sessionStorage.removeItem("access_token");
-            localStorage.removeItem("access_token");
-            window.location.href = "/logout";
-        };
+       
 
-        $scope.cache = (name, value) => {
-            if (!name) {
-                return null;
-            }
-            if (typeof value === "undefined") {
-                return $scope.cache_memory[name];
-            }
-            $scope.cache_memory[name] = value;
-        };
 
         $scope.registerErrors = (error) => {
             $scope.errors = { ...$scope.errors, ...error };
@@ -271,6 +292,46 @@ app.controller("RootController", [
 
             return `${dd}/${mm}/${yyyy}`;
         };
+
+        $scope.http = async (url, data, success, error, init = {}) => {
+
+            if (typeof url === "object" && url !== null) {
+                ({ url, data, success, error, ...init } = url);
+            } else if (typeof data === "function") {
+                [data, success, error, init] = [undefined, data, success, error || {}];
+            } else if (typeof success === "object") {
+                init = success;
+                [success, error] = [undefined, error];
+            }
+        
+            if (url.indexOf("/api") === -1) {
+                url = `/api/${url.replace(/^\//, "")}`;
+            }
+            let successCallback = success;
+            if (init.cacheId) {
+                let cacheId = init.cacheId;
+                if (cacheId === true) {
+                    cacheId = url.replace(/([a-zA-Z0-9])/, '');
+                    cacheId += '-'+ Object.values(data).join('_');
+                }
+                if (CacheService.has(cacheId)) {
+                    const cached_data = CacheService.get(cacheId);
+                    if (typeof success === 'function') {
+                        success(cached_data);
+                    }
+                    return cached_data;
+                }
+                else {
+                    successCallback = (data) => {
+                        CacheService.put(cacheId, data, 60 * 60 * 24);
+                        success(data);
+                    }
+                }
+                
+            }
+
+            return api(url, data, successCallback, error, init);
+        }
 
         $scope.api = async (page, data, callbackOrInit, errorCallback) => {
             let init = {};
@@ -493,80 +554,9 @@ app.controller("RootController", [
             }
         };
 
-        /**
-         * Function to display off-canvas content
-         *
-         * displayOffCanvas
-         * Sets the visible canvas to the specified name.
-         *
-         * @param {string} name The name of the canvas to display.
-         */
-
-        $scope.displayOffCanvas = (name) => {
-            $scope.visible_canvas = name;
-        };
-
-        /**
-         * Function to check if a canvas is open
-         *
-         * canvasOpen
-         * Checks if the specified canvas is currently open.
-         *
-         * @param {string} name The name of the canvas to check.
-         * @returns {boolean} True if the canvas is open, otherwise false.
-         */
-        $scope.canvasOpen = (name) => {
-            return $scope.visible_canvas === name;
-        };
 
         $scope.popup_wrapper = "";
 
-        /**
-         * Function to toggle the profile card
-         *
-         * toggleProfileCard
-         * Toggles the visibility of the profile card.
-         */
-        $scope.toggleProfileCard = function () {
-            $scope.open = !$scope.open;
-        };
-
-        $scope.setState = (state) => {
-            $scope.currentState = state;
-            $scope.$apply();
-        };
-
-        /**
-         * Function to set the state of a button
-         *
-         * setButtonState
-         * Sets the state of a button.
-         *
-         * @param {string} name The name of the button.
-         * @param {string|number} state The state to set for the button.
-         */
-        $scope.setButtonState = (name, state) => {
-            $scope.currentState = state;
-            if (!name) {
-                return;
-            }
-            if (typeof state === "string") {
-                const states = {
-                    error: 0,
-                    initial: 1,
-                    sending: 2,
-                    sent: 3,
-                };
-                let normalValue = state.toLowerCase();
-                state = 1;
-                if (normalValue in states) {
-                    state = states[normalValue];
-                }
-            }
-
-            $scope.buttonStates[name] = state;
-            $scope.currentState = state;
-        };
 
         /**
          * Function to handle output messages
@@ -646,10 +636,13 @@ app.controller("RootController", [
         };
 
         $scope.enterSidebar = (event) => {
-            const target = angular.element(event.target)
+            const target = angular.element(event.target);
             const sidebar = angular.element(".sidebar");
 
-            if(!target.is('.sidebar-footer') && target.closest('.sidebar-footer').length === 0) {
+            if (
+                !target.is(".sidebar-footer") &&
+                target.closest(".sidebar-footer").length === 0
+            ) {
                 sidebar.addClass("sidebar-hovered");
                 $scope.openSidebar();
             }
@@ -729,32 +722,37 @@ app.controller("RootController", [
          * Toggles the application theme between light and dark mode.
          */
         $scope.toggleTheme = () => {
-            $scope.theme = $scope.theme === 'dark' ? 'light':'dark';
+            $scope.theme = $scope.theme === "dark" ? "light" : "dark";
             localStorage.setItem("colorScheme", $scope.theme);
         };
-        
 
         $scope.loadTheme = () => {
+            $scope.colorScheme =
+                localStorage.getItem("colorScheme") || "system";
 
-        
-            $scope.colorScheme = localStorage.getItem('colorScheme') || 'system';
-            
-            let mode = 'light';
-            if ($scope.colorScheme === 'dark' || ($scope.colorScheme === 'system' && "function"==typeof window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)"))) {
-                mode = 'dark';
+            let mode = "light";
+            if (
+                $scope.colorScheme === "dark" ||
+                ($scope.colorScheme === "system" &&
+                    "function" == typeof window.matchMedia &&
+                    window.matchMedia("(prefers-color-scheme: dark)"))
+            ) {
+                mode = "dark";
             }
-            $scope.system_detect = "function"==typeof window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)") ? 'dark':'light';
+            $scope.system_detect =
+                "function" == typeof window.matchMedia &&
+                window.matchMedia("(prefers-color-scheme: dark)")
+                    ? "dark"
+                    : "light";
             $scope.theme = mode;
-        }
+        };
 
         $scope.saveTheme = (theme) => {
-            if (theme && ['dark', 'light', 'system'].includes(theme)) {  
-                localStorage.setItem('colorScheme', theme);
+            if (theme && ["dark", "light", "system"].includes(theme)) {
+                localStorage.setItem("colorScheme", theme);
                 $scope.loadTheme();
             }
-        }
-
-       
+        };
 
         /**
          * Function to get the index of object item
@@ -773,29 +771,12 @@ app.controller("RootController", [
             return -1;
         };
 
-        $scope.autoLogin = () => {
-            // alert(localStorage.getItem('access_token'));
-            const session = sessionStorage.getItem("access_token");
-            const local = localStorage.getItem("access_token");
-            let token = null;
-            let persist = false;
-
-            if (session) {
-                token = session;
-            } else if (!session && local) {
-                token = local;
-                persist = true;
-            }
-
-            if (token) {
-                // $scope.refreshToken(token, persist);
-            }
-        };
+       
 
         $scope.viewCourse = (course) => {
             console.log(course);
             $scope.view_course = course;
-            $scope.popUp('view_course');
+            $scope.popUp("view_course");
         };
 
         $scope.loadConfigurations = () => {
@@ -807,13 +788,10 @@ app.controller("RootController", [
         };
 
         $scope.loadAssignableClassNames = () => {
-            api(
-                "/class/generate_name",
-                (res) => {
-                    $scope.assignable_class_names = res;
-                }
-            );
-        }
+            api("/class/generate_name", (res) => {
+                $scope.assignable_class_names = res;
+            });
+        };
 
         /**
          * Function to initialize the application
@@ -822,13 +800,13 @@ app.controller("RootController", [
          * Initializes the application by setting the dark mode theme based on the user's preference.
          */
 
-        $scope.init = (userRole, token) => {
-            $scope.token = token;
-            $scope.userRole = userRole;
+        $scope.init = (logged, title) => {
+            $scope.app_title = title;
+           
 
             $scope.loadTheme();
             $scope.loadAssignableClassNames();
-            $scope.autoLogin();
+            AuthService.autoLog(logged);
 
             $scope.loadConfigurations();
             $scope.loadAnnouncements();
@@ -836,16 +814,14 @@ app.controller("RootController", [
     },
 ]);
 
-app.directive('toggle_mode', function(){
+app.directive("toggle_mode", function () {
     return {
-        restrict: 'A',
-        controller: 'RootController',
-        templateUrl: '/components/dark_mode_toggler.html',
-        link: function(scope, element, attr) {
-            
-        }
-    }
-})
+        restrict: "A",
+        controller: "RootController",
+        templateUrl: "/components/dark_mode_toggler.html",
+        link: function (scope, element, attr) {},
+    };
+});
 
 app.directive("infiniteScroll", function () {
     return {

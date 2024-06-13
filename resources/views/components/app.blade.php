@@ -1,3 +1,4 @@
+@props(['title'])
 <!DOCTYPE html>
 <html 
     ng-cloakx
@@ -6,7 +7,7 @@
     ng-controller="RootController" 
     ng-class="{[theme]: true}"
     ng-resize="handleResize()" 
-    ng-init="init()" 
+    ng-init="init({{ auth()->check()?'true':'false'}}, '{{$title ?? config("app.title", "Futo CSC Portal")}}')" 
     {{ $attributes }}
     custom-on-change>
     

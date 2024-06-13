@@ -148,7 +148,7 @@ $icons['logout'] = "<svg class='$class' xmlns='http://www.w3.org/2000/svg' enabl
     </span>
 @else
     <x-template title="ICONS">
-        <printer></printer>
+        
        
         <div class='full grid grid-cols-12 gap-2'>
             @foreach($icons as $name => $svg)

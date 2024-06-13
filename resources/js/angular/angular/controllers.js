@@ -230,6 +230,9 @@ app.controller("SidebarController", function ($scope) {
             $scope.openSidebar();
         }
     };
+
+    $scope.isActive = (nav) => $scope.nav === nav;
+    $scope.setActiveNav = (nav) => ($scope.nav = nav);
     $scope.changeNav = (nav) => ($scope.nav = nav);
 });
 

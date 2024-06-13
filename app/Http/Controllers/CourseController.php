@@ -476,18 +476,36 @@ class CourseController extends Controller
                 'errors' => $validator->errors()
             ], 401);
         }
+        $level = $request->level;
+        $semester = $request->semester;
+        $session = $request->session;
 
-        $findSession = AcademicSession::where('name', $request->session)->first();
+
+        $findSession = AcademicSession::where('name', $session)->first();
 
         if ($findSession) {
-            $semester_column = strtolower($request->semester) . '_course_registration_status';
+            $semester_column = strtolower($semester) . '_course_registration_status';
             $status = $findSession->$semester_column;
+            
 
 
             if ($status === 'OPEN') {
-                $courses = Course::active()->where('level', '=', $request->level)
-                    ->where('semester', $request->semester)
-                    ->get();
+                $courses = Course::active()->where('level', '=', $level)
+                    ->where('semester', '=', $semester)
+                    ->get()
+                    ->groupBy('option');
+
+                    
+                    $minUnits = config("courseunits.$level.$semester.min", 18);
+                    $maxUnits = config("courseunits.$level.$semester.max", 24);
+                    
+                    $student = $request->user()->student;
+                    
+                    // add borrowed units to maximum units
+                    $maxUnits += (int) $student->borrowed_units;
+
+                return response()->json(compact('maxUnits', 'minUnits', 'courses'));
+                
                 return response()->json($courses);
             }
             return response()->json([

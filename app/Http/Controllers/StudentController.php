@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Cache;
 
 class StudentController extends Controller
 {
@@ -590,19 +591,30 @@ class StudentController extends Controller
         $session = $request->session;
         $user = $request->user();
         $student = $user->student;
+        $cacheId = "cache_{$student->reg_no}_{$semester}_{$session}";
+        
+        if (Cache::has($cacheId)) {
+            extract(Cache::get($cacheId));
+        }
+        else {
 
 
-        $enrollments = Course::getEnrollments($semester, $session);
+            $enrollments = Course::getEnrollments($semester, $session);
 
-        if (!count($enrollments)) {
-            return response()->json([
-                'error' => 'Enrollment history doesnt exist'
-            ], 400);
+            if (!count($enrollments)) {
+                return response()->json([
+                    'error' => 'Enrollment history doesnt exist'
+                ], 400);
+            }
+
+            $level = $enrollments->first()->level;
+
+            $totalUnits = $enrollments->map(fn($enrollment) => $enrollment->course)->sum('units');
+            
+            Cache::put($cacheId, compact('enrollments', 'totalUnits'), 60 * 60 * 24 * 2);
         }
 
-        $level = $enrollments->first()->level;
-
-        return compact('semester', 'level', 'student', 'user', 'session', 'enrollments');
+        return compact('semester', 'level', 'totalUnits','student', 'user', 'session', 'enrollments');
     }
 
     public function api_enrollments(Request $request)
@@ -610,9 +622,19 @@ class StudentController extends Controller
         $user = $request->user();
         $student = $user->student;
         $enrollments = $student->courseRegistrationPerSemester;
+        $enrollments = Enrollment::where('reg_no', $student->reg_no)
+            ->join('courses', 'courses.id', '=', 'enrollments.course_id')
+            ->orderBy('enrollments.level', 'asc')
+            ->orderBy('enrollments.semester', 'desc')
+            ->get(['enrollments.request_id','enrollments.level','enrollments.semester', 'session', 'units'])
+            ->groupBy('request_id')
+            // ->map(function($enrollment) use ($student) {
+            //     $enrollment->maxUnits = $enrollment->maxUnits();
+            //     $enrollment->minUnits = $enrollment->minUnits();
+            //     $
+            // })
+            ;
 
-
-
-        return compact('enrollments');
+        return $enrollments;
     }
 }

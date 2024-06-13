@@ -66,6 +66,15 @@ $nav = $nav ?? 'all';
         </button>
     </div>
 @endif
+
+<div ng-show="showPasswordModal" class="password-modal">
+    <div class="password-modal-content">
+        <span class="close" ng-click="closeModal()">&times;</span>
+        <h2>Verify Password</h2>
+        <input type="password" ng-model="password" placeholder="Enter your password">
+        <button ng-click="verifyPassword()">Submit</button>
+    </div>
+</div>
 <div id="isLoading" class="">
     <div class="flex items-center gap-1">
         <div class="dot-pulse"></div>

@@ -25,7 +25,7 @@
                         <div class="panel rounded-lg">
                             <div class="panel-header">
                                 <div class="md:flexx md:flex-col md:items-center md:gap-2">
-                                    <img src="{{ asset($user->picture()) }}" alt="advisor"
+                                    <img src="{{ asset($user->image) }}" gender="{{$user->gender}}" alt="advisor"
                                         class="aspect-square w-12 rounded-full object-cover">
                                     <div>
                                         <p class="font-semibold text-md lg:text-xl">{{ $user->name }}</p>
@@ -43,8 +43,8 @@
                         <div
                             class="blue-card">
                             <header class="w-full flex items-center justify-between">
-                                <p class="font-medium uppercase">students</p><span
-                                    class="material-symbols-rounded">groups</span>
+                                <p class="font-medium uppercase">students</p>
+                                <x-icon name="groups"/>
                             </header>
                             <div>
                                 <h1 class="font-medium text-4xl" ng-bind="config.count.students||0"></h1>
@@ -57,8 +57,8 @@
                         <div
                             class="red-card">
                             <header class="w-full flex items-center justify-between">
-                                <p class="font-medium uppercase">staff</p><span
-                                    class="material-symbols-rounded">work</span>
+                                <p class="font-medium uppercase">staff</p>
+                                <x-icon name="work"/>
                             </header>
                             <div>
                                 <h1 class="font-medium text-4xl" ng-bind="config.count.staffs||0"></h1>
@@ -68,8 +68,8 @@
                         <div
                             class="purple-card">
                             <header class="w-full flex items-center justify-between">
-                                <p class="font-medium uppercase">advisors</p><span
-                                    class="material-symbols-rounded">group</span>
+                                <p class="font-medium uppercase">advisors</p>
+                                <x-icon name="group"/>
                             </header>
                             <div>
                                 <h1 class="font-medium text-4xl" ng-bind="config.count.advisors||0"></h1>
@@ -80,8 +80,8 @@
                         <div
                             class="yellow-card">
                             <header class="w-full flex items-center justify-between">
-                                <p class="font-medium uppercase">courses</p><span
-                                    class="material-symbols-rounded">book_2</span>
+                                <p class="font-medium uppercase">courses</p>
+                                <x-icon name="book_4"/>
                             </header>
                             <div>
                                 <h1 class="font-medium text-4xl" ng-bind="config.count.courses||0"></h1>
@@ -91,8 +91,8 @@
                         <div
                             class="primary-card">
                             <header class="w-full flex items-center justify-between">
-                                <p class="font-medium uppercase" ng-bind="config.active_session.name"></p><span
-                                    class="material-symbols-rounded">book_2</span>
+                                <p class="font-medium uppercase" ng-bind="config.active_session.name"></p>
+                                <x-icon name="book_3"/>
                             </header>
                             <div>
                                 <h1 class="font-medium text-2xl lg:text-4xl" ng-bind="config.active_session.active_semester"></h1>

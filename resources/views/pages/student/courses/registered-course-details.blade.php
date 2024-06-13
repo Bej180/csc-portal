@@ -6,16 +6,14 @@
                 <i class="fa fa-chevron-left"></i> Course Registration Details
             </span>
 
-            <button ng-click="print()" type="button" class="btn-primary transition text-sm">
-                Print
-            </button>
+            <printer></printer>
 
         </div>
     </div>
 
     <div class="grid place-items-center">
         <div id="registered-courses-details-container"
-            class="mt-2 border slate-400 rounded p-7 pb-10 md:flex md:flex-col md:gap-2 visible-on-print w-[800px] bg-white">
+            class="mt-2 border slate-400 rounded p-7 pb-10 md:flex md:flex-col md:gap-2 visible-on-print max-w-[800px] bg-white">
             <div class="flex flex-col items-center">
                 <img src="{{ asset('images/futo-log.png') }}" alt="futo-logo" class="w-20" />
                 <h1 class="text-sm font-semibold text-body-400 md:text-base xl:text-lg print:text-black">
@@ -26,53 +24,106 @@
                     COMPUTER SCIENCE (SICT)</p>
             </div>
 
-            <div class="flex gap-3 items-center mt-8 w-fit mx-auto" id="student-info">
+            <div class="flex gap-3 items-center mt-8 w-fit" id="student-info">
                 <div>
                     <img src="/profilepic/{% course_reg.user.id %}" alt="user"
-                        class="rounded-full w-16 lg:w-20 xl:w-24 aspect-square" />
+                        class="rounded-full w-14 lg:w-16 xl:w-20 aspect-square" />
                 </div>
 
 
                 <div
                     class="flex-1 text-[.78rem] gap-4 text-body-800 items-center whitespace-nowrap md:text-sm print:text-black">
 
-                    <div class="w-full">
-                        <div class="grid grid-cols-5 gap-1">
-                            <div class="col-span-1">Full Name:</div>
-                            <div class="col-span-2 uppercase font-semibold" ng-bind="course_reg.user.name"></div>
-                            <div class="col-span-1">Registration Number:</div>
-                            <div class="col-span-1 uppercase font-semibold" ng-bind="course_reg.student.reg_no">
+                    <div class="w-full flex flex-col">
+                        <div class="grid grid-cols-2 gap-1">
+                            <div class="col-span-1 flex gap-2">
+                                <div class="w-[90px]">Full Name:</div>
+                                <div class="flex-1 uppercase font-semibold" ng-bind="course_reg.user.name"></div>
+                            </div>
+
+                            <div class="col-span-1 flex gap-2">
+                                <div class="w-[90px]">School:</div>
+                                <div class="flex-1 uppercase font-semibold">SICT</div>
+                            </div>
+
+                            
+                            
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-1">
+                            
+
+                            <div class="col-span-1 flex gap-2">
+                                <div class="w-[90px]">Reg. No.:</div>
+                                <div class="flex-1 uppercase font-semibold" ng-bind="course_reg.student.reg_no"></div>
+                            </div>
+                            
+                            <div class="col-span-1 flex gap-2">
+                                <div class="w-[90px]">Department:</div>
+                                <div class="flex-1 uppercase font-semibold">Computer Science</div>
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-5 gap-1">
+                        <div class="grid grid-cols-2 gap-1">
+                            <div class="col-span-1 flex gap-2">
+                                <div class="w-[90px]">Entry Mode:</div>
+                                <div class="flex-1 uppercase font-semibold">UTME</div>
+                            </div>
+                            <div class="col-span-1 flex gap-2">
+                                <div class="w-[90px]">Level:</div>
+                                <div class="flex-1 uppercase font-semibold" ng-bind="course_reg.level"></div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-1">
+                        
+                            <div class="col-span-1 flex gap-2">
+                                <div class="w-[90px]">Session:</div>
+                                <div class="flex-1 uppercase font-semibold" ng-bind="course_reg.session"></div>
+                            </div>
+                            <div class="col-span-1 flex gap-2">
+                                <div class="w-[90px]">Semester:</div>
+                                <div class="flex-1 uppercase font-semibold" ng-bind="course_reg.semester"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- <div class="w-full">
+                        <div class="grid grid-cols-4 gap-1">
+                            <div class="col-span-1">Full Name:</div>
+                            <div class="col-span-1 uppercase font-semibold" ng-bind="course_reg.user.name"></div>
                             <div class="col-span-1">School:</div>
-                            <div class="col-span-2 uppercase font-semibold">SICT</div>
+                            <div class="col-span-1 uppercase font-semibold">SICT</div>
+                        </div>
+
+                        <div class="grid grid-cols-4 gap-1">
+                            <div class="col-span-1">Registration Number:</div>
+                            <div class="col-span-1 uppercase font-semibold" ng-bind="course_reg.student.reg_no"></div>
                             <div class="col-span-1">Department:</div>
                             <div class="col-span-1 uppercase font-semibold">Computer Science</div>
                         </div>
 
-                        <div class="grid grid-cols-5 gap-1">
+                        <div class="grid grid-cols-4 gap-1">
                             <div class="col-span-1">Entry Mode:</div>
-                            <div class="col-span-2 uppercase font-semibold">UTME</div>
+                            <div class="col-span-1 uppercase font-semibold">UTME</div>
                             <div class="col-span-1">Level:</div>
                             <div class="col-span-1 uppercase font-semibold" ng-bind="course_reg.level"></div>
                         </div>
 
-                        <div class="grid grid-cols-5 gap-1">
+                        <div class="grid grid-cols-4 gap-1">
                             <div class="col-span-1">Session:</div>
-                            <div class="col-span-2 uppercase font-semibold" ng-bind="course_reg.session"></div>
+                            <div class="col-span-1 uppercase font-semibold" ng-bind="course_reg.session"></div>
                             <div class="col-span-1">Semester:</div>
                             <div class="col-span-1 uppercase font-semibold" ng-bind="course_reg.semester"></div>
-                        </div><!--end-->
-                    </div>
+                        </div>
+                    </div> --}}
 
 
 
                 </div>
             </div>
 
-            <div class="mt-4 responsive-table">
+            <div class="mt-4 responsive-table text-sm">
                 <table class="mx-auto print:text-black !w-[400px] min-w-[90%]">
                     <thead class="print:text-black">
                         <th class="!w-24">Code</th>
@@ -91,7 +142,7 @@
                         <tr>
                             <td></td>
                             <td class="uppercase">Total</td>
-                            <td ng-bind="totalUnits"></td>
+                            <td ng-bind="course_reg.totalUnits"></td>
                             <td></td>
                         </tr>
                     </tbody>

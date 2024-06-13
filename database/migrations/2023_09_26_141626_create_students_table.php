@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->unsignedBigInteger('id');
+            $table->unsignedTinyInteger('borrowed_units')->default(0);
             $table->unsignedBigInteger('set_id')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->boolean('approved')->default(true);
-            $table->unsignedInteger('reg_no');
+            $table->string('reg_no', 11);
             $table->date('birthdate')->nullable();
             $table->string('address')->nullable();
             $table->enum('gender', ['MALE', 'FEMALE'])->nullable();
@@ -33,6 +34,7 @@ return new class extends Migration
             $table->string('state')->nullable();
             $table->string('country')->nullable();
             $table->enum('entry_mode', ['DIRECT', 'UTME'])->nullable();
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
 
         });

@@ -88,7 +88,7 @@ Route::get('/tokens/create', function (Request $request) {
 
 Route::post('/dologin', [AuthController::class, 'api_login']);
 Route::post('/app/auth/verify_otp', [AuthController::class, 'verifyOTP']);
-Route::post('/authenticate', [AuthController::class, 'authenticate']);
+
 
 // Route::get('/register', 'AuthController@register');
 Route::post('/doRegister', [AuthController::class, 'api_register_student']);
@@ -100,6 +100,8 @@ Route::post('/request_activation_link', [AuthController::class, 'api_request_act
 
 /**PROTECTED API */
 Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::post('/authenticate', [AuthController::class, 'authenticate']);
+    
     Route::get('/testapi', function (Request $request) {
         return $_SERVER;
     });
@@ -184,8 +186,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     });
 
     Route::get('/fetch/user', function (Request $request) {
-        return $request->user();
+        return $request->user()->account();
     });
+
+    
+    Route::post('/app/auth/logout', [AuthController::class, 'api_logout'])->middleware('auth');
 
 
 
@@ -311,7 +316,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/app/student/courses/register', [CourseController::class, 'doRegister']);
     Route::post('/app/student/results/index', [StudentController::class, 'index_results']);
     Route::post('/app/students/index', [UserController::class, 'index_students']);
-    Route::post('/app/student/course_registration_details', [StudentController::class, 'course_registration_details']);
+    Route::post('/app/student/enrollments/show', [StudentController::class, 'enrollment_details']);
     Route::post('/app/student/enrollments/index', [StudentController::class, 'api_enrollments']);
 
 
