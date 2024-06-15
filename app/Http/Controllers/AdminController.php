@@ -244,7 +244,7 @@ class AdminController extends Controller
             'birthdate' => 'sometimes',
             'staff_id' => 'required',
             'designation' => 'required',
-            'password_required' => 'password'
+            'passkey' => 'password'
         ], [
             'fullname.required' => 'Staff\'s name must be provided',
             'email.required' => 'Email address must be provided',
@@ -256,11 +256,7 @@ class AdminController extends Controller
             'designation.required' => 'Staff Designation is required',
         ]);
 
-        if (!$request->password_required) {
-            return response()->json([
-                'password_required' => true,
-            ], 400);
-        }
+        
 
         if ($validator->fails()) {
             return response()->json([
@@ -536,21 +532,15 @@ class AdminController extends Controller
             'email' => 'sometimes|email',
             'username' => 'sometimes',
             'reset_password' => 'sometimes',
-            'password_required' => 'password',
+            'passkey' => 'password',
             'id' => 'required|exists:users'
         ], [
             'email.email' => 'You provided an invalid email address',
             'id.required' => 'User must be provided',
             'id.exists' => 'Account not found',
-            'password_required.password' => 'Passwords did not match'
         ]);
 
 
-        if (!$request->password_required) {
-            return response()->json([
-                'password_required' => true,
-            ], 400);
-        }
 
         if ($validator->fails()) {
             return response()->json([

@@ -34,10 +34,13 @@ app.controller("RootController", [
         $scope.token = null;
         $scope.colorScheme = null;
         $scope.session_name = "access_token";
+        $scope.throwError = false;
 
         $scope.logout = () => {
             return AuthService.logout();
         };
+
+        
 
         $scope.title = (title) => {
             if (!title) return;
@@ -54,7 +57,7 @@ app.controller("RootController", [
         }
 
         $scope.loadAnnouncements = () => {
-            api("/app/annoucement/stream", (res) => {
+            $scope.api("/app/annoucement/stream", (res) => {
                 if (res.length > 0) {
                     for (let i = 0; i < res.length; i++) {
                         const current = res[i];
@@ -71,7 +74,7 @@ app.controller("RootController", [
                                 acceptText: "Mark as Seen",
                                 title: "Announcement",
                                 accept: async () => {
-                                    return api("/app/annoucement/markAsSeen");
+                                    return $scope.api("/app/annoucement/markAsSeen");
                                 },
                             };
                         }
@@ -108,21 +111,24 @@ app.controller("RootController", [
         // (100, 500, 100) -> 100 -> 200 -> ... -> 500
 
         $scope.range = (start, end) => {
-            const min = Math.min(start, end);
-            const offset = Math.pow(10, min.toString().length - 1);
-            const increase = end > start;
-            let newArray = [];
+            return CacheService.Cache(`range_${start}_${end}`, function(){
+                
+                const min = Math.min(start, end);
+                const offset = Math.pow(10, min.toString().length - 1);
+                const increase = end > start;
 
-            console.log({start, end, increase, offset, min});
-            let counter = start;
-            while((increase && counter < end) || (!increase && counter > end)) {
-                newArray.push(counter);
-                counter = counter + ((increase ? 1: -1) * offset);
-            }
-
-            return newArray;
+                let newArray = [];
+    
+                let counter = start;
+                while((increase && counter < end) || (!increase && counter > end)) {
+                    newArray.push(counter);
+                    counter = counter + ((increase ? 1: -1) * offset);
+                }
+    
+                return newArray;
+            });
             
-        }
+        };
 
         
 
@@ -293,199 +299,44 @@ app.controller("RootController", [
             return `${dd}/${mm}/${yyyy}`;
         };
 
-        $scope.http = async (url, data, success, error, init = {}) => {
+        $scope.send = async (url, data, success, error, headers = {}) => {
+            if (typeof headers !== 'object' || headers === null) {
+                headers = {};
+            }
+            headers = {
+                throwError: true,
+                ...headers
+            };
+
+            return $scope.api(url, data, success, error, headers);
+        }
+
+        
+
+        $scope.api = async (url, data, success, error, headers = {}) => {
 
             if (typeof url === "object" && url !== null) {
-                ({ url, data, success, error, ...init } = url);
+                ({ url, data, success, error, ...headers } = url);
             } else if (typeof data === "function") {
-                [data, success, error, init] = [undefined, data, success, error || {}];
+                [data, success, error, headers] = [undefined, data, success, error || {}];
             } else if (typeof success === "object") {
-                init = success;
+                headers = success;
                 [success, error] = [undefined, error];
             }
         
             if (url.indexOf("/api") === -1) {
                 url = `/api/${url.replace(/^\//, "")}`;
             }
-            let successCallback = success;
-            if (init.cacheId) {
-                let cacheId = init.cacheId;
-                if (cacheId === true) {
-                    cacheId = url.replace(/([a-zA-Z0-9])/, '');
-                    cacheId += '-'+ Object.values(data).join('_');
-                }
-                if (CacheService.has(cacheId)) {
-                    const cached_data = CacheService.get(cacheId);
-                    if (typeof success === 'function') {
-                        success(cached_data);
-                    }
-                    return cached_data;
-                }
-                else {
-                    successCallback = (data) => {
-                        CacheService.put(cacheId, data, 60 * 60 * 24);
-                        success(data);
-                    }
-                }
-                
-            }
 
-            return api(url, data, successCallback, error, init);
+            const throwError = $scope.throwError;
+            $scope.throwError = false;
+
+            return http({url, data, success, error, throwError, ...headers});
         }
 
-        $scope.api = async (page, data, callbackOrInit, errorCallback) => {
-            let init = {};
-            let callback = () => {};
-            $("#isLoading").addClass("show");
+        
 
-            if (typeof callbackOrInit === "function") {
-                callback = callbackOrInit;
-            } else if (typeof callbackOrInit === "string") {
-                init = callbackOrInit;
-            }
-
-            if ("success" in init && typeof init.success === "function") {
-                callback = init.success;
-            }
-            if ("error" in init && typeof init.error === "function") {
-                errorCallback = init.error;
-            }
-            if (typeof errorCallback !== "function") {
-                errorCallback = () => {};
-            }
-
-            init = {
-                method: "POST",
-                cache: "no-cache",
-                headers: {
-                    "Content-Type": "application/json",
-                    Accept: "applicatin/json",
-                },
-                ...init,
-            };
-
-            let url = `/api${page}`;
-
-            if ("type" in init) {
-                init.method = init.type;
-                delete init.type;
-            }
-
-            const csrfToken = await getCSRFToken();
-            if (csrfToken && init.method === "POST") {
-                init.headers["X-CSRF-TOKEN"] = csrfToken;
-            }
-
-            if (
-                typeof localStorage !== "undefined" &&
-                localStorage !== null &&
-                localStorage.getItem("access_token")
-            ) {
-                init.headers.Authorization = `Bearer ${localStorage.getItem(
-                    "access_token"
-                )}`;
-            }
-
-            if (["GET", "HEAD"].includes(init.method) && data) {
-                const newUrl = new URL(url, fetchApi.baseURL);
-                const params = newUrl.searchParams;
-
-                for (const query in data) {
-                    params.append(query, data[query]);
-                }
-                url = newUrl.toString();
-            } else {
-                init.body = JSON.stringify(data);
-            }
-
-            const processData = (response) => {
-                return new Promise(async (resolve, reject) => {
-                    var data, process;
-                    data = process = await response.text();
-                    try {
-                        return resolve(JSON.parse(process));
-                    } catch (e) {
-                        return reject(data);
-                    }
-                });
-            };
-            return new Promise((resolve, reject) => {
-                try {
-                    fetch(url, init)
-                        .then(async (response) => {
-                            const data = processData(response);
-                            $("#isLoading").removeClass("show");
-
-                            if (!response.ok) {
-                                try {
-                                    const res = await data;
-                                    return await Promise.reject(res);
-                                } catch (err) {
-                                    throw err;
-                                }
-                            }
-
-                            try {
-                                return await Promise.resolve(await data);
-                            } catch (error) {
-                                return await Promise.reject(error);
-                            }
-                        })
-                        .then((response) => {
-                            ENV.log(response);
-                            $("#isLoading").removeClass("show");
-
-                            if (typeof callback === "function") {
-                                callback(response);
-                            }
-                            if ("success" in response) {
-                                toastr.success(response.success);
-                            }
-
-                            $scope.$apply();
-
-                            if ("redirect" in response) {
-                                setTimeout(() => {
-                                    window.location.href = response.redirect; // Redirect user
-                                }, 2000);
-                            }
-
-                            // return Promise.resolve(response);
-                            return resolve(response);
-                        })
-                        .catch(async (err) => {
-                            errorCallback(err);
-
-                            ENV.error(err);
-
-                            if (typeof err === "object" && err !== null) {
-                                if (
-                                    "errors" in err &&
-                                    typeof err.errors === "object" &&
-                                    err.errors !== null
-                                ) {
-                                    const errors = Object.values(err.errors);
-                                    toastr.error(errors[0]);
-                                    $scope.registerErrors(errors);
-                                } else if (
-                                    "error" in err &&
-                                    err.error.length > 0
-                                ) {
-                                    toastr.error(err.error);
-                                }
-                                if ("redirect" in err) {
-                                    setTimeout(() => {
-                                        window.location.href = err.redirect;
-                                    }, 2000);
-                                }
-                            }
-                            $scope.$apply();
-
-                            return reject(err);
-                        });
-                } catch (e) {}
-            });
-        };
+    
 
         /**
          * popUp
@@ -788,7 +639,7 @@ app.controller("RootController", [
         };
 
         $scope.loadAssignableClassNames = () => {
-            api("/class/generate_name", (res) => {
+            $scope.api("/class/generate_name", (res) => {
                 $scope.assignable_class_names = res;
             });
         };
@@ -802,7 +653,8 @@ app.controller("RootController", [
 
         $scope.init = (logged, title) => {
             $scope.app_title = title;
-           
+
+
 
             $scope.loadTheme();
             $scope.loadAssignableClassNames();

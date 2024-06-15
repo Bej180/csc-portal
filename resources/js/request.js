@@ -8,24 +8,27 @@ window.csrfToken = document
 window.bearerToken =
     sessionStorage.getItem(session_name) || localStorage.getItem(session_name);
 
-
 if (bearerToken) {
     axios.defaults.headers.common["Authorization"] = "Bearer " + bearerToken;
 }
 axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
 
-const getHeaders = (session, customHeaders) => {
+const getHeaders = (customHeaders) => {
+    const session =
+        localStorage.getItem(session_name) ||
+        sessionStorage.getItem(session_name);
+
     const headers = {
         "Content-Type": "application/json",
         Accept: "application/json",
         ...(session && { Authorization: `Bearer ${session}` }),
         ...customHeaders,
     };
-    
+
     return headers;
 };
 
-const handleResponse = (response, success, init) => {
+const handleResponse = (response, args) => {
     response = parseResponse(response);
 
     ENV.log(response);
@@ -34,8 +37,11 @@ const handleResponse = (response, success, init) => {
     if (typeof response === "string") {
         throw response;
     }
-    if (success) success(response);
-    if (!init.silent && response.success) toastr.success(response.success);
+    if (args.isCacheable) {
+        CacheService.put(args.cacheKey, response, 60 * 60 * 24);
+    }
+    if (args.success) args.success(response);
+    if (!args.silent && response.success) toastr.success(response.success);
     if (response.alert)
         $.confirm(response.alert, {
             type: "alert",
@@ -43,58 +49,77 @@ const handleResponse = (response, success, init) => {
         });
     if (response.redirect)
         setTimeout(() => (window.location.href = response.redirect), 2000);
-    
 
     return response;
 };
 
-const handleError = (err, error, init, args) => {
+const handleError = (err, args) => {
     const errorData = parseResponse(err);
 
-    if (error) error(errorData, err);
+    if (args.error) args.error(errorData, err);
     ENV.error(errorData);
+
     $("#isLoading").removeClass("show");
 
-    
-        if ("error" in errorData || "errors" in errorData) {
-            if (
-                "errors" in errorData &&
-                "password_required" in errorData.errors
-            ) {
-                $.confirm("Enter your password to proceed", {
-                    type: "password",
-                    style: "info",
-                    accept: function () {
-                        args[1]["password_required"] = this.value;
-                        return api(...args);
-                    },
-                });
-            }
+    if ("error" in errorData || "errors" in errorData) {
+        if (
+            "errors" in errorData &&
+            Array.isArray(errorData.errors.passkey) &&
+            errorData.errors.passkey.includes("validation.password")
+        ) {
             toastr.error(
-                errorData.errors
-                    ? Object.values(errorData.errors)[0]
-                    : errorData.error
+                "Could not verify your password",
+                "Password not verified"
             );
-        } else if ("alert" in errorData) {
-            $.confirm(errorData.alert, {
-                type: "alert",
-                style: "danger",
-            });
-        } else if ("password_required" in errorData) {
-            $.confirm("Enter your password to proceed", {
+
+            return $.confirm("Enter your password to proceed", {
                 type: "password",
                 style: "info",
                 accept: function () {
-                    args[1]["password_required"] = this.value;
-                    return api(...args);
+                    args.data = appendData(args.data, {
+                        passkey: this.value,
+                    });
+
+                    return http(args);
                 },
             });
         }
-        if (errorData.redirect)
-            setTimeout(() => (window.location.href = errorData.redirect), 2000);
-    
-    throw errorData;
+
+        toastr.error(
+            errorData.errors
+                ? Object.values(errorData.errors)[0]
+                : errorData.error
+        );
+    } else if ("alert" in errorData) {
+        return $.confirm(errorData.alert, {
+            type: "alert",
+            style: "danger",
+        });
+    }
+    if (errorData.redirect) {
+        setTimeout(() => (window.location.href = errorData.redirect), 2000);
+    } else if (
+        errorData instanceof Error &&
+        errorData.message === "Timeout") {
+        
+        if (args.retryLimit > 0 && args.retries < args.retryLimit) {
+        args.retries++;
+        toastr.error(
+            `Retrying ${args.retries}/${args.retryLimit}`,
+            "Failed Connection",
+            { positionClass: "toast-bottom-right" }
+        );
+
+        return setTimeout(() => http(args), args.retryDelay);
+    }
+    else {
+        toastr.error("Timeout",{ positionClass: "toast-bottom-right" });
+    }
+}
+
+    if (args.throwError) throw errorData;
 };
+
 const parseResponse = (axios) => {
     if (typeof axios.response === "undefined") {
         let data = axios.data || axios;
@@ -118,71 +143,161 @@ const parseResponse = (axios) => {
     return { message: axios.toString() };
 };
 
-const api = async (url, data, success, error, init = {}) => {
-    
-    if (typeof url === "object" && url !== null) {
-        ({ url, data, success, error, ...init } = url);
-    } else if (typeof data === "function") {
-        [data, success, error, init] = [undefined, data, success, error || {}];
-    } else if (typeof success === "object") {
-        init = success;
-        [success, error] = [undefined, error];
+const appendData = (obj, data) => {
+    if (obj instanceof FormData) {
+        for (var key in data) {
+            obj.append(key, data[key]);
+        }
+    } else if (typeof obj === "object" && obj !== null) {
+        obj = { ...obj, ...data };
+    } else {
+        obj = {};
+    }
+    return obj;
+};
+
+const loadingIndicator = (indicatorText = 'Loading') => {
+    let existing, wrapper, loading, dotPulse, indicator;
+    existing = $('.isLoading');
+
+    if (existing.length > 0) {
+        return existing; 
+    }
+
+    loading = $('<div>');
+    wrapper = $('<div>');
+    dotPulse = $('<div>');
+    indicator = $('<div>');
+
+    loading.addClass('isLoading show');
+    wrapper.addClass('flex items-center gap-1');
+    dotPulse.addClass('dot-pulse');
+    indicator.addClass('text-2xl ml-[20px]');
+    indicator.text(indicatorText);
+
+    wrapper.append(dotPulse, indicator);
+    loading.append(wrapper);
+    return loading;
+}
+
+const http = async ({
+    url,
+    data = {},
+    success = () => {},
+    silent = true,
+    type = "post",
+    files = null,
+    error = () => {},
+    contentType = "application/json",
+    timeout = 0,
+    retryLimit = 0,
+    withPassword = false,
+    cacheKey = null,
+    retries = 0,
+    retryDelay = 5000,
+    throwError = false,
+    headers = {},
+}) => {
+    if (typeof files === "object" && files !== null) {
+        data = appendData(new FormData(), { ...files, ...data });
+        contentType = "multipart/form-data";
+    }
+
+    success = typeof success === "function" ? success : () => {};
+    error = typeof error === "function" ? error : () => {};
+    type = ["post", "get", "delete"].includes(type) ? type : "post";
+
+    const isCacheable =
+        cacheKey &&
+        typeof data === "object" &&
+        !(data instanceof FormData) &&
+        obj !== null;
+
+    if (isCacheable) {
+        if (cacheKey === true) {
+            cacheKey = url.replace(/([a-zA-Z0-9])/, "");
+            cacheKey += "-" + Object.values(data).join("_");
+        }
+        if (CacheService.has(cacheKey)) {
+            const cached_data = CacheService.get(cacheKey);
+            if (typeof success === "function") {
+                success(cached_data);
+            }
+            return cached_data;
+        }
     }
 
     if (url.indexOf("/api") === -1) {
         url = `/api/${url.replace(/^\//, "")}`;
     }
-    const args = [url, data, success, error, init];
+    const args = {
+        url,
+        data,
+        success,
+        silent,
+        type,
+        files,
+        error,
+        contentType,
+        timeout,
+        retryLimit,
+        retries,
+        retryDelay,
+        headers,
+        cacheKey,
+        isCacheable,
+        throwError
+    };
 
-    if (init.auth) {
-        delete init.auth;
+    headers = getHeaders(headers);
+
+    if (withPassword) {
+        toastr.info(
+            "Enter your password for verification",
+            "Identity Verification"
+        );
+
         return $.confirm("Enter your password to proceed", {
             type: "password",
             style: "info",
             accept: function () {
-                args[1]["password_required"] = this.value;
-                return api(...args);
+                args.data = appendData(args.data, {
+                    passkey: this.value,
+                });
+
+                return http(args);
             },
         });
     }
 
-    if (!init.silent) {
-        $("#isLoading").addClass("show");
+    let loader = null;
+    if (!silent) {
+        loader = loadingIndicator();
+
+        // $("#isLoading").addClass("show");
     }
-
-    const session =
-        localStorage.getItem(session_name) ||
-        sessionStorage.getItem(session_name);
-
-    const headers = getHeaders(session, init.headers);
-    delete init.headers;
-    init = {
-        silent: false,
-        ...init,
-        headers: headers,
-    };
 
     try {
         const response = await Promise.race([
-            axios.post(url, data, init),
+            axios.post(url, data, headers),
             new Promise((_, reject) =>
                 setTimeout(
-                    () => init.timeout && reject(new Error("Request Timeout")),
-                    init.timeout || 5000
+                    () => timeout && reject(new Error("Timeout")),
+                    timeout || 0
                 )
             ),
         ]);
 
-        return handleResponse(response, success, init);
+        return handleResponse(response, args);
     } catch (err) {
-        return handleError(err, error, init, args);
+        return handleError(err, args);
+    } finally {
+        if (loader) {
+            loader.remove();
+        }
+        // $("#isLoading").removeClass("show");
     }
-    finally {
-        $("#isLoading").removeClass("show");
-    }
-
-   
 };
 
 window.parseResponse = parseResponse;
-window.api = api;
+window.http = http;

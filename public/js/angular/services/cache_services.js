@@ -23,5 +23,19 @@ app.service("CacheService", [
             }
             return value;
         };
+    
+
+        this.Cache = (key, callback, expires = 60 * 60 * 24) => {
+            let data;
+
+            if (this.has(key)) {
+                data = this.get(key);
+            }
+            else {
+                data = callback();
+                this.put(key, data, expires);
+            }
+            return data;
+        };
     }
 ]);

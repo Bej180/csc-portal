@@ -36,7 +36,7 @@ app.controller("AdvisorClassController", function ($scope, StudentService) {
      * Generates an invitation link for students to join class .
      */
     $scope.generateInviteLink = (type) => {
-        return api(
+        return $scope.api(
             "/app/class/generateInviteLink",
             {
                 class_id: $scope.active_class.id,
@@ -53,7 +53,7 @@ app.controller("AdvisorClassController", function ($scope, StudentService) {
      * Withdraws the invitation link for the class.
      */
     $scope.withdrawInviteLink = () => {
-        return api(
+        return $scope.api(
             "/app/class/withdrawInviteLink",
             {
                 class_id: $scope.active_class.id,
@@ -80,15 +80,14 @@ app.controller("AdvisorClassController", function ($scope, StudentService) {
     };
 
     $scope.initPage = () => {
-        api(
+        $scope.api(
             "/app/advisor/classes",
             {},
             (res) => {
                 $scope.classes = res.classes;
                 $scope.active_class = res.active_class;
                 $scope.invitationLink = res.invitationLink;
-            },
-            (err) => alert(JSON.stringify(err))
+            }
         );
     };
 

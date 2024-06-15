@@ -12,7 +12,7 @@ app.controller("AdminClassController", function ($scope) {
   
     $scope.saveCourseAdvisor = (academicClass, staff_id) => {
         
-        return api(
+        return $scope.api(
             "/app/admin/classes/advisor/add",
             {
                 id: academicClass.id,

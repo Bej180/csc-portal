@@ -83,13 +83,13 @@
                         <span ng-click="toggleProfileCard()"
                             class="text-body-800 cursor-pointer select-none hover:text-[var(--primary-700)]">
                             <x-icon name="expand_less" ng-if="!open"/>
-                            <x-icon name="expand_more" ng-if="open"/>
+                            <x-icon ng-cloak name="expand_more" ng-if="open"/>
                         </span>
                     </div>
                     <div class="profile-card-overlay" ng-class="{'show':open}" ng-click="toggleProfileCard()"></div>
                     <div class="profile-card" ng-class="{'show':open}">
                         <div class="profile-card-body">
-                            <x-profile-pic :user="$authUser" alt="user_img" class="w-14 h-14 object-cover rounded-full" />
+                            <x-profile-pic :user="$authUser" alt="user_img" class="aspect-square w-8 rounded-full" />
                             <h1 class="flex flex-col items-center text-center justify-center">
                                 <div class="font-bold">{{ $authUser->name }}</div>
                                 <div>
@@ -130,7 +130,7 @@
                                 </a>
                             </x-tooltip>
                             <x-tooltip label="Logout">
-                                <a href="#" class="flex justify-center">
+                                <a href="#" ng-click="logout()" class="flex justify-center">
                                     <x-icon name="logout"/>
                                 </a>
                             </x-tooltip>

@@ -694,21 +694,16 @@ class UserController extends Controller
          $validator = Validator::make($request->all(), [
              'id' => 'required|exists:staffs',
              'courses' => 'required',
-             'password_required' => 'password'
+             'passkey' => 'password'
          ], [
              'id.numeric' => 'Invalid Staff Id',
              'id.required' => 'Staff ID must be provided',
              'id.exists' => 'Staff Account is unavailable at the moment',
              'courses.required' => 'Courses to deallocate must be provided',
              'courses.array' => 'Course to be deallocated is missing',
-             'password_required.password' => 'The password you provided did not match the password stored in the database'
          ]);
 
-         if (!$request->password_required) {
-            return response()->json([
-                'password_required' => true,
-            ], 400);
-        }
+         
 
          if (!$request->user()->hasPermissionTo('allocate_course')) {
             return response()->json([
@@ -771,20 +766,15 @@ class UserController extends Controller
          $validator = Validator::make($request->all(), [
              'id' => 'required|exists:staffs',
              'courses' => 'required|array',
-             'password_required' => 'password'
+             'passkey' => 'password'
          ], [
              'id.required' => 'Staff ID must be provided',
              'id.exists' => 'Staff Account is unavailable at the moment',
              'courses.required' => 'Courses to deallocate must be provided',
              'courses.array' => 'Course to be deallocated is missing',
-             'password_required.password' => 'The password you provided did not match the password stored in the database'
          ]);
 
-         if (!$request->password_required) {
-            return response()->json([
-                'password_required' => true,
-            ], 400);
-        }
+         
 
          if (!$request->user()->hasPermissionTo('allocate_course')) {
             return response()->json([

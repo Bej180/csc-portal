@@ -17,7 +17,7 @@
                 )
 
             </span>
-            <button ng-if="regData.level != 100" type="button" class="btn btn-primary" ng-click="openBorrorPanel()">
+            <button ng-if="canBorrowCourses(regData)" type="button" class="btn btn-primary" ng-click="openBorrowPanel()">
                 Borrow Courses
             </button>
         </div>

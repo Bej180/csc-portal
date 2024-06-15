@@ -108,7 +108,7 @@ app.controller("AdminControlPanelController", function ($scope) {
     };
 
     $scope.saveCourseRegistrationState = (obj, success, error) => {
-        return api(
+        return $scope.api(
             "/app/admin/session/course_registration_status/update",
             obj,
             success,

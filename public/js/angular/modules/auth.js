@@ -1,4 +1,4 @@
-import '../services/students.js';
+import "../services/students.js";
 // import '../services/auth_services.js';
 
 const session_name = "access_token";
@@ -12,7 +12,7 @@ app.controller("AuthController", [
     "$scope",
     "$timeout",
     "StudentService",
-    'AuthService',
+    "AuthService",
     function ($scope, $timeout, StudentService, AuthService) {
         // Initialize variables
         $scope.credential = null; // User credential (email or username)
@@ -33,28 +33,12 @@ app.controller("AuthController", [
             const token =
                 response.temporary_session || response.persistent_session;
 
-                
             if (typeof response.persistent_session == "string") {
                 localStorage.setItem(session_name, token);
             }
 
             sessionStorage.setItem(session_name, token);
         };
-
-
-
-
-
-
-
-        
-
-
-
-
-        
-
-        
 
         /**
          * login
@@ -63,99 +47,11 @@ app.controller("AuthController", [
          */
         $scope.login = (callbackUrl) => {
             $scope.loginData.callbackUrl = callbackUrl;
-            return AuthService.login( $scope.loginData);
-
-            return $timeout(function(){
-                return api(
-                    '/dologin',
-                    $scope.loginData,
-                    (res) => $scope.storeTokenFromResponse(res),
-                    (err) => {
-                        if (typeof err.cause === "string" && err.cause === "2fa") {
-                            $scope.otp_user_email = err.user_email;
-                            $scope.route("2fa");
-                            $scope.$apply();
-                        }
-                    }
-                )
-            }, 3000);
-
-            return $scope.api(
-                "/dologin",
-                $scope.loginData,
-                (res) => $scope.storeTokenFromResponse(res),
-                (err) => {
-                    if (typeof err.cause === "string" && err.cause === "2fa") {
-                        $scope.otp_user_email = err.user_email;
-                        $scope.route("2fa");
-                        $scope.$apply();
-                    }
-                }
-            );
-
-            /*
-            return api(
-                "/dologin",
-                $scope.loginData,
-                (res) => () => {},
-                (err) => {
-                    console.log(err);
-                    if (
-                        typeof err === "object" &&
-                        err !== null &&
-                        "cause" in err
-                    ) {
-                        if (err.cause == "2fa") {
-                            $scope.otp_user_email = err.user_email;
-                            $scope.route("2fa");
-                        }
-                    }
-                }
-            );
-
-            return api(
-                "/dologin",
-                $scope.loginData,
-                (response) => {
-                    $scope.loginData.rememberme = null;
-
-                    if ("temporary_session" in response) {
-                        sessionStorage.setItem(
-                            "access_token",
-                            response.temporary_session
-                        );
-                    } else if ("persistent_session" in response) {
-                        localStorage.setItem(
-                            "access_token",
-                            response.persistent_session
-                        );
-
-                        sessionStorage.setItem(
-                            "access_token",
-                            response.persistent_session
-                        );
-                    } else if ("token" in response) {
-                        localStorage.setItem("access_token", response.token);
-                    }
-                },
-                (err) => {
-                    if (
-                        typeof err === "object" &&
-                        err !== null &&
-                        "cause" in err
-                    ) {
-                        if (err.cause == "2fa") {
-                            $scope.otp_user_email = err.user_email;
-                            $scope.route("2fa");
-                        }
-                    }
-                }
-            );
-        */
+            return AuthService.login($scope.loginData);
         };
 
         $scope.verifyOTP = (callbackUrl) => {
-            return api(
+            return $scope.api(
                 "/app/auth/verify_otp",
                 {
                     tokens: $scope.otp,
@@ -269,32 +165,9 @@ app.controller("AuthController", [
          * @param {Event} event - Event triggered by registration action.
          */
         $scope.register = () => {
-            return StudentService.register($scope.registerData, res => {
-
+            return StudentService.register($scope.registerData, (res) => {
                 alert(res);
             });
-            return;
-
-            // Set user's full name
-            $scope.registerData.name = $scope.surname + " " + $scope.othernames;
-
-            // Check if passwords match and meet strength requirements
-            if (
-                $scope.registerData.password !==
-                $scope.registerData.password_confirmation
-            ) {
-                return toastr.warning("Passwords do not match");
-            }
-            if (!$scope.passwordIsStrong($scope.registerData.password)) {
-                return toastr.warning(
-                    "Password is not strong, it must be at least 6 characters long and must contain numbers, special characters and at least an upper case letter"
-                );
-            }
-
-            // Perform user registration API request
-            api("/doRegister", $scope.registerData)
-                .then((res) => console.log(res))
-                .catch((err) => console.error(err));
         };
 
         /**
@@ -304,28 +177,17 @@ app.controller("AuthController", [
          */
         $scope.requestActivationLink = (email) => {
             // Perform request for activation link API request
-            api("/request_activation_link", {
-                email,
-            })
-                .then((res) => {
+            $scope.api(
+                "/request_activation_link",
+                {
+                    email,
+                },
+                (res) => {
                     console.log(res);
                     $scope.$apply();
                     toastr.success(res.message); // Display success message
-                })
-                .catch((err) => {
-                    console.log(err);
-                    setTimeout(() => {
-                        $scope.$apply();
-                        if (typeof err === "object" && err && err.message) {
-                            toastr.error(err.message); // Display error message
-                        }
-                    }, 3000);
-                })
-                .finally(() => {
-                    setTimeout(() => {
-                        $scope.$apply();
-                    }, 6000);
-                });
+                }
+            );
         };
     },
 ]);

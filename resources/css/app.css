@@ -3173,7 +3173,7 @@ fieldset.profile-fieldset legend {
     font-family: inherit;
     font-size: 0.8rem;
     color: #545454;
-    @apply dark:bg-zinc-950 dark:text-zinc-200;
+    @apply dark:bg-zinc-800 dark:text-zinc-200 dark:shadow-zinc-800 dark:shadow-md;
 }
 .confirm-confirm {
     @apply flex gap-1 justify-center items-center;
@@ -3199,7 +3199,7 @@ fieldset.profile-fieldset legend {
 
 .confirm-backdrop.show {
     background: rgba(0, 0, 0, .4);
-    @apply dark:bg-[#858585a8];
+    @apply dark:bg-[rgba(0,0,0,0.8)];
 }
 .confirm-backdrop.show, confirm-backdrop.show .confirm-popup {
     display: flex;
@@ -4299,10 +4299,10 @@ button[data-ui=shuffle] {
 }
 .responsive-table tbody tr:hover {
   transition: .2s;
-  @apply bg-zinc-100/60 dark:bg-zinc-950 rounded-md;
+  @apply dark:bg-zinc-950 bg-zinc-100/60  print:!bg-zinc-100/60 rounded-md;
 }
 .responsive-table tbody tr:nth-child(even) {
-  @apply dark:bg-zinc-800 bg-zinc-50/45; 
+  @apply dark:bg-zinc-800 bg-zinc-50/45 print:!bg-zinc-50/45; 
 }
 .responsive-table th,
 .responsive-table td {

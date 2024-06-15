@@ -33,7 +33,7 @@ app.controller("StaffController", function ($scope, $timeout) {
         counter = 0
     ) => {
         return $timeout(function () {
-            return api(
+            return $scope.api(
                 "/app/moderator/make_staff_class_advisor",
                 {
                     staff_id,
@@ -59,7 +59,6 @@ app.controller("StaffController", function ($scope, $timeout) {
                             },
                         });
                     }
-                    console.error(err);
                 }
             );
         });

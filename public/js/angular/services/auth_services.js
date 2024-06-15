@@ -26,26 +26,19 @@ app.service("AuthService", function () {
         }
     
         if (!logged && token) {
-            api(
-                "/authenticate",
-                {
+            http({
+                url: "/authenticate",
+                data: {
                     token,
                     callbackUrl
                 },
-                (res) => {
+                success: (res) => {
                     this.storeTokenFromResponse(res);
 
                     this.logged = true;
                     // window.location = callbackUrl;
                 },
-                (err) => {
-                    // this.clearToken();
-                }, {
-                    headers: {
-                        Authoritzation: 'Bearer '+token
-                    }
-                }
-            );
+            });
         }
     };
 
@@ -57,29 +50,25 @@ app.service("AuthService", function () {
     this.logout = () => {
         $.confirm("Are you sure you want to log out?", {
             accept: () => {
-                return api(
-                    '/auth/logout', 
-                    res => {
-                        this.clearToken();
-                    }, 
-                );
+                this.clearToken();
+                window.location.href = '/logout';
             },
             acceptText: "Log Me out",
         });
     };
 
     this.login = (data) => {
-        return api(
-            "/dologin",
-            data,
-            (res) => this.storeTokenFromResponse(res),
-            (err) => {
+        return http({
+            url: "/dologin",
+            data: data,
+            success: (res) => this.storeTokenFromResponse(res),
+            error: (err) => {
                 if (typeof err.cause === "string" && err.cause === "2fa") {
                     $scope.otp_user_email = err.user_email;
                     $scope.route("2fa");
                     $scope.$apply();
                 }
             }
-        );
+        });
     };
 });

@@ -12,7 +12,7 @@ app.directive('newSession', [function() {
 
                
 
-                api(
+                scope.api(
                     "/class/generate_name",
                     (res) => {
                         scope.options = res;
@@ -56,7 +56,7 @@ app.directive("newSession", function () {
                 select.empty();
                 select.append(`<option value="">Loading...</option>`);
 
-                api(
+                scope.api(
                     "/class/generate_name",
                     (res) => {
                         select.empty();

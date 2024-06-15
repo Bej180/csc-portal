@@ -30,6 +30,7 @@ use App\Models\Result;
 use App\Models\Todo;
 use App\Models\User;
 use Illuminate\Broadcasting\Broadcast;
+use Illuminate\Support\Facades\Validator;
 
 /*
 GET /quizzes - List all quizzes (index)
@@ -282,7 +283,18 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/app/staff/course_allocation/allocatable/all', [UserController::class, 'allocatable_courses']);
 
 
-
+    Route::post('/homepage', function(Request $request){
+        $validator = Validator::make($request->all(), [
+            'passkey' => 'sometimes|password',
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors(),
+            ], 400);
+        }
+    
+        return $request->user();
+    });
 
     // Staff routes
     Route::post('/app/staff/courses/students', [StaffController::class, 'list_of_enrolled_students']);

@@ -15,9 +15,15 @@ app.controller("StudentCourseRegistrationController", function ($scope) {
     $scope.borrowingCourses = [];
     $scope.selectedUnits = 0;
 
+    $scope.canBorrowCourses = ({semester, level}) => {
+        if ($scope.selectedUnits >= $scope.maxUnits) {
+            return false;
+        }
+        return !(level == 100 || (level == 400 && semester == 'RAIN'));
+    }
+   
     $scope.viewCourseRegistrationDetails = ({ level, semester, session }) => {
-        $scope.http({
-            auth: true,
+        http({
             cacheId: true,
             url: "/app/student/enrollments/show",
             data: { level, semester, session },
@@ -36,7 +42,7 @@ app.controller("StudentCourseRegistrationController", function ($scope) {
     };
 
     $scope.loadEnrollments = () => {
-        api("/app/student/enrollments/index", (res) => {
+        $scope.api("/app/student/enrollments/index", (res) => {
             $scope.enrolled = res;
         }).finally(() => {
             $scope.loaded = true;
@@ -50,28 +56,26 @@ app.controller("StudentCourseRegistrationController", function ($scope) {
         const session = $scope.regData.session;
 
         if (level && session && session) {
-            return $scope.api(
-                "/app/student/course_registration/courses",
-                $scope.regData,
-                ({ courses, maxUnits, minUnits }) => {
+            return http({
+                url:"/app/student/course_registration/courses",
+                data: $scope.regData,
+                success({ courses, maxUnits, minUnits }){
                     $scope.reg_courses = courses;
-                    $scope.regCourses();
+                    $scope.parseCourses();
                     $scope.maxUnits = maxUnits;
                     $scope.minUnits = minUnits;
                     $scope.route("reg_courses");
                 }
-            );
+            });
         }
     };
 
     $scope.gotoIndex = () => {
-        $scope.route('index');
         $scope.route('index', 'Enrollments');
     }
 
     $scope.displayCourseRegistrationForm = () => {
-        $scope.title('Register Courses');
-        $scope.route('register_form');
+        $scope.route('register_form', 'Register Courses');
     }
 
     /**
@@ -104,11 +108,14 @@ app.controller("StudentCourseRegistrationController", function ($scope) {
         );
     };
 
-    $scope.openBorrorPanel = () => {
+    $scope.canBorrow =  () => $scope.regData.level != 100 && $scope.regData.semester !== 'RAIN' && $scope.regData.level !== 400;
+
+    $scope.canRegister = () => $scope.selectedUnits < $scope.minUnits || $scope.selectedUnits > $scope.maxUnits;
+    $scope.openBorrowPanel = () => {
         $scope.popUp("open_borror_panel");
     };
 
-    $scope.regCourses = () => {
+    $scope.parseCourses = () => {
         let courses = [];
         for(let index in $scope.reg_courses) {
             courses = courses.concat($scope.reg_courses[index]);
@@ -116,8 +123,8 @@ app.controller("StudentCourseRegistrationController", function ($scope) {
         $scope.reg_courses2 = courses;
     }
 
-    $scope.reloadUnits = () => {
-        // const total = $scope.reg_courses.reduce((carry, item) =>
+    $scope.recalculate_units = () => {
+        // const total = $scope.reg_courses2.reduce((carry, item) =>
         const selectedCourses = $scope.reg_courses2.filter(
             (course) => course.checked === true
         );
@@ -154,14 +161,18 @@ app.controller("StudentCourseRegistrationController", function ($scope) {
                         $scope.maxUnits +
                         " units workloads"
                 );
-            } else {
+            } else if (event.target.checked) {
                 // $scope.selectedUnits += units;
                 $scope.selection[id] = course;
                 $scope.reg_courses2[index].checked = true;
             }
+            else {
+                alert('unchanged')
+            }
+
         }
 
-        $scope.reloadUnits();
+        $scope.recalculate_units();
     };
 
     $scope.toggleBorrow = (event, course) => {
@@ -187,14 +198,14 @@ app.controller("StudentCourseRegistrationController", function ($scope) {
                 event.stopPropagation();
                 event.target.checked = false;
                 return;
-            } else {
+            } else if (event.target.checked) {
                 // $scope.selectedUnits += units;
                 const currentCourse = { checked: true, ...course };
                 $scope.selection[id] = currentCourse;
                 $scope.reg_courses2.push(currentCourse);
             }
         }
-        $scope.reloadUnits();
+        $scope.recalculate_units();
     };
 
     $scope.initiate_courses = () => {

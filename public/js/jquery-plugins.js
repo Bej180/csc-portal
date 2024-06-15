@@ -58,10 +58,10 @@ $.confirm = async function (content, obj) {
 
     const body = $("body");
     const confirmElement = $(
-        `<div class="confirm-backdrop show confirm-${obj.style}"></div>`
+        `<div class="confirm-backdrop reload-dismiss show confirm-${obj.style}"></div>`
     );
     confirmElement.append(`<div class="confirm-container confirm-center"><div aria-labelledby="confirm-title" aria-describedby="confirm-content" class="confirm-popup confirm-modal"
-  tabindex="-1" role="dialog" aria-live="assertive" aria-modal="true"><div class="confirm-icon-wrapper"><span class="confirm-icon"><i class="fa-2x faIcon "></i></span></div><div class="confirm-header"><h2 ng-if="title" class="confirm-title"></h2><button type="button" class="confirm-close confirm-dismiss" aria-label="Close this dialog">×</button></div>
+  tabindex="-1" role="dialog" aria-live="assertive" aria-modal="true"><div class="confirm-icon-wrapper"><span class="confirm-icon hidden"><i class="fa-2x faIcon "></i></span></div><div class="confirm-header"><h2 ng-if="title" class="confirm-title"></h2><button type="button" class="confirm-close confirm-dismiss" aria-label="Close this dialog">×</button></div>
   <div class="confirm-content"></div>
   <div class="confirm-actions"><button type="button" class="confirm-confirm btn btn-primary" aria-label="Accept"><i id="btnIcon" class="btn-spinning" style="display:none"></i><label class="button-label flex items-center justify-center gap-1 font-semibold"></label>
   </button><button type="button" class="confirm-deny" aria-label="Deny" style="display: none;">Deny</button><button type="button" class="confirm-cancel confirm-dismiss btn btn-danger ml-1" aria-label="Cancel">Cancel</button></div></div>`);
@@ -113,46 +113,57 @@ $.confirm = async function (content, obj) {
         passwordInput.addClass("input mt-2");
         passwordWrapper.append(passwordInput);
         accepted = obj.accept.bind(passwordInput[0]);
+        confirmAccept.prop('disabled', true);
+
+        passwordInput.on('keyup', (e) => {
+            confirmAccept.prop('disabled', e.target.value.trim().length === 0)
+        });
     }
 
-    confirmDismiss.on("click", function () {
+    confirmDismiss.on("click", (e) => {
         confirmElement.remove();
     });
-    confirmAccept.on("click", function () {
+
+    confirmAccept.on("click", (e) => {
         spinner.attr("class", "btn-spinning").show();
         label.hide();
         $(this).prop("disabled", true);
-        accepted = accepted();
+        accepted = (async () => accepted())();
 
-        if (typeof accepted === "function" && accepted) {
-            if (typeof accepted.then === "function") {
-                accepted
-                    .then((res) => {
-                        spinner
-                            .attr("class", "sonar_once fa fa-check-circle")
-                            .show();
-                        confirmElement.remove();
-                    })
-                    .catch((res) => {
-                        spinner
-                            .attr(
-                                "class",
-                                "opacity-50 fa fa-exclamation-triangle"
-                            )
-                            .show();
-                    })
-                    .finally(() => {
-                        setTimeout(() => {
-                            spinner.hide();
-                            $(this).prop("disabled", false);
-                        }, 2000);
-                    });
-                return;
-            }
+        if (typeof accepted === "function" && accepted && typeof accepted.then === "function") {
+            accepted
+                .then((res) => {
+                    spinner
+                        .attr("class", "sonar_once fa fa-check-circle")
+                        .show();
+                        spinner.hide();
+                        $(this).prop("disabled", false); 
+                    confirmElement.remove();
+                })
+                .catch((res) => {
+                    spinner
+                        .attr(
+                            "class",
+                            "opacity-50 fa fa-exclamation-triangle"
+                        )
+                        .show();
+                })
+                .finally(() => {
+                    setTimeout(() => {
+                        
+                    }, 2000);
+                });
+               
         }
-        spinner.hide();
-        $(this).prop("disabled", false);
-        confirmElement.remove();
+        else {
+            setTimeout(() => {
+                confirmElement.remove();
+                spinner.hide();
+                $(this).prop("disabled", false);
+            }, 5000);
+        }
+        
+        
     });
     confirmDeny.on("click", function () {
         obj.deny.call(confirmElement);

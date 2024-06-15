@@ -464,7 +464,6 @@ class CourseController extends Controller
     public function index_courses_for_registration(Request $request)
     {
 
-
         $validator = Validator::make($request->all(), [
             'level' => 'required',
             'semester' => 'required',

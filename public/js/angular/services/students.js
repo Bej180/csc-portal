@@ -6,7 +6,7 @@ app.service('StudentService', function() {
      */
 
     this.create = (data, callback) => {
-        return api(
+        return $scope.api(
             "/app/admin/student/create",
             data,
             callback
@@ -15,7 +15,7 @@ app.service('StudentService', function() {
 
 
     this.register = (data, callback) => {
-        return api({
+        return http({
             url: '/doRegister',
             data: data,
             silent: false,

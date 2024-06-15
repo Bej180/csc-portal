@@ -55,7 +55,7 @@ app.controller("AdminStudentController", function ($scope) {
 
     $scope.bootStudentAccounts = () => {
         
-        api(
+        $scope.api(
             "/app/students/index",
             (students) => {
                 $scope.students = students;

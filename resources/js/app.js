@@ -1,11 +1,12 @@
 import './bootstrap';
 import toastr from 'toastr';
-import 'toastr/build/toastr.css';
+// import 'toastr/build/toastr.css';
+import '../../public/styles/toastr.css';
 import ApexCharts from 'apexcharts';
 import '../../public/js/storage.js';
 import './request.js';
+import Http from './http.js';
 import './angular/helpers.js';
-import '../../public/js/http';
 import './angular/bootstrap.js';
 import '../../public/js/location.js';
 // import Echo from 'laravel-echo';
@@ -16,6 +17,7 @@ import '../../public/js/location.js';
 
 window.toastr = toastr;
 window.ApexCharts = ApexCharts;
+window.Request = new Http();
 
 // const eventSource = new EventSource('/api/notifications/stream');
 

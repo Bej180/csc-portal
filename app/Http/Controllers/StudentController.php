@@ -603,7 +603,9 @@ class StudentController extends Controller
 
             if (!count($enrollments)) {
                 return response()->json([
-                    'error' => 'Enrollment history doesnt exist'
+
+                    'data' => $enrollments,
+                    'error' => $semester.$session.'Enrollment history doesnt exist'
                 ], 400);
             }
 
@@ -634,6 +636,11 @@ class StudentController extends Controller
             //     $
             // })
             ;
+        if (!$enrollments->count()) {
+            return response()->json([
+               'error' => 'You are not enrolled to any course yet', 
+            ], 400);
+        }
 
         return $enrollments;
     }

@@ -1,4 +1,3 @@
-import Http from "../../../../public/js/http";
 
 app.controller("AlertController", function ($scope, $timeout) {
     $scope.showAlert = false;
@@ -110,7 +109,7 @@ app.controller("SearchController", function ($scope) {
                 $scope.account &&
                 ["staffs", "students", "admins"].includes($scope.account)
             ) {
-                api("/search/students", {
+                $scope.api("/search/students", {
                     query: $scope.query,
                 })
                     .then((response) => {
@@ -668,7 +667,7 @@ app.controller("StudentController", function ($scope) {
 
         if (student_id) {
             $scope.student_id = student_id;
-            api("/student", { student_id })
+            $scope.api("/student", { student_id })
                 .then((response) => {
                     $scope.student = response;
                     const nameParts = response.user.name.split(" ");
@@ -689,7 +688,7 @@ app.controller("StudentController", function ($scope) {
 
     $scope.init = () => {
         if ($scope.student_id) {
-            api("/student", { student_id: $scope.student_id })
+            $scope.api("/student", { student_id: $scope.student_id })
                 .then((response) => {
                     $scope.student = response;
                     $scope.$apply();

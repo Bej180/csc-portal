@@ -63,7 +63,7 @@ app.controller("ScanUserController", function ($scope, $window) {
 
 
         setTimeout(() => {
-            api($scope.url, { queries, limit, page })
+            $scope.api($scope.url, { queries, limit, page })
                 .then((res) => {
                     $scope.results = res.data;
                     
@@ -118,7 +118,7 @@ app.controller("SearchController", function ($scope) {
                     $scope.account
                 )
             ) {
-                api("/search/students", {
+                $scope.api("/search/students", {
                     query: $scope.query,
                 })
                     .then((response) => {
@@ -370,7 +370,7 @@ app.controller("CreateQuizCtrl", function ($scope) {
         });
         $scope.quiz.questions = questions;
 
-        api("/quiz/create", $scope.quiz)
+        $scope.api("/quiz/create", $scope.quiz)
             .then((response) => console.log(response))
             .catch((error) => console.log(error));
     };
@@ -636,11 +636,9 @@ app.controller("CheckboxController", function ($scope) {
 
 app.controller("TodoController", function ($scope) {
     $scope.check = (todo_id) => {
-        api("/todo/complete", {
+        $scope.api("/todo/complete", {
             todo_id,
-        })
-            .then((res) => console.log(res))
-            .catch((err) => console.error(err));
+        });
     };
 });
 app.controller("RadioCheckboxController", function ($scope) {
@@ -1069,8 +1067,10 @@ app.controller("StudentController", function ($scope) {
 
         if (student_id) {
             $scope.student_id = student_id;
-            api("/student", { student_id })
-                .then((response) => {
+            $scope.api(
+                "/student", 
+                { student_id },
+                (response) => {
                     $scope.student = response;
                     const nameParts = response.user.name.split(" ");
                     $scope.firstname = nameParts[0];
@@ -1080,22 +1080,21 @@ app.controller("StudentController", function ($scope) {
                     $scope.$apply();
                     console.log(response);
                     Location.set({ student_id });
-                })
-                .catch(async (error) => {
-                    const err = await error;
-                    console.log(err);
-                });
+                }
+            );
         }
     };
 
     $scope.init = () => {
         if ($scope.student_id) {
-            api("/student", { student_id: $scope.student_id })
-                .then((response) => {
+            $scope.api(
+                "/student",
+                { student_id: $scope.student_id },
+                (response) => {
                     $scope.student = response;
                     $scope.$apply();
-                })
-                .catch((error) => log(error));
+                }
+            );
         }
     };
 

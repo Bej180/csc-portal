@@ -51,7 +51,7 @@ app.controller("StaffController", function ($scope, $timeout) {
         counter = 0
     ) => {
         return $timeout(function () {
-            return api(
+            return $scope.api(
                 "/app/moderator/make_staff_class_advisor",
                 {
                     staff_id,
@@ -291,7 +291,7 @@ app.controller("StaffCourseAllocationController", function ($scope) {
                 (course) => course.id
             );
 
-            return api(
+            return $scope.api(
                 "/app/staff/course_allocation/allocate",
                 {
                     courses: course_ids,
@@ -328,7 +328,7 @@ app.controller("StaffCourseAllocationController", function ($scope) {
                 `Are you sure you want to deallocate the selected ${course}?`,
                 {
                     accept: () => {
-                        return api(
+                        return $scope.api(
                             "/app/staff/course_allocation/deallocate",
                             {
                                 id: $scope.staff_id,

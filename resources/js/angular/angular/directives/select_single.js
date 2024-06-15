@@ -385,11 +385,11 @@ app.directive("select", [
                 );
 
                 scope.$watch('ngDisabled', function(newValue, oldValue) {
-                    trigger.prop('disabled', !newValue === false);
+                    trigger.prop('disabled', newValue);
                 });
 
                 scope.$watch('disabled', function(newValue, oldValue) {
-                    trigger.prop('disabled', !newValue === false);
+                    trigger.prop('disabled', newValue);
                 });
 
                 scope.$watch(

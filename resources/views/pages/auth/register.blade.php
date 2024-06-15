@@ -10,7 +10,7 @@
 
     <div class="grid place-items-center h-screen max-h-screen">
         <div
-            class="shadow-md flex max-w-[85%] lg:max-w-[800px] min-h-[500px] max-h-[500px] overflow-hidden my-[2rem] mx-auto w-full bg-white rounded-md">
+            class="shadow-md flex max-w-[85%] lg:max-w-[800px] min-h-[500px] max-h-[500px] overflow-hidden my-[2rem] mx-auto w-full bg-white dark:bg-black print:!bg-white rounded-md">
             <!--left column-->
             <div
                 class="bg-orange-500 flex-1 min-h-full hidden lg:flex flex-col justify-end items-center bg-blend-multiply relative">

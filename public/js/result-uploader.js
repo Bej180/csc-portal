@@ -29,7 +29,7 @@ async function convertAndSave() {
       return;
     }
 
-    const response = await api('/save-result', {result: csvData});
+    const response = await http('/save-result', headers = {result: csvData});
 
   } catch(e) {
     console.error('Error: ',e.message);

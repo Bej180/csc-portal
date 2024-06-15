@@ -13,6 +13,7 @@ app.directive("controller", [
                 values: "=",
                 submitting: "=",
             },
+            controller:'RootController',
             link: function (scope, element, attr) {
                 let values = {initial: element.text()};
                 if (typeof scope.values === "object" && scope.values !== null) {
@@ -91,8 +92,10 @@ app.directive("controller", [
 
                         if (!scope.disabled && !scope.ngDisabled) {
                             setState("sending");
-                            let promise = scope.controller();
-
+                            
+                            
+                            let promise = scope.controller.apply(scope);
+                           
                             if (promise && angular.isFunction(promise.then)) {
                                 promise
                                     .then((res) => {

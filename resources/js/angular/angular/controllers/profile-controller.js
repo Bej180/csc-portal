@@ -1,12 +1,10 @@
 app.controller("AccountSetting", function ($scope) {
     // $scope.two_factor={};
 
-    $scope.updateUserLogins = (user) => {
-        return api(
+    $scope.updateUserLogins = (userData) => {
+        return $scope.api(
             '/app/admin/user/resetlogins',
-            user,
-            res => console.log(res),
-            err => console.error(err)
+            userData
         );
     };
     

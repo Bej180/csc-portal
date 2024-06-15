@@ -30,6 +30,11 @@ class Enrollment extends Model
 
 
 
+
+
+    public static function getEnrollmentsByRequestID(string $request_id) {
+
+    }
     
 
 

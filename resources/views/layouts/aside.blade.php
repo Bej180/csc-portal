@@ -20,6 +20,13 @@
 
             <div class="sidebar-body">
                 <ul class="menu">
+                    <li class="p-[20px] flex md:hidden items-center justify-between">
+                        <span class="text-xs opacity-20 inline-flex gap-2 items-center">
+                            <x-icon name="menu"/> 
+                            <label>Menu</label>
+                        </span>
+                        <span class="text-2xl opacity-15 hover:scale-150 hover:opacity-100" ng-click="closeSidebar()">&times;</span>
+                    </li>
                     <li data-nav="home" ng-class="{'active': isActiveNav('home')}">
                         <a href="/home" ng-click="changeNav('home')">
                             <i class="material-symbols-roundedx"><x-icon name="dashboard" /> </i>

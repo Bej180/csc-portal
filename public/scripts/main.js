@@ -87,7 +87,7 @@ async function generateTranscript($el) {
     const reg_no = target.getAttribute("data-regNo");
 
     // try {
-    //   const data = await api('/student', {id:reg_no});
+    //   const data = await http('/student', {id:reg_no});
     //   console.log(data);
     //   //const data = await res.json();
     // } catch(e) {console.log(e);}
@@ -96,7 +96,8 @@ async function generateTranscript($el) {
 
     document.getElementById("transcriptregNum").value = reg_no;
     document.getElementById("transcriptHolder").value = name;
-    document.getElementById("transcriptgenerator").classList.remove("hidden");``
+    document.getElementById("transcriptgenerator").classList.remove("hidden");
+    ``;
 
     this.formOpen = true;
 }
@@ -131,13 +132,6 @@ window.handlePrint = handlePrint;
 
 jQuery(document).ready(function () {
     var $ = jQuery;
-
-    $(document).on("click", 'a[href="/logout"]', function (e) {
-        e.preventDefault();
-        if (confirm("Are you sure you want to log out?")) {
-            window.location.href = "/logout";
-        }
-    });
 
     function load() {
         $(".scroller").each(function () {
@@ -180,7 +174,7 @@ jQuery(document).ready(function () {
         "select.data-load-classes:not(.clicked)",
         function (e) {
             const element = $(this);
-            api("/classes").then((res) => {
+            http("/classes", (res) => {
                 element.addClass("clicked");
                 const first = $(this).find("option");
                 res.forEach((set) => {
@@ -193,23 +187,7 @@ jQuery(document).ready(function () {
     );
 });
 
-$(document).on("click", ".sidebar-toggler", function (e) {
-    return;
-    const menu = $(".sidebar").eq(0);
-    const display = menu.css("display");
-    if (window.innerWidth > 1024) {
-        if (!menu.is(".minimized")) {
-            menu.toggleClass("activate-hovering");
-        }
-        menu.toggleClass("closed-sidebar");
-    } else {
-        if (display == "none") {
-            menu.css("display", "flex");
-        } else {
-            menu.hide();
-        }
-    }
-});
+
 
 $(document).on(
     "mouseenter mouseleave",
@@ -265,6 +243,7 @@ $(document).on("click", ".popup", function (event) {
 
 window.onbeforeunload = () => {
     onOverlay();
+    $(".reload-dismiss").remove();
 };
 
 $(function () {
@@ -564,20 +543,19 @@ $(function () {
 // }
 
 function getHeaderHeight() {
-  $('.header').each(function(){
-    $('html').css({
-      '--header-height': $(this).outerHeight() + 'px'
+    $(".header").each(function () {
+        $("html").css({
+            "--header-height": $(this).outerHeight() + "px",
+        });
     });
-  });
 }
 getHeaderHeight();
-$(window).on('resize', getHeaderHeight);
+$(window).on("resize", getHeaderHeight);
 
 $(".scrollable").each(function () {
-    var scrollbarTrack =  $(this).next(".scrollable-track");
-    var scrollbarThumb = $(".scrollable-thumb",scrollbarTrack);
+    var scrollbarTrack = $(this).next(".scrollable-track");
+    var scrollbarThumb = $(".scrollable-thumb", scrollbarTrack);
     const container = $(this)[0];
-
 
     function updateScrollbar() {
         var contentHeight = container.scrollHeight;
@@ -591,7 +569,11 @@ $(".scrollable").each(function () {
             top: scrollPercentage + "%",
             height: thumbHeight + "px",
         });
-        console.log({thumbHeight, scrollPercentage, found: scrollbarThumb.length});
+        console.log({
+            thumbHeight,
+            scrollPercentage,
+            found: scrollbarThumb.length,
+        });
     }
 
     // Function to handle scrolling and update thumb position
