@@ -1,15 +1,15 @@
-<x-template title="{{ $title }}" nav='courses' controller="StudentCourseRegistrationController"
-    ng-init="loadEnrollments()">
+<x-template title="Course Enrollment History" nav='courses' controller="StudentCourseRegistrationController"
+    ng-init="loadEnrollments()">            
 
     <div class="columns">
 
         <x-route class="one-column" name="index">
             <section>
 
-                <div ng-cloak ng-if="loaded && enrolled">
+                <div ng-cloak ng-if="loaded && enrollments">
 
                     <div class="flex justify-between items-center">
-                        <div class="flex items-center gap-1">
+                        <div class="flex items-center gap-1 text-2xl">
                             <span>Course Registration History</span>
                         </div>
 
@@ -27,38 +27,26 @@
                                             <th class="text-center">Session</th>
                                             <th>Semester</th>
                                             <th class="text-center">Level</th>
+                                            <th class="!text-center">Total</th>
+
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="(request_id, enrollments) in enrolled">
-                                            <td class="text-center" ng-bind="enrollments[0].session"></td>
-                                            <td class="uppercase" ng-bind="enrollments[0].semester"></td>
-                                            <td class="text-center" ng-bind="enrollments[0].level"></td>
+                                        <tr ng-repeat="enrollment in enrollments">
+                                            <td class="text-center" ng-bind="enrollment.session"></td>
+                                            <td class="uppercase" ng-bind="enrollment.semester"></td>
+                                            <td class="text-center" ng-bind="enrollment.level"></td>
+                                            <td class="!text-center" ng-bind="enrollment.courses.length"></td>
                                             <td class="flex justify-center">
 
 
                                                 <button
-                                                    ng-click="viewCourseRegistrationDetails(enrollments[0])"
+                                                    controller="showCourseRegistrationDetails(enrollment)"
                                                     class="whitespace-nowrap flex gap-1 text-xs btn btn-primary transition px-1 lg:px-2"
                                                     type="button">
                                                     <x-icon name="visibility"/>
                                                     <label>View Details</label>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr ng-repeat="enrollment in enrolled.enrollments">
-                                            <td class="text-center" ng-bind="enrollment.session"></td>
-                                            <td class="uppercase" ng-bind="enrollment.semester"></td>
-                                            <td class="text-center" ng-bind="enrollment.level"></td>
-                                            <td class="flex justify-center">
-
-
-                                                <button
-                                                    ng-click="viewCourseRegistrationDetails(enrollment.level, enrollment.semester, enrollment.session)"
-                                                    class="text-xs btn btn-primary transition px-1 lg:px-2"
-                                                    type="button">
-                                                    View <span class="hidden lg:inline">Details</span>
                                                 </button>
                                             </td>
                                         </tr>
@@ -69,7 +57,7 @@
                         </div>
                     </div>
                 </div>
-                <div ng-if="loaded && !enrolled" ng-cloak id="no-courses"
+                <div ng-if="loaded && !enrollments" ng-cloak id="no-courses"
                     class="h-avail flex  p-2 flex-col gap-5 justify-center items-center">
                     <img class="w-72" src="{{ asset('svg/no_courses.svg') }}" alt="no_courses_icon">
                     <div class="flex flex-col items-center gap-5 text-center">

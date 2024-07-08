@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
 @import url('./toastr.css');
+@import url('../plugins/scrollbar/scroll.min.css');
 
 :root {
     --input-border-color:#cbd5e1;
@@ -9,6 +10,7 @@
     --input-bg-color: #fff;
     --dropdown-bg-color: #fff;
     --td-border-color: rgb(51, 51, 51, 0.1);
+    --tabview-bg: #fff;
 }
 * {
   scrollbar-width: none !important;
@@ -20,6 +22,14 @@
   }
     
 }
+html.theme body > *:not(#overlay) {
+  display:none !important;
+  visibility: hidden;
+  opacity: 0 !important;
+  position: absolute !important;
+  height: 0px !important;
+  width: 0px !important;
+}
 audio, canvas, embed, iframe, img, object, svg, video {
   display: block;
   vertical-align: middle;
@@ -30,8 +40,8 @@ audio, canvas, embed, iframe, img, object, svg, video {
   --dropdown-bg-color: #222224;
   --input-border-color: transparent;
   --td-border-color: #aaa;
+  --tabview-bg:#151515;
   
-  /* @apply bg-zinc-800; text-black dark:text-[#96a2b4]*/
 }
 
 

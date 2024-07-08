@@ -22,7 +22,7 @@ use App\Models\Department;
 use Illuminate\Http\Request;
 use App\Models\AcademicRecord;
 use App\Models\AcademicSession;
-use App\Models\ActivityLog;
+
 use App\Models\CourseAllocation;
 use App\Models\Enrollment;
 use App\Models\Staff;
@@ -461,60 +461,7 @@ class CourseController extends Controller
 
 
 
-    public function index_courses_for_registration(Request $request)
-    {
-
-        $validator = Validator::make($request->all(), [
-            'level' => 'required',
-            'semester' => 'required',
-            'session' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'errors' => $validator->errors()
-            ], 401);
-        }
-        $level = $request->level;
-        $semester = $request->semester;
-        $session = $request->session;
-
-
-        $findSession = AcademicSession::where('name', $session)->first();
-
-        if ($findSession) {
-            $semester_column = strtolower($semester) . '_course_registration_status';
-            $status = $findSession->$semester_column;
-            
-
-
-            if ($status === 'OPEN') {
-                $courses = Course::active()->where('level', '=', $level)
-                    ->where('semester', '=', $semester)
-                    ->get()
-                    ->groupBy('option');
-
-                    
-                    $minUnits = config("courseunits.$level.$semester.min", 18);
-                    $maxUnits = config("courseunits.$level.$semester.max", 24);
-                    
-                    $student = $request->user()->student;
-                    
-                    // add borrowed units to maximum units
-                    $maxUnits += (int) $student->borrowed_units;
-
-                return response()->json(compact('maxUnits', 'minUnits', 'courses'));
-                
-                return response()->json($courses);
-            }
-            return response()->json([
-                'error' => 'Course registration has closed for the session',
-            ], 401);
-        }
-        return response()->json([
-            'error' => 'Academic Session not found'
-        ], 401);
-    }
+    
 
 
     /**
@@ -694,109 +641,7 @@ class CourseController extends Controller
 
 
 
-    /***
-     * Handles Student Course Registration
-     */
-
-    public function doRegister(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'courses' => 'required|array',
-            'level' => 'required',
-            'semester' => 'required|in:HARMATTAN,RAIN'
-        ], [
-            'courses.required' => 'Courses to be registered were not provided',
-            'level.level' => 'Your level is required',
-            'semester' => 'Academic semester not provided',
-            'courses.array' => 'Invalid course selection'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'errors' => $validator->errors()
-            ]);
-        }
-
-        $requestedCourses = $request->input('courses');
-        $session = $request->input('session');
-        $semester = $request->input('semester');
-        $level = $request->input('level');
-
-        // get the instances of all the to courses to be enrolled in
-        $courses = Course::whereIn('id', $requestedCourses)->get();
-
-
-
-        $courses_ = [];
-        $user = auth()->user();
-
-        // Student Reg Number
-        $reg_no = $user->student->reg_no;
-
-       
-
-        $request_id = generateToken('enrollments.request_id');
-
-        foreach ($courses as $course) {
-
-            // Check if course has prerequisites courses
-            // if yes, check if he has passed them 
-
-            if ($course->prerequisites) {
-                $slitPrerequisites = implode(',', $course->prerequisites);
-                $prerequisitesCourses = Course::whereIn('id', $slitPrerequisites)->get();
-
-                foreach ($prerequisitesCourses as $preCourse) {
-
-                    $result = Result::where('course_id', $preCourse->id)
-                        ->where('reg_no', $reg_no)
-                        ->where('remark', 'PASSED')->first();
-
-                    if (!$result) {
-                        return response()->json([
-                            'error' => 'You are not allowed to register ' . $course->name . ' until you settle ' . $preCourse->name
-                        ], 400);
-                    }
-                }
-            }
-
-
-            $courses_[] = [
-                'course_id' => $course->id,
-                'reg_no' => $reg_no,
-                'level' => $level,
-                'semester' => $semester,
-                'session' => $session,
-                'request_id' => $request_id
-            ];
-        }
-
-
-        if (count($requestedCourses) !== count($courses_)) {
-            return response()->json([
-                'error' => 'Failed to register courses',
-            ], 400);
-        }
-
-
-        Enrollment::insert($courses_);
-
-        // foreach ($courses_ as $course) {
-        //     Enrollment::create(Enrollment::getFillables($course));
-        // }
-
-        // Log Activity 
-        ActivityLog::logCourseRegistrationActivity($user, "registered $session $semester courses");
-
-        return response()->json([
-            'semester' => $semester,
-            'session' => $session,
-            'level' => $level,
-            'success' =>  "You have successfully registered " . count($courses_) . " courses for $session $semester Semester",
-            // 'redirect' => "/course-registration-details?semester=$semester&level=$level"
-            //http://127.0.0.1:8000/course-registration-details?semester=HARMATTAN&session=2018%2F2019
-        ]);
-    }
+    
 
 
 

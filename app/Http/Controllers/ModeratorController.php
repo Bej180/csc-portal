@@ -19,7 +19,7 @@ class ModeratorController extends Controller
 
     public function index()
     {
-        $hod = Staff::with('user')->where('is_hod', true)->first();
+        $hod = Staff::with('user')->where('is_hod', true)->first()->user->account();
         $dean = Dean::with('user')->latest()->first();
 
         return compact('hod', 'dean');
@@ -143,7 +143,7 @@ class ModeratorController extends Controller
 
         return response()->json([
             'success' => $staff->user->name . ' has been made the HOD of CSC',
-            'hod' => $staff
+            'hod' => $staff->user->account()
         ]);
     }
 

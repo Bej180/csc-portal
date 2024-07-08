@@ -66,7 +66,9 @@ HTTP_METHOD_NOT_ALLOWED (405): T
 |
 */
 
-Route::get('/csrf-end-point', fn () => ['token' => csrf_token()]);
+Route::get('/csrf-end-point', fn () => response()->json([
+    'token' => csrf_token()
+], 200));
 
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
@@ -90,6 +92,10 @@ Route::get('/tokens/create', function (Request $request) {
 Route::post('/dologin', [AuthController::class, 'api_login']);
 Route::post('/app/auth/verify_otp', [AuthController::class, 'verifyOTP']);
 
+Route::post('/auth/generate-qr-code', 'QrCodeController@generateQrCode')->middleware('auth');
+Route::post('/auth/check-scan-status/{token}', 'QrCodeController@checkScanStatus')->middleware('auth');
+Route::post('/auth/regenerate-qr-code', 'QrCodeController@regenerateQrCode')->middleware('auth');
+Route::post('/auth/scan-qr-code', 'QrCodeController@scanQrCode')->middleware('auth:api');
 
 // Route::get('/register', 'AuthController@register');
 Route::post('/doRegister', [AuthController::class, 'api_register_student']);
@@ -242,6 +248,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/app/admin/courses/make_cordinator', [CourseController::class, 'makeCourseCordinator']);
     // Route::post('/app/admin/courses/allocate/to_staff', [CourseController::class, 'allocate_to_staff']);
     Route::post('/app/admin/student/create', [StudentController::class, 'store']);
+    
+    Route::post('/app/admin/student/enrollments/course/drop', [AdminController::class, 'drop_course_from_enrollment']);
+    Route::post('/app/admin/student/enrollments/course/add', [AdminController::class, 'add_course_to_enrollment']);
+    Route::post('/app/adminappser/enrollments/delete', [AdminController::class, 'delete_enrollments']);
+    Route::post('/app/admin/enrollments/update', [AdminController::class, 'update_enrollments']);
+
     Route::post('/app/admin/staff/create', [AdminController::class, 'store_staff']);
     Route::post('/app/admin/staff/index', [AdminController::class, 'index_staff']);
     Route::post('/app/admin/user/resetlogins', [AdminController::class, 'resetLoginDetails']);
@@ -255,6 +267,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     # Portal Configuration
     Route::post('/app/admin/session/show', [PortalConfigurationController::class, 'show']);
     Route::post('/app/admin/session/close', [PortalConfigurationController::class, 'close_semester_course_registration']);
+
 
 
     Route::post('/app/advisor/dashboard', [AdvisorController::class, 'dashboard_api_data']);
@@ -275,8 +288,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 
     Route::post('/app/hod/results/index', [HODController::class, 'api_index_results']);
-    Route::post('/app/hod/results/approve', [HODController::class, 'approve_results']);
     Route::post('/app/staff/index', [UserController::class, 'get_staffs']);
+    Route::post('/app/hod/results/approve', [HODController::class, 'approve_results']);
+    Route::post('/app/hod/results/disapprove', [HODController::class, 'disapprove_results']);
     Route::post('/app/staff/show', [UserController::class, 'get_staff']);
     Route::post('/app/staff/course_allocation/deallocate', [UserController::class, 'deallocate_courses']);
     Route::post('/app/staff/course_allocation/allocate', [UserController::class, 'allocate_courses']);
@@ -297,21 +311,25 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     });
 
     // Staff routes
-    Route::post('/app/staff/courses/students', [StaffController::class, 'list_of_enrolled_students']);
+    Route::post('/app/staff/courses/students', [EnrollmentController::class, 'list_of_enrolled_students']);
+    Route::post('/app/staff/courses/index', [StaffController::class, 'index_my_courses']);
     Route::post('/app/staff/result/add', [ResultsController::class, 'add_results']);
-    Route::post('/app/staff/results/add', [StaffController::class, 'save_results']);
-    Route::post('/app/staff/results/save_draft', [StaffController::class, 'save_as_draft']);
-    Route::post('/app/staff/results/index', [ResultsController::class, 'staff_results_index_page']);
+    Route::post('/app/staff/results/add', [ResultsController::class, 'save_results']);
+    Route::post('/app/staff/results/upload_ogmr', [ResultsController::class, 'upload_ogmr']);
+    Route::get('/app/staff/results/sessions',  [StaffController::class, 'results_uploaded_session']);
+    Route::post('/app/staff/results/save_draft', [ResultsController::class, 'save_as_draft']);
+    Route::post('/app/staff/results/index', [StaffController::class, 'staff_results_index_page']);
     Route::post('/app/staff/lab_scores/index', [StaffController::class, 'staff_lab_scores_index_page']);
     Route::post('/app/staff/results/approve_lab_scores', [StaffController::class, 'approve_lab_scores']);
 
 
     Route::post('/app/moderator/make_staff_class_advisor', [ModeratorController::class, 'makeStaffAdviser']);
 
+    Route::post('/test', fn()=>response()->json(['alert.success' => 'Do you want to logout?'], 400));
 
     Route::post('/app/staff/course/results', [ResultsController::class, 'single_course_results']);
 
-    Route::post('/app/announcement/announce', [AnnouncementController::class, 'announce']);
+    
 
 
     # TECHNOLOGIST ROUTES
@@ -321,26 +339,30 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/app/technologist/attendance/index', [TechnologistController::class, 'attendance_lists']);
     Route::post('/app/technologist/attendance/mark', [TechnologistController::class, 'mark_attendance']);
 
+    
 
 
     // ROutes for students 
-    Route::post('/app/student/course_registration/courses', [CourseController::class, 'index_courses_for_registration']);
-    Route::post('/app/student/courses/register', [CourseController::class, 'doRegister']);
+    Route::post('/app/student/course_registration/courses', [EnrollmentController::class, 'index_courses_for_registration']);
+    Route::post('/app/student/courses/enroll', [EnrollmentController::class, 'store']);
     Route::post('/app/student/results/index', [StudentController::class, 'index_results']);
     Route::post('/app/students/index', [UserController::class, 'index_students']);
-    Route::post('/app/student/enrollments/show', [StudentController::class, 'enrollment_details']);
-    Route::post('/app/student/enrollments/index', [StudentController::class, 'api_enrollments']);
+    Route::post('/app/student/enrollments/show', [EnrollmentController::class, 'show']);
+    Route::post('/app/student/enrollments/index', [EnrollmentController::class, 'index']);
+    Route::post('/app/student/enrollments', [EnrollmentController::class, 'getStudentEnrollments']);
+    Route::get('/app/student/cgpa', [StudentController::class, 'getCGPA']);
 
 
-
-    Route::post('/app/announcements/announcer_index', [AnnouncementController::class, 'announcer_index']);
-
+    
     Route::post('/app/todo/complete', [TodoController::class, 'mark_todo']);
     Route::post('/app/todo/store', [TodoController::class, 'store']);
     Route::post('/app/todo/index', [TodoController::class, 'get_todos']);
     Route::post('/app/todo/delete', [TodoController::class, 'delete_todo']);
 
-    Route::post('/app/annoucement/stream', [AnnouncementController::class, 'unseen_announcements']);
+    Route::post('/app/announcement/stream', [AnnouncementController::class, 'unseen_announcements']);
+    Route::post('/app/announcement/announce', [AnnouncementController::class, 'announce']);
+    Route::post('/app/announcements/announcer_index', [AnnouncementController::class, 'announcer_index']);
+    Route::post('/app/announcement/mark_as_seen', [AnnouncementController::class, 'mark_as_seen']);
 
 
 });

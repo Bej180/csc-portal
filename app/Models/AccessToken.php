@@ -31,6 +31,9 @@ class AccessToken extends Model
         );
     }
 
+
+   
+
     /**
      * Check if the token has expired.
      *
@@ -51,9 +54,9 @@ class AccessToken extends Model
     {
         return $this->token === $token;
     }
-    public function match(string $token) {
-        return ['storedToken'=>$this->token, 'userToken'=>$token];
-    }
+
+
+   
 
     /**
      * Terminate all access tokens for the current tokenable.
@@ -113,11 +116,11 @@ class AccessToken extends Model
      */
     public function regenerateToken(): string
     {
-        $this->token = $this->generateTokenString();
-        $plainTextToken = $this->id . '|' . $this->token;
-        $this->save();
-
-        return $plainTextToken;
+        $user = $this->tokenable;
+        if ($user) {
+            return $user->createToken($this->name)->plainTextToken;
+        }
+        return null;
     }
 
     /**

@@ -1006,32 +1006,8 @@
     margin: 0;
 }
 
-.btn-primary {
-    background-color: var(--primary); 
-    color: var(--white);
-}
 
-.btn-primary:hover {
-    background-color: var(--primary-600);
-}
 
-.btn-secondary {
-    background-color: var(--secondary);
-    color: var(--white);
-}
-
-.btn-secondary:hover {
-    background-color: var(--secondary-600);
-}
-
-.btn-danger {
-    background-color: var(--danger);
-    color: var(--white);
-}
-
-.btn-danger:hover {
-    background-color: var(--danger-600);
-}
 
 .btn-accent {
     background-color: var(--accent);

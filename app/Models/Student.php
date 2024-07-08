@@ -75,10 +75,11 @@ class Student extends Model
     function calculateCGPA(?string $retrieve = 'GPA') {
 
         // fetch all approved results
-        $results = $this->results()->where('status', 'approved');
+        $results = $this->results()->where('status', 'APPROVED');
         if (!$results->exists()) {
             return 0.0;
         }
+        
         $totalUnits = $results->sum('units');
         $totalGradePoints = $results->sum('grade_points');
         return round($totalGradePoints / $totalUnits, 2);
@@ -158,9 +159,7 @@ class Student extends Model
         return $this->hasMany(Enrollment::class, 'reg_no', 'reg_no')->orderby('enrollments.course_id');
     }
 
-    public function courseRegistrationPerSemester() {
-        return $this->hasMany(Enrollment::class, 'reg_no', 'reg_no')->orderBy('level', 'asc')->orderBy('semester', 'desc')->groupBy('request_id');
-    }
+    
 
     public function results() {
         return $this->hasMany(Result::class, 'reg_no', 'reg_no');

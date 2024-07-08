@@ -1,6 +1,7 @@
 @props(['title'])
 <!DOCTYPE html>
 <html 
+    class="no-ng {% theme %}"
     ng-cloakx
     lang="en" 
     ng-app="cscPortal" 

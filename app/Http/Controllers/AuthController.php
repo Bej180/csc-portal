@@ -24,6 +24,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Validator;
 use PragmaRX\Google2FA\Google2FA;
+use Illuminate\Support\Str;
 
 use Illuminate\Support\Carbon;
 
@@ -64,6 +65,7 @@ class AuthController extends Controller
 
         if (!$accessToken->exists()) {
             return response()->json([
+                'data' => $split_token,
                 'error' => 'Token has expired',
             ], 400);
         }
@@ -71,42 +73,54 @@ class AuthController extends Controller
       
 
         if ($accessToken->hasExpired()) {
-            return response()->json([
-                'error' => 'Access Token has expired',
-            ], 400);
-        }
-        else if (!$accessToken->equals($token)) {
+            auth()->logout();
+            $user = $request->user();
+
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
             
+            $accessToken->delete();
+            
+
             return response()->json([
-                'token' => $token,
-                'raw_token' => $accessToken,
-                'message' => $accessToken->match($token),
-                'error' => 'Token is invalid..',
-            ], 400);
+                'error' => 'Session has been terminated'
+            ]);
 
+            
         }
+       
 
-        $user = User::where('id', $accessToken->tokenable_id)
-            ->where('role', $accessToken->name);
+        $user = $accessToken->tokenable;
 
-
+        
 
         if (!$user) {
             return response()->json([
                 'message' => 'Authentication failed'
             ], 401);
         }
+
+        return $user;
        
         
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        
+        
+        return response()->json([
+            'user' => $request->user(),
+            'u' => $user
+        ], 400);
         auth()->login($user);
     
 
         if (auth()->check()) {
-            $token = $user->createToken($accessToken->name)->plainTextToken;
+            $token = $accessToken->regenerateToken();
 
             $response = [
                 'persistent_session' => $token,
-                'redirect' => '/home',
+               // 'redirect' => '/home',
                 'success' => 'Welcome back',
             ];
 
@@ -873,5 +887,51 @@ class AuthController extends Controller
         ActivityLog::logLoginActivity($user);
 
         return response()->json($response);
+    }
+
+
+
+    /**QRCODE LOGIN */
+    public function scanQrCode(Request $request)
+    {
+        $token = $request->input('token');
+
+        // Retrieve the data associated with the token from cache
+        $data = Cache::get($token);
+
+        if ($data) {
+            // Mark the token as scanned
+            $data['scanned'] = true;
+            Cache::put($token, $data, now()->addMinutes(5));
+
+            return response()->json(['success' => 'QR code scanned successfully.'], 200);
+        }
+
+        return response()->json(['error' => 'Invalid or expired token.'], 400);
+    }
+
+    public function generateQrCode()
+    {
+        $token = Str::random(64);
+        $expiresAt = now()->addMinutes(5);
+
+        // Store token in cache with the user ID and a "not scanned" status
+        Cache::put($token, ['user_id' => auth()->id(), 'scanned' => false], $expiresAt);
+
+        // Generate QR Code with the token
+        $qrCode = QrCode::size(300)->generate(url('/api/scan-qr-code?token=' . $token));
+
+        return view('qr-code', ['qrCode' => $qrCode, 'token' => $token]);
+    }
+
+    public function checkScanStatus($token)
+    {
+        $data = Cache::get($token);
+
+        if ($data && $data['scanned']) {
+            return response()->json(['status' => 'scanned']);
+        }
+
+        return response()->json(['status' => 'not_scanned']);
     }
 }

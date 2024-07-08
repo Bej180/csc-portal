@@ -99,7 +99,7 @@ $.confirm = async function (content, obj) {
         label.text("Verify Password").attr("aria-label", "Verify Password");
         confirmContent.empty();
         const passwordWrapper = $("<form>");
-    
+
         confirmContent.append(passwordWrapper);
         passwordWrapper.append(
             `<div class="font-semibold block text-left">Password</div>`
@@ -112,11 +112,11 @@ $.confirm = async function (content, obj) {
         });
         passwordInput.addClass("input mt-2");
         passwordWrapper.append(passwordInput);
-        accepted = obj.accept.bind(passwordInput[0]);
-        confirmAccept.prop('disabled', true);
+        accepted = obj.accept.bind(null, passwordInput.text());
+        confirmAccept.prop("disabled", true);
 
-        passwordInput.on('keyup', (e) => {
-            confirmAccept.prop('disabled', e.target.value.trim().length === 0)
+        passwordInput.on("keyup", (e) => {
+            confirmAccept.prop("disabled", e.target.value.trim().length === 0);
         });
     }
 
@@ -130,40 +130,38 @@ $.confirm = async function (content, obj) {
         $(this).prop("disabled", true);
         accepted = (async () => accepted())();
 
-        if (typeof accepted === "function" && accepted && typeof accepted.then === "function") {
+        if (
+            typeof accepted === "function" &&
+            accepted &&
+            typeof accepted.then === "function"
+        ) {
             accepted
                 .then((res) => {
                     spinner
                         .attr("class", "sonar_once fa fa-check-circle")
                         .show();
-                        spinner.hide();
-                        $(this).prop("disabled", false); 
+                    spinner.hide();
+                    $(this).prop("disabled", false);
                     confirmElement.remove();
                 })
                 .catch((res) => {
                     spinner
-                        .attr(
-                            "class",
-                            "opacity-50 fa fa-exclamation-triangle"
-                        )
+                        .attr("class", "opacity-50 fa fa-exclamation-triangle")
                         .show();
                 })
                 .finally(() => {
-                    setTimeout(() => {
-                        
-                    }, 2000);
+                    setTimeout(() => {}, 2000);
                 });
-               
+        } else {
+            setTimeout(
+                () => {
+                    confirmElement.remove();
+                    spinner.hide();
+                    $(this).prop("disabled", false);
+                },
+                obj.type === "alert" ? 0 : 5000
+            );
         }
-        else {
-            setTimeout(() => {
-                confirmElement.remove();
-                spinner.hide();
-                $(this).prop("disabled", false);
-            }, 5000);
-        }
-        
-        
     });
     confirmDeny.on("click", function () {
         obj.deny.call(confirmElement);
@@ -175,4 +173,311 @@ $.confirm = async function (content, obj) {
 
     //     confirmElement.remove();
     // });
+};
+
+/*
+$.fn.pin = function(options) {
+    if (typeof options !== 'object' || options === null) {
+        options = {};
+    }
+    options = {paste:false, toggle: false, form: null, timeout: 2000, ...options};
+    $(this).each(function(){
+
+        const element = $(this);
+        const inputs = element.find("input");
+        const insertValue = () => {
+            let pinArr = [];
+            inputs.each(function(){
+                pinArr.push($(this).val().replace(/\D+/, ''));
+            });
+            element.attr('data-value', pinArr.join(''));
+        };
+
+        const initialType = inputs.eq(0).attr('type') || 'text';
+        insertValue();
+
+
+        inputs.eq(0).focus();
+
+        // Add event listeners to all OTP input fields for handling input
+        inputs.on("input", function (event) {
+            const value = $(this).val();
+            if (/\D/.test(value)) {
+                $(this).val("");
+            } else if (value.length === 1) {
+                const index = inputs.index(this);
+                insertValue();
+                if (index < inputs.length - 1) {
+                    // Move focus to the next input field if available
+                    $(inputs[index + 1]).focus();
+                }
+            }
+        });
+
+        if (options.toggle) {
+            let visibility = element.find('.pin-visibility');
+            if (visibility.length === 0) {
+                visibility = $('<span>');
+                visibility.addClass('pin-visibility');
+                element.append(visibility);
+            }
+            const visibilityObj = {
+                text: "<svg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 0 24 24' width='24px' fill='currentColor'><path d='M0 0h24v24H0V0z' fill='none'/><path d='M12 6c3.79 0 7.17 2.13 8.82 5.5C19.17 14.87 15.79 17 12 17s-7.17-2.13-8.82-5.5C4.83 8.13 8.21 6 12 6m0-2C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 5c1.38 0 2.5 1.12 2.5 2.5S13.38 14 12 14s-2.5-1.12-2.5-2.5S10.62 9 12 9m0-2c-2.48 0-4.5 2.02-4.5 4.5S9.52 16 12 16s4.5-2.02 4.5-4.5S14.48 7 12 7z'/></svg>",
+                number: "<svg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 0 24 24' width='24px' fill='currentColor'><path d='M0 0h24v24H0V0z' fill='none'/><path d='M12 6c3.79 0 7.17 2.13 8.82 5.5C19.17 14.87 15.79 17 12 17s-7.17-2.13-8.82-5.5C4.83 8.13 8.21 6 12 6m0-2C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 5c1.38 0 2.5 1.12 2.5 2.5S13.38 14 12 14s-2.5-1.12-2.5-2.5S10.62 9 12 9m0-2c-2.48 0-4.5 2.02-4.5 4.5S9.52 16 12 16s4.5-2.02 4.5-4.5S14.48 7 12 7z'/></svg>",
+                password: "<svg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 -960 960 960' width='24px' fill='currentColor'><path d='m644-428-58-58q9-47-27-88t-93-32l-58-58q17-8 34.5-12t37.5-4q75 0 127.5 52.5T660-500q0 20-4 37.5T644-428Zm128 126-58-56q38-29 67.5-63.5T832-500q-50-101-143.5-160.5T480-720q-29 0-57 4t-55 12l-62-62q41-17 84-25.5t90-8.5q151 0 269 83.5T920-500q-23 59-60.5 109.5T772-302Zm20 246L624-222q-35 11-70.5 16.5T480-200q-151 0-269-83.5T40-500q21-53 53-98.5t73-81.5L56-792l56-56 736 736-56 56ZM222-624q-29 26-53 57t-41 67q50 101 143.5 160.5T480-280q20 0 39-2.5t39-5.5l-36-38q-11 3-21 4.5t-21 1.5q-75 0-127.5-52.5T300-500q0-11 1.5-21t4.5-21l-84-82Zm319 93Zm-151 75Z'/></svg>"
+            };
+
+            const type = typeof visibilityObj[initialType] === 'string' ?
+                initialType :
+                'password';
+
+            visibility.html(visibilityObj[type]);
+
+            
+
+            visibility.on('click', function(){
+                const type = inputs.eq(0).attr('type');
+                const newType = type === 'password' ? initialType : 'password';
+               
+                
+                inputs.attr('type', newType);
+                visibility.html(visibilityObj[newType]);
+
+                if (newType === 'text' && options.timeout) {
+                    setTimeout(() => {
+                        inputs.attr('type', 'password');
+                        visibility.html(visibilityObj.password);
+
+                    }, options.timeout);
+                }
+
+            });
+            
+        }
+
+        // Add event listeners to all OTP input fields for handling keyboard navigation
+        inputs.on("keydown", function (event) {
+            const value = $(this).val();
+            if (event.key === "Backspace" && value.length === 0) {
+                const index = inputs.index(this);
+                if (index > 0) {
+                    // Move focus to the previous input field if available
+                    $(inputs[index - 1]).focus();
+                }
+            }
+        });
+
+        // Add event listeners to all OTP input fields for handling keyup events
+        inputs.on("keyup", function (event) {
+            const value = $(this).val();
+            if (value.length > 1 && $(this).is("input:last")) {
+                $(this).blur(); // Blur the input field if more than one character is entered and it's the last field
+            }
+        });
+
+        if (options.paste) {
+            element.on("paste", function (event) {
+                event.preventDefault();
+                const pastedData =
+                    event.originalEvent.clipboardData.getData("text");
+                if (pastedData.length === inputs.length) {
+                    // Paste OTP characters into respective input fields
+                    inputs.each(function (index) {
+                        $(this).val(pastedData[index]);
+                        if (index < inputs.length - 1) {
+                            $(this).trigger("input");
+                        }
+                        if (index === inputs.length - 1) {
+                            // form.submit(); // Submit the form after pasting all OTP characters
+                        }
+                    });
+                }
+            });
+        }
+    });
+}
+*/
+
+const uniqueAttr = (attr, value) => {
+    value = value || Math.random().toString(36).substring(2, 9);
+    while($(`[${attr}='${value}']`).length > 0) {
+
+        value = `${value}-${Math.random().toString(36).substring(2, 9)}`;
+    }
+    
+    return value;
+}
+
+window.uniqueAttr = uniqueAttr;
+
+$.fn.setAttr = (attr, value) => {
+    value = uniqueAttr(attr, value)
+    $(this).attr(attr, value);
+    return value;
+}
+
+$.fn.pin = function (options) {
+    // Validate options
+    if (typeof options !== "object" || options === null) {
+        options = {};
+    }
+   
+    // Set default options and merge with user options
+    options = {
+        paste: false,
+        toggle: true,
+        hide: true,
+        count: 4,
+        form: null,
+        timeout: 2000,
+        onComplete: function(value){
+           const modal = this.closest('.swal-modal');
+           modal.find('#pinAutoFocus').click();
+           console.log('Completed')
+        },
+        ...options,
+    };
+
+    // Iterate over each element in the jQuery object
+    $(this).each(function () {
+        const element = $(this);
+        const modal = element.closest('sw')
+        const inputType = options.hide ? "password" : "number";
+        
+        
+        let inputs = element.find("input");
+        if (inputs.length === 0) {
+            for (var i = 0; i < count; i++) {
+                const input = $("<input>");
+                element.append(input);
+            }
+            inputs = $("input", element);
+        }
+        inputs.css('height', inputs.eq(0).css('width'))
+        inputs.attr('type', inputType);
+        
+        // Function to insert the value into data-value attribute
+        const insertValue = () => {
+            let pinArr = [];
+            inputs.each(function () {
+                pinArr.push($(this).val().replace(/\D+/g, ""));
+            });
+            element.attr("data-value", pinArr.join(""));
+        };
+
+        // Insert initial value and focus on the first input
+        insertValue();
+        inputs.eq(0).focus();
+        // Handle input events
+        inputs.on("input", function () {
+            const value = $(this).val();
+            const index = inputs.index(this);
+
+            // Ensure only numeric input and shift focus to the next input
+            if (/\D/.test(value)) {
+                $(this).val("");
+            } else if (value.length === 1 && index < inputs.length - 1) {
+                insertValue();
+                $(inputs[index + 1]).focus();
+            } else {
+                insertValue();
+            }
+
+            // Trigger custom event
+            element.trigger("pin:input", [element.attr("data-value")]);
+        });
+        
+        // Handle toggle visibility
+        if (options.hide) {
+           
+            let visibility = element.find(".pin-visibility");
+            if (visibility.length === 0) {
+                visibility = $("<span>", {
+                    class: "pin-visibility",
+                    tabindex: "0",
+                    role: "button",
+                    "aria-label": "Toggle visibility",
+                });
+                element.append(visibility);
+            }
+
+            const visibilityObj = {
+                number: "<svg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 0 24 24' width='24px' fill='currentColor'><path d='M0 0h24v24H0V0z' fill='none'/><path d='M12 6c3.79 0 7.17 2.13 8.82 5.5C19.17 14.87 15.79 17 12 17s-7.17-2.13-8.82-5.5C4.83 8.13 8.21 6 12 6m0-2C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 5c1.38 0 2.5 1.12 2.5 2.5S13.38 14 12 14s-2.5-1.12-2.5-2.5S10.62 9 12 9m0-2c-2.48 0-4.5 2.02-4.5 4.5S9.52 16 12 16s4.5-2.02 4.5-4.5S14.48 7 12 7z'/></svg>",
+                password:
+                    "<svg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 -960 960 960' width='24px' fill='currentColor'><path d='m644-428-58-58q9-47-27-88t-93-32l-58-58q17-8 34.5-12t37.5-4q75 0 127.5 52.5T660-500q0 20-4 37.5T644-428Zm128 126-58-56q38-29 67.5-63.5T832-500q-50-101-143.5-160.5T480-720q-29 0-57 4t-55 12l-62-62q41-17 84-25.5t90-8.5q151 0 269 83.5T920-500q-23 59-60.5 109.5T772-302Zm20 246L624-222q-35 11-70.5 16.5T480-200q-151 0-269-83.5T40-500q21-53 53-98.5t73-81.5L56-792l56-56 736 736-56 56ZM222-624q-29 26-53 57t-41 67q50 101 143.5 160.5T480-280q20 0 39-2.5t39-5.5l-36-38q-11 3-21 4.5t-21 1.5q-75 0-127.5-52.5T300-500q0-11 1.5-21t4.5-21l-84-82Zm319 93Zm-151 75Z'/></svg>",
+            };
+
+            visibility.html(visibilityObj.password);
+
+            // Toggle input type on click
+            visibility.on("click keydown", function (event) {
+                if (
+                    event.type === "click" ||
+                    (event.type === "keydown" &&
+                        (event.key === "Enter" || event.key === " "))
+                ) {
+                    const type = inputs.eq(0).attr("type");
+                    const newType = type === inputType ? "number" : inputType;
+                    inputs.attr("type", newType);
+                    visibility.html(visibilityObj[newType]);
+
+                    // Revert to password type after a timeout if set
+                    if (newType === "text" && options.timeout) {
+                        setTimeout(() => {
+                            inputs.attr("type", inputType);
+                            visibility.html(visibilityObj.password);
+                        }, options.timeout);
+                    }
+                }
+            });
+        }
+
+        // Handle backspace and navigation
+        inputs.on("keydown", function (event) {
+            const index = inputs.index(this);
+            if (
+                event.key === "Backspace" &&
+                $(this).val().length === 0 &&
+                index > 0
+            ) {
+                $(inputs[index - 1]).focus();
+            }
+        });
+
+        // Handle keyup events
+        inputs.on("keyup", function (event) {
+            console.log(inputs.last())
+            if ($(this).val().length > 1 && $(this).is(inputs.last())) {
+                alert(333)
+                if (options.onComplete) {
+                    options.onComplete.call(element, element.data("value"));
+                }
+                $(this).blur();
+            }
+        });
+
+        // Handle paste events
+        if (options.paste) {
+            element.on("paste", function (event) {
+                event.preventDefault();
+                const pastedData =
+                    event.originalEvent.clipboardData.getData("text");
+                if (pastedData.length === inputs.length) {
+                    inputs.each(function (index) {
+                        $(this).val(pastedData[index]).trigger("input");
+                        if (index < inputs.length - 1) {
+                            $(inputs[index + 1]).focus();
+                        }
+                    });
+                    if (options.onComplete) {
+                        options.onComplete.call(element, pastedData);
+                    }
+                    // Optionally submit the form if provided
+                    if (options.form) {
+                        $(options.form).submit();
+                    }
+                }
+            });
+        }
+    });
 };

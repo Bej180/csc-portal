@@ -106,6 +106,8 @@ class HODController extends Controller
     // }
 
 
+   
+
 
     public function approve_results(Request $request)
     {
@@ -113,12 +115,12 @@ class HODController extends Controller
 
         $validator = Validator::make($request->all(), [
             'results_id' => 'required|exists:results,reference_id',
+            'passcode' => 'pin'
         ], [
             'results_id.required' => 'A unique identifier for the results to be approved was not provided',
             'results_id.exists' => 'Results were not found. They may have been deleted'
         ]);
 
-        // return response()->json(['error'=>$validator->errors(),$request->all()], 400);
 
         if ($validator->fails()) {
             return response()->json([
@@ -126,30 +128,46 @@ class HODController extends Controller
             ], 400);
         }
 
-        $results = Result::where('reference_id', '=', $request->results_id)->with('course');
+        if ($course = Result::approveResults($request->results_id)) {
+            return response()->json([
+                'success' => $course->code . ' results have been approved successfully',
+            ]);
+        }
+        return response()->json([
+            'error' => 'Failed to APPROVE Course',
+        ], 400);
+       
+    }
+    
+    
+    public function disapprove_results(Request $request)
+    {
+        
 
-        $results->update([
-            'status' => 'APPROVED'
+        $validator = Validator::make($request->all(), [
+            'results_id' => 'required|exists:results,reference_id',
+            'passcode' => 'pin'
+        ], [
+            'results_id.required' => 'A unique identifier for the results to be approved was not provided',
+            'results_id.exists' => 'Results were not found. They may have been deleted'
         ]);
 
-        $firstResult = $results->first();
-        $date = Carbon::parse($firstResult->created_at);
 
-        $getResults = $results->get();
-
-        // re-calculate the cpga of the results uploaded
-        foreach ($getResults as $result) {
-            $result->updateCGPA();
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors()
+            ], 400);
         }
 
-
-        //Email(ApprovedResultNotification($uploader, $firstResult->course->code, $date->format('d/m/Y')), $uploader);
-        // return $results;
-
+        if ($course = Result::disapproveResults($request->results_id)) {
+            return response()->json([
+                'success' => $course->code . ' results have been disapproved',
+            ]);
+        }
         return response()->json([
-            'success' => $results->first()->course->code . ' results have been approved successfully',
-            'data' => $this->api_index_results($request)
-        ]);
+            'error' => 'Failed to DISAPPROVE Course',
+        ], 400);
+       
     }
 
 

@@ -1,7 +1,36 @@
+
+import '../../plugins/scrollbar/scrollbar.min.js';
+import '../../plugins/scrollbar/custom-scroll.js';
+
 (function ($) {
     $(function () {
         "use strict";
-        offOverlay(3000);
+
+        setTimeout(() => {
+            const overlay = $('#overlay');
+            if ($('html').hasClass('theme')) {
+                overlay.text('Failed to load page due to programming error. If this issue persists contact the administrator')
+            }
+            else {
+                overlay.hide();
+            }
+        });
+
+
+
+        window.onbeforeunload = () => {
+            const loading = $("#isLoading");
+            
+
+            $("#loadingText", loading).text("Reloading...");
+            loading.addClass('show');
+
+            $(".reload-dismiss").remove();
+            $(".reload-hide").hide();
+            $('.swal-modal').remove();
+        };
+
+        
 
         // setTimeout(() => {
         $(".scrollable").each(function () {
@@ -10,15 +39,16 @@
             const scrollableHeight = $(this)[0].scrollHeight;
             const height = $(this).height();
             const diff = scrollableHeight - height;
-            // thumb.css({height: diff+'px'})
+            // thumb.css({height: diff + 'px'})
             // alert(thumb.length)
-            console.log(track);
 
             $(this).on("scroll", function (e) {
                 thumb.css("top", e.target.scrollTop + "px");
             });
         });
         // }, 8000);
+
+        
         
 
         $(window).on("resize", function (e) {
@@ -51,7 +81,7 @@
             });
         });
 
-        $("input[type=file][preview-at]").each(function () {
+        $("inputx[type=file][preview-at]").each(function () {
             const preview = $(this).attr("preview-at");
             const image = $(preview);
 

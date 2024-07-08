@@ -40,17 +40,24 @@ class StudentController extends Controller
     {
         $user = auth()->user();
         $student = $user->student;
-        $enrollments = $student->courseRegistrationPerSemester;
-
-        $hasEnrolled = count($enrollments) > 0;
-        $title = 'Enrolled Courses';
-        if (!$hasEnrolled) {
-            $title = 'Not Enrolled to any course';
-        }
+        
 
         $sessions = \App\Models\AcademicSession::get();
 
-        return view('pages.student.courses.enrollment_history', compact('title', 'hasEnrolled', 'enrollments', 'sessions'));
+        return view('pages.student.courses.enrollment_history', compact('sessions'));
+    }
+
+
+    public function getCGPA(Request $request) {
+        $user = $request->user();
+        $student = $user->student;
+        $cgpa = $student->calculateCGPA();
+
+
+        return [
+            'cgpa' => $cgpa
+        ];
+
     }
 
 
@@ -565,6 +572,11 @@ class StudentController extends Controller
 
 
 
+    
+
+
+
+
 
 
     public function enrollment_details(Request $request)
@@ -619,29 +631,5 @@ class StudentController extends Controller
         return compact('semester', 'level', 'totalUnits','student', 'user', 'session', 'enrollments');
     }
 
-    public function api_enrollments(Request $request)
-    {
-        $user = $request->user();
-        $student = $user->student;
-        $enrollments = $student->courseRegistrationPerSemester;
-        $enrollments = Enrollment::where('reg_no', $student->reg_no)
-            ->join('courses', 'courses.id', '=', 'enrollments.course_id')
-            ->orderBy('enrollments.level', 'asc')
-            ->orderBy('enrollments.semester', 'desc')
-            ->get(['enrollments.request_id','enrollments.level','enrollments.semester', 'session', 'units'])
-            ->groupBy('request_id')
-            // ->map(function($enrollment) use ($student) {
-            //     $enrollment->maxUnits = $enrollment->maxUnits();
-            //     $enrollment->minUnits = $enrollment->minUnits();
-            //     $
-            // })
-            ;
-        if (!$enrollments->count()) {
-            return response()->json([
-               'error' => 'You are not enrolled to any course yet', 
-            ], 400);
-        }
-
-        return $enrollments;
-    }
+   
 }

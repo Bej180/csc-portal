@@ -63,13 +63,15 @@ Route::get('/api/notifications/stream', [AnnouncementController::class, 'announc
     Route::get('/calender', fn() => view('components.calendar'));
     Route::get('/export', [DBExportController::class, 'exportToJson']);
     Route::get('/tester', function(Request $request) {
-        return view('pages.test');
+        // return view('pages.test');
         $results = Result::get();
         
         foreach($results as $result) {
-            $result->exam = $result->exams;
-            $result->test = $result->tests;
-            $result->lab = $result->labs;
+            
+            $result->setGradings();
+            // dd($result->grade_points);
+            // $result->test = $result->tests;
+            // $result->lab = $result->labs;
             $result->save();
         }
 
@@ -352,6 +354,9 @@ Route::post('/2fa/verify', [TwoFactorController::class, 'postVerify'])->name('2f
             Route::get('/staff/uploadManually', [ResultsController::class, 'staff_add_result'])
                 ->name('staff.add-result')
                 ->middleware('role:staff');
+
+                Route::get('/staff/courses', [StaffController::class, 'index_staff_courses'])
+                    ->name('staff.courses');
 
                 Route::get('/staff/results',  [StaffController::class, 'staff_result_index'])
                 ->name('staff.results');

@@ -5,6 +5,13 @@
     </a>
 </li>
 
+<li data-nav="announcement" ng-class="{'active': isActiveNav('announcement')}">
+    <a href="{{ route('staff.courses') }}">
+        <i class="material-symbols-rounded">notifications_rounded</i>
+        <label>My Courses</label>
+    </a>
+</li>
+
 
 @if (auth()->user()?->is('advisor'))
     <li data-nav="student_course_reg" ng-class="{'active': nav == 'student_course_reg'}">

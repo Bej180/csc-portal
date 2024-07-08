@@ -50,6 +50,7 @@ class User extends Authenticatable
         'log_attempts',
         'activation_token',
         'rank',
+        'pin',
         'two_factor_status',
         'two_factor_locked',
         'two_factor_confirmed_at',
@@ -74,6 +75,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'pin',
         'secret',
         'two_factor_confirmed_at',
         'two_factor_recovery_codes',
@@ -386,6 +388,14 @@ class User extends Authenticatable
         return $this->hasMany(AcademicSet::class)->with('_course');
     }
 
+    
+
+    public function setPin(int $pin) {
+
+        $this->pin = Hash::make($pin);
+        $this->save();
+
+    }
 
 
 

@@ -22,7 +22,8 @@ use Illuminate\Support\Facades\Validator;
 class StaffController extends Controller
 {
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('role:staff');
     }
 
@@ -57,7 +58,7 @@ class StaffController extends Controller
     }
 
 
-    
+
 
 
     public function update(Request $request)
@@ -126,9 +127,102 @@ class StaffController extends Controller
 
 
 
+    public function index_my_courses(Request $request)
+    {
+        $auth = $request->user();
+        $myAccount = $auth->staff;
+        $courses = $myAccount->courses()
+            ->with('course')
+            ->orderBy('created_at')
+            ->simplePaginate(10)
+            ->map(function ($course) {
+                $technologist = $course->technologists();
+                $course->technologist = null;
+                if (count($technologist)) {
+                    $course->technologists = $technologist;
+                }
+                return $course;
+            });
+
+        return $courses;
+    }
+
+    public function results_uploaded_session(Request $request)
+    {
+        $user = $request->user();
+        $courses = $user->staff->courses->pluck('course_id');
+        $result = Enrollment::whereIn('course_id', $courses)
+                        ->orderBy('session', 'desc')
+                        ->get('session')
+                        ->unique('session')
+                        ->map(function($item) use ($courses) {
+                          
+                            $item->courses = Course::whereIn('id', $courses)
+                                ->get(['id', 'code'])
+                                ->map(function($course) use ($item) {
+                                    $course->result = Result::where('session', $item->session)
+                                        ->where('course_id', $course->id)
+                                        ->leftJoin('users', 'users.id', '=', 'results.uploaded_by')
+                                        ->leftJoin('courses', 'courses.id', '=', 'results.course_id')
+                                        ->get([
+                                            'course_id',
+                                            'users.id',
+                                            'courses.code', 
+                                            'users.name', 
+                                            'session', 
+                                            'results.semester', 
+                                            'results.level', 
+                                            'results.status',
+                                            'results.reference_id',
+                                            'uploaded_by',
+                                            'updated_by',
+                                            'results.created_at'
+                                        ])
+                                        ->unique('code')
+                                        ->first();
+                                  
+                                    return $course;
+                                });
+
+                            return $item;    
+                        });
+
+        if ($result->isNotEmpty()) {
+            return $result;
+        }
+        return response()->json([
+            'message' => 'No result uploaded yet',
+        ], 400);
+    }
+
+    public function staff_results_index_page(Request $request)
+    {
+        $user = $request->user();
+        $courses = $user->staff->courses->pluck('course_id');
+
+        $results = Result::where('uploaded_by', $user->id)
+            ->orWhere(function ($query) use ($user, $courses) {
+                $query->whereIn('course_id', $courses)
+                    ->whereNot('uploaded_by', $user->id)
+                    ->whereNotIn('status', ['incomplete', 'ready']);
+            })
+
+            ->with('course')
+            ->orderBy('created_at')
+            ->groupBy(['reference_id'])
+            ->simplePaginate(10)
+            ->map(fn ($result) => $result);
+
+        return $results;
+    }
+    public function index_staff_courses()
+    {
+
+        return view('pages.staff.course-management.courses');
+    }
 
 
-    
+
 
 
 
@@ -293,228 +387,10 @@ class StaffController extends Controller
     }
 
 
-    public function save_as_draft(Request $request)
-    {
-        // Validate the request
-        $validator = Validator::make($request->all(), [
-            'session' => 'required|exists:sessions,name',
-            'students' => 'required|array',
-            'course_id' => 'required|exists:courses,id'
-        ], [
-            'session.required' => 'Session is missing',
-            'session.exists' => 'Academic session not found',
-            'students.required' => 'Student results are missing',
-            'students.array' => 'Student results are missing',
-            'course_id.required' => 'Course id is missing',
-            'course_id.exists' => 'The course you are trying to save its results does not exist',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 400);
-        }
-
-        $students = $request->students;
-        $existingResults = Result::where('course_id', $request->course_id)
-            ->where('session', $request->session)
-            ->get();
-
-        if ($existingResults->isNotEmpty()) {
-            $status = $existingResults[0]->status;
-
-            if ($status === 'INCOMPLETE') {
-                return response()->json(['error' => 'A technologist has uploaded lab score results for this course. You need to approve it before continuing'], 400);
-            }
-            if ($status === 'APPROVED') {
-                return response()->json(['error' => 'You cannot update or add this result because it is already approved previously uploaded ones'], 400);
-            }
-        }
-
-        foreach ($students as $student) {
-
-            $result = Result::firstOrNew([
-                'course_id' => $request->course_id,
-                'session' => $request->session,
-                'reg_no' => $student['reg_no']
-            ]);
-
-            $uploadedBy = $result->uploaded_by;
-
-            if ($uploadedBy) {
-                $result->updated_by = auth()->id();
-            }
-            else {
-                $result->uploaded_by = auth()->id();
-            }
-
-
-            $result->status = 'DRAFT';
-            $result->score = (int) $student['score'];
-            $result->lab = $student['lab'];
-            $result->exam = $student['exam'];
-            $result->test = $student['test'];
-            $result->grade = $result->getGrade();
-            $result->remark = $result->getRemark();
-            $result->grade_points = $result->getGradePoints();
-            $result->save();
-        }
-
-        return response()->json(['scuccess' => 'Results updated successfully'], 200);
-    }
 
 
 
 
-
-    public function save_results(Request $request)
-    {
-        // Validation rules
-        $validator = Validator::make($request->all(), [
-            'students' => 'required|array',
-            'course_id' => 'required|exists:courses,id',
-            'session' => 'required',
-        ], [
-            'students.required' => 'Students results were not submitted',
-            'students.array' => 'Students results were not submitted',
-            'course_id.required' => 'Course was not submitted',
-            'course_id.exists' => 'The course you want to submit results is unknown.',
-            'session.required' => 'Session must be provided',
-        ]);
-
-        // Handle validation errors
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 400);
-        }
-
-        try {
-            // Retrieve request data
-            $course_id = $request->course_id;
-            $session = $request->session;
-            // Check existing results
-            $existingResults = Result::where('course_id', $course_id)
-                ->where('session', $session)
-                ->first();
-
-            if ($existingResults && in_array($existingResults->status, ['READY', 'INCOMPLETE'])) {
-                return response()->json([
-                    'error' => 'Results have already been uploaded',
-                ], 400);
-            }
-            
-            
-            $has_practical = $existingResults?->has_practical;
-            
-
-            // Process new results
-            $reference_id = generateToken('results.reference_id');
-            $course = Course::findOrFail($course_id);
-            
-                
-
-            foreach ($request->students as $student) {
-                
-                // Check if the student already exists
-                $existingResult = Result::where([
-                    'reg_no' => $student['reg_no'],
-                    'course_id' => $course_id,
-                    'session' => $session
-                ])->first();
-
-                
-                if ($existingResult) {
-                    $existingResult->exam = $student['exam'];
-                    $existingResult->lab = $student['lab'];
-                    $existingResult->test = $student['test'];
-                    $existingResult->test = $student['score'];
-                    $existingResult->setGradings();
-                    $existingResult->status = 'PENDING';
-                    $existingResult->save();
-                    
-                }
-                else {
-                    // result contains lab, exam, score, reg_no
-                    $result = new Result($student);
-                    $result->status = 'PENDING';
-                    $result->units = $course->units;
-                    $result->course_id = $course_id;
-                    
-                    $result->level = $course->level;
-                    $result->setGradings();
-                    
-                    $result->reference_id = $reference_id;
-                   
-                    
-                    $result->semester = $course->semester;
-                    $result->uploaded_by = auth()->id();
-                    $result->session = $session;
-                    
-                    $result->save();
-                }
-            }
-
-            // Return success response
-            return response()->json(['success' => 'Results uploaded successfully']);
-        } catch (\Exception $e) {
-            // Return error response
-            return response()->json(['data'=>$e->getMessage(),'error' => 'Failed to upload results'], 401);
-        }
-    }
-
-
-    public function list_of_enrolled_students(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'session' => 'required',
-            // 'semester' => 'required',
-            'course_id' => 'required|exists:enrollments',
-        ], [
-            'session.required' => 'Session must be provided',
-            // 'semester.required' => 'Session must be provided',
-            'course.required' => 'Course must be provided',
-            'course_id.exists' => 'No student registered for this course',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'errors' => $validator->errors(),
-            ], 400);
-        }
-        $session = $request->get('session');
-        $course_id = $request->course_id;
-        $course = Course::find($course_id);
-        $semester = $course->semester;
-
-        $result = Result::where('course_id', $course_id)
-            ->where('semester', $semester)
-            ->where('session', $session)
-            ->with('uploader')->first();
-
-        if ($result && !in_array($result->status, ['incomplete', 'ready'])) {
-            $uploader = $result->uploader?->name;
-            if ($result->uploader->id === auth()->id()) {
-                $uploader = 'you';
-            }
-
-            if ($result->status !== 'draft') {
-                return response()->json([
-                    'data' => $result,
-                    'error' => 'Result has already been uploaded by ' . $uploader,
-                ], 400);
-            }
-        }
-
-
-        $enrolledStudents = Enrollment::students($semester, $session, $request->course_id);
-
-        if (!count($enrolledStudents)) {
-            return response()->json([
-
-                'error' => "No student found to have enrolled in the course in $semester semeseter of $session academic session",
-            ], 400);
-        }
-
-
-        return $enrolledStudents;
-    }
 
 
     /**RESULT MANAGMENT SECTION STARTS*/

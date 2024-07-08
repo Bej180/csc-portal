@@ -128,7 +128,7 @@
                             <avatar :user="student" alt="student_pic" class="w-16 h-16 rounded-md object-cover">
                             </avatar>
                             <div class="flex-1">
-                                <div class="font-2xl font-bold" ng-bind="student.name"></div>
+                                <div class="font-2xl font-bold" ng-bind="student.user.name"></div>
                                 <div class="text-sm" ng-bind="student.reg_no"></div>
                                 <div class=" text-xs">
 

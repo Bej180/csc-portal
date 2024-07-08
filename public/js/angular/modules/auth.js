@@ -192,11 +192,79 @@ app.controller("AuthController", [
     },
 ]);
 
+app.controller('QrCodeController', ['$scope', '$interval', 'QrCodeService', function($scope, $interval, QrCodeService) {
+    $scope.token = '';
+    $scope.qrCode = '';
+
+    $scope.generateQrCode = function() {
+        QrCodeService.generateQrCode().then(function(response) {
+            $scope.qrCode = response.data.qrCode;
+            $scope.token = response.data.token;
+            $scope.startTokenRegeneration();
+            $scope.checkScanStatus();
+        });
+    };
+
+    $scope.checkScanStatus = function() {
+        QrCodeService.checkScanStatus($scope.token).then(function(response) {
+            if (response.data.status === 'scanned') {
+                window.location.href = '/home';
+            } else {
+                setTimeout($scope.checkScanStatus, 2000);
+            }
+        });
+    };
+
+    $scope.regenerateQrCode = function() {
+        QrCodeService.regenerateQrCode($scope.token).then(function(response) {
+            $scope.qrCode = response.data.qrCode;
+            $scope.token = response.data.token;
+        });
+    };
+
+    $scope.startTokenRegeneration = function() {
+        $interval($scope.regenerateQrCode, 300000); // Regenerate every 5 minutes
+    };
+
+    $scope.generateQrCode(); // Initial QR code generation
+}]);
+
+app.controller('AuthQrScanController', ['$scope', 'AuthQrCodeService', function($scope, QrCodeService) {
+    document.addEventListener('DOMContentLoaded', () => {
+        let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+        scanner.addListener('scan', function (content) {
+            const token = new URL(content).searchParams.get('token');
+
+            if (token) {
+                QrCodeService.scanQrCode(token).then(function(response) {
+                    alert('QR code scanned successfully.');
+                }).catch(function(error) {
+                    console.error('Error:', error);
+                    alert('An error occurred while processing the scan request.');
+                });
+            } else {
+                alert('Invalid QR code.');
+            }
+        });
+
+        Instascan.Camera.getCameras().then(function (cameras) {
+            if (cameras.length > 0) {
+                scanner.start(cameras[0]);
+            } else {
+                console.error('No cameras found.');
+            }
+        }).catch(function (e) {
+            console.error(e);
+        });
+    });
+}]);
+
+
 app.directive("otpInputs", function () {
     return {
         restrict: "A",
         link: function (scope, element) {
-            const inputs = element.find("input.otp-input"); // Find all OTP input fields
+            const inputs = element.find("input"); // Find all OTP input fields
 
             // Set focus on the first OTP input field
             inputs.eq(0).focus();
@@ -230,7 +298,7 @@ app.directive("otpInputs", function () {
             // Add event listeners to all OTP input fields for handling keyup events
             inputs.on("keyup", function (event) {
                 const value = $(this).val();
-                if (value.length > 1 && $(this).is("input.otp-input:last")) {
+                if (value.length > 1 && $(this).is("input:last")) {
                     $(this).blur(); // Blur the input field if more than one character is entered and it's the last field
                 }
             });
@@ -247,7 +315,7 @@ app.directive("otpInputs", function () {
                         if (index < inputs.length - 1) {
                             $(this).trigger("input");
                         }
-                        if (index === 5) {
+                        if (index === inputs.length - 1) {
                             // form.submit(); // Submit the form after pasting all OTP characters
                         }
                     });

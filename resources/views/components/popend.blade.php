@@ -3,8 +3,12 @@
 <div class="popend-wrapper show" ng-cloak ng-if="is_popend('{{ $name }}')" {{ $attributes }}>
     <div class="popend {{ $class ?? '' }}" tabindex="-1" aria-labelledby="popendLabel" aria-modal="true" role="dialog">
         <div class="popend-header">
+            <div class="lg:hidden" ng-click="popDown('{{ $name }}')">
+                <i class="fa fa-chevron-left"></i>
+                <span>Back</span>
+            </div>
             <h5 class="sentence-case text-[1.25rem] font-[600]">{{ $title ?? '' }}</h5>
-            <span ng-click="popDown('{{ $name }}')" class="btn-text btn-close text-reset"></span>
+            
         </div>
         <div class="popend-body relative z-10">
             {{ $slot }}

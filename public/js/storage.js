@@ -17,6 +17,7 @@ export default class Storage {
         const prefixedName = this.prefix + name;
         try {
             const storedData = localStorage.getItem(prefixedName);
+
             if (storedData) {
                 const { value, expires } = JSON.parse(storedData);
                 if (!expires || Date.now() <= new Date(expires)) {
@@ -24,9 +25,11 @@ export default class Storage {
                 } else {
                     localStorage.removeItem(prefixedName);
                 }
-            }
+            } 
+            return null;
+                        
         } catch (error) {
-            console.error("Error getting data from localStorage:", error);
+           
         }
 
         const cookieParts = decodeURIComponent(document.cookie).split(";");
@@ -45,12 +48,16 @@ export default class Storage {
         return null;
     }
 
-    static getObj(name) {
+    static getObj(name, defaultValue = {}) {
         const value = this.get(name);
-        if (value) {
-            return JSON.parse(value);
+        if (!value) {
+            return defaultValue;
         }
-        return {};
+        try {
+            return JSON.parse(value);
+        } catch(e) {
+            return defaultValue;
+        }
     }
 
     static setObj(name, value) {
@@ -99,6 +106,9 @@ export default class Storage {
         localStorage.removeItem(prefixedName);
         const cookieToDelete = `${prefixedName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
         document.cookie = cookieToDelete;
+    }
+    static drop(name) {
+        this.remove(name);
     }
 
     static has(name) {

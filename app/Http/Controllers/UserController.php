@@ -386,39 +386,20 @@ class UserController extends Controller
 
 
         $validator = Validator::make($request->all(), [
+            'passkey' => 'sometimes|password',
+            'passcode' => 'sometimes|pin',
+
             'data' => 'required|array',
-            'type' => 'required',
-            'data.username' => [
-                'sometimes',
-                function ($attribute, $value, $fail) use ($request) {
-                    if ($request->type === 'username') {
-                        $findUser = User::where('username', $value)->first();
-                        if ($findUser) {
-                            $fail('Username already exists');
-                        }
-                    }
-                }
-            ],
-            'data.password' => [
-                'sometimes',
-                function ($attribute, $value, $fail) use ($request) {
-                    if (Arr::exists($request->data, 'password')) {
-                        if (!Arr::exists($request->data, 'old_password')) {
-                            $fail('You old password is required');
-                        } else if (!Arr::exists($request->data, 'password_confirmation')) {
-                            $fail('Confirmation password is required');
-                        } else if (!Hash::check($request->data['old_password'], $request->user()->password)) {
-                            $fail('The old password you provided is not correct');
-                        } else if ($request->data['password_confirmation'] !== $value) {
-                            $fail('Passwords do not match');
-                        }
-                    }
-                }
-            ]
+            'type' => 'sometimes|string',
+            'data.username' => 'sometimes|unique:users',
+            'data.password' => 'sometimes|confirm',
+            'data.passkey' => 'password',
+            'data.password_confirmation' => 'sometimes'
         ], [
             'data.required' => 'You provided no data for update',
             'data.array' => 'Data not provided',
-            'type.required' => 'Can not update profile',
+            'data.username.unique' => 'Username already exists',
+            'data.password.confirm' => 'Passwords did not match',
             'data.username.unique' => 'Username name was not updated because it already exists.'
         ]);
 
@@ -440,18 +421,24 @@ class UserController extends Controller
             $data['password'] = Hash::make($data['password']);
         }
 
+        if (Arr::exists($data, 'pin')) {
+            $data['pin'] = Hash::make($data['pin']);
+        }
+
         if ($uploadImage = UploaderController::uploadFile('image', 'pic')) {
             $data['image'] = $uploadImage;
         }
-
-        if (isset($unUpdatable[$user->role])) {
-            $data = Arr::except($data, $unUpdatable[$user->role]);
-        }
+        
 
         if (!empty($data['title'])  && !empty($data['name']) && $role !== 'student') {
             $data['name'] = $data['title'] . ' ' .$data['name'];
         }
 
+        $profileData = [];
+
+        if (isset($unUpdatable[$user->role])) {
+            $profileData = Arr::except($data, $unUpdatable[$user->role]);
+        }
 
 
         
@@ -459,16 +446,17 @@ class UserController extends Controller
 
 
         
-        $user->fill($data);
+        $user->fill(Arr::only($data, (new User())->getFillable()));
         $user->save();
 
-        $profile->fill($data);
+        $profile->fill($profileData);
         $profile->save();
 
         ActivityLog::log($user, 'profile_update', 'update profile');
+        $type = ucfirst($request->get('type', 'profile'));
 
         return response()->json([
-            'success' => 'You have successfully updated your profile',
+            'success' => 'You have successfully updated your '.$type,
             'data' => $profile
         ]);
     }

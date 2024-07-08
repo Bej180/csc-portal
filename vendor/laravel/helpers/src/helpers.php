@@ -3,6 +3,7 @@
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
+
 if (! function_exists('array_add')) {
     /**
      * Add an element to an array using "dot" notation if it doesn't exist.

@@ -261,46 +261,46 @@ class Result extends Model
     }
 
     public static function studentGPA($reg_no, $semester, $session)
-{
-    // Fetch results for the current semester and session
-    $currentResults = Result::where('reg_no', $reg_no)
-        ->where('semester', $semester)
-        ->where('session', $session)
-        ->get();
+    {
+        // Fetch results for the current semester and session
+        $currentResults = Result::where('reg_no', $reg_no)
+            ->where('semester', $semester)
+            ->where('session', $session)
+            ->get();
 
-    $currentTGP = $currentResults->sum('grade_points');
-    $currentTNU = $currentResults->sum('units');
-    $currentGPA = $currentTNU ? round($currentTGP / $currentTNU, 2) : 0;
+        $currentTGP = $currentResults->sum('grade_points');
+        $currentTNU = $currentResults->sum('units');
+        $currentGPA = $currentTNU ? round($currentTGP / $currentTNU, 2) : 0;
 
-    $current = [
-        'TGP' => $currentTGP,
-        'TNU' => $currentTNU,
-        'GPA' => $currentGPA,
-    ];
+        $current = [
+            'TGP' => $currentTGP,
+            'TNU' => $currentTNU,
+            'GPA' => $currentGPA,
+        ];
 
-    // Determine the previous semester
-    $previousSemester = $semester === 'HARMATTAN' ? 'RAIN' : 'HARMATTAN';
-    $previousLevel = $semester === 'HARMATTAN' ? $currentResults->first()?->course?->level - 100 : $currentResults->first()?->course?->level;
+        // Determine the previous semester
+        $previousSemester = $semester === 'HARMATTAN' ? 'RAIN' : 'HARMATTAN';
+        $previousLevel = $semester === 'HARMATTAN' ? $currentResults->first()?->course?->level - 100 : $currentResults->first()?->course?->level;
 
-    // Fetch results for the previous semester and level
-    $previousResults = Result::where('reg_no', $reg_no)
-        ->where('semester', $previousSemester)
-        ->where('session', $session)
-        ->where('level', $previousLevel)
-        ->get();
+        // Fetch results for the previous semester and level
+        $previousResults = Result::where('reg_no', $reg_no)
+            ->where('semester', $previousSemester)
+            ->where('session', $session)
+            ->where('level', $previousLevel)
+            ->get();
 
-    $previousTGP = $previousResults->sum('grade_points');
-    $previousTNU = $previousResults->sum('units');
-    $previousGPA = $previousTNU ? round($previousTGP / $previousTNU, 2) : 0;
+        $previousTGP = $previousResults->sum('grade_points');
+        $previousTNU = $previousResults->sum('units');
+        $previousGPA = $previousTNU ? round($previousTGP / $previousTNU, 2) : 0;
 
-    $previous = [
-        'TGP' => $previousTGP,
-        'TNU' => $previousTNU,
-        'GPA' => $previousGPA,
-    ];
+        $previous = [
+            'TGP' => $previousTGP,
+            'TNU' => $previousTNU,
+            'GPA' => $previousGPA,
+        ];
 
-    return compact('current', 'previous');
-}
+        return compact('current', 'previous');
+    }
 
 
     public static function studentPreviousSemesterGPA($reg_no, $semester, $session)
@@ -467,11 +467,10 @@ class Result extends Model
                 }
             }
 
-            // Calculate the grade points 
-            $this->grade = $this->getGradeText();
-            
+            $this->score = $this->getScore();
             $this->grade_points = $this->getGradePoints();
-            $this->remark = $this->score < 40 ? 'FAILED' : 'PASSED';
+            $this->grade = $this->getGradeText();
+            $this->remark = $this->getRemark();
         }
         return $this;
     }
@@ -508,6 +507,142 @@ class Result extends Model
 
     public function getRemark()
     {
+        if ($this->course->has_practical && !$this->lab) {
+            return 'FAILED';
+        }
         return $this->score > 39 ? 'PASSED' : 'FAILED';
+    }
+
+    public function getScore()
+    {
+        $score = (int) $this->exam;
+        $score += (int) $this->test;
+        $score += (int) $this->lab;
+
+        return $score;
+    }
+
+
+    /**
+     * Save results to the database
+     *
+     * @param $session (string) - session of the result to be saved 
+     * @param $students (array) - list of students whose results are to be saved 
+     * @param $course_id (int) - course id of the result to be saved 
+     * @param $status (string) - status of the result 
+
+     * @return string|boolean - string - error message, boolean success of update/upload
+     **/
+
+
+    public static function uploadOrUpdateResults(
+        string $session,
+        array $students,
+        int $course_id,
+        string $status = 'PENDING'
+    ) {
+        $user = request()->user();
+        if (!$user) {
+            $user = auth()->user();
+        }
+
+
+        $reference_id = generateToken('results.reference_id');
+        $course = Course::find($course_id);
+
+
+        foreach ($students as $student) {
+
+            $result = Result::firstOrNew([
+                'course_id' => $course_id,
+                'session' => $session,
+                'reg_no' => $student['reg_no']
+            ]);
+
+            if ($course->has_practical && $result->status === 'INCOMPLETE') {
+                return 'A technologist has uploaded lab score results for this course. You need to approve it before continuing';
+            } else if ($result->status === 'APPROVED') {
+                return 'You cannot update or add this result because it is already approved previously uploaded ones';
+            } else if (in_array($result->status ?? 'new', ['READY', 'INCOMPLETE'])) {
+                return 'Results have already been uploaded';
+            }
+
+            if ($result->uploaded_by) {
+                // existing records
+                $result->updated_by = $user->id;
+            } else {
+                // new records
+                $result->reference_id = $reference_id;
+                $result->uploaded_by = $user->id;
+
+                $result->units = $course->units;
+                $result->level = $course->level;
+                $result->reference_id = $reference_id;
+                $result->semester = $course->semester;
+            }
+
+            $result->status = $status;
+            $lab = $student['lab'] ?? 0;
+            $exam = $student['exam'] ?? 0;
+            $test = $student['test'] ?? 0;
+
+            $result->lab = (int) $lab;
+            $result->exam = (int) $exam;
+            $result->test = (int) $test;
+            $result
+                ->setGradings()
+                ->save();
+        }
+
+        return true;
+    }
+
+    public static function scoreToGradeText(int $score)
+    {
+        return match (true) {
+            $score > 69 => 'A',
+            $score > 59 => 'B',
+            $score > 49 => 'C',
+            $score > 44 => 'D',
+            $score > 39 => 'E',
+            default => 'F',
+        };
+    }
+
+
+
+
+    public static function changeStatus(string $reference_id, string $status): Course
+    {
+
+        $results = Result::where('reference_id', '=', $reference_id)->with('course');
+
+        $results->update(compact('status'));
+
+
+        $getResults = $results->get();
+
+
+        // re-calculate the cpga of the results uploaded
+        foreach ($getResults as $result) {
+            $result->updateCGPA();
+        }
+        if ($status === 'APPROVED') {
+            //Email(ApprovedResultNotification($uploader, $firstResult->course->code, $date->format('d/m/Y')), $uploader);
+        }
+
+        return $results->first()->course;
+    }
+
+
+    public static function approveResults(string $reference_id): ?Course
+    {
+        return self::changeStatus($reference_id, 'APPROVED');
+    }
+
+
+    public static function disapproveResults(string $reference_id): ?Course
+    {
+        return self::changeStatus($reference_id, 'PENDING');
     }
 }

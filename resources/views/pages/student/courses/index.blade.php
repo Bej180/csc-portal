@@ -41,25 +41,22 @@
                             <th>Code</th>
                             <th>Title</th>
                             <th class="!text-center">Units</th>
+                            <th>Option</th>
                         </tr>
                     </thead>
-                    <tbody ng-repeat="(option, courses) in reg_courses" id="course-registeration-prepend">
+                    <tbody id="course-registeration-prepend">
                         
-                        <tr>
-                            <td colspan="4" >
-                                <div ng-bind="option" class="font-semibold text-center">
-                                </div>
-                            </td>
-                        </tr>
-                        <tr ng-repeat="course in courses">
+                       
+                        <tr ng-repeat="course in reg_courses">
                             <td class="!text-center">
-                                <input type="checkbox" name="course[]" value="{%course.id%}" class="checkbox"
-                                    ng-checked="course.checked" ng-model="courses_to_be_registered"
+                                <input type="checkbox" name="course" value="{%course.id%}" class="checkbox"
+                                    ng-checked="course.checked"
                                     ng-click="toggleSelect($event, course)" />
                             </td>
                             <td class="uppercase" ng-bind="course.code"></td>
                             <td ng-bind="course.name"></td>
                             <td class="!text-center" ng-bind="course.units" class="text-center"></td>
+                            <td ng-bind="course.option"></td>
                            
                         </tr>
 
@@ -68,7 +65,7 @@
             </div>
 
             <div class="flex justify-end my-2">
-                <button controller="registerCourses()" ng-disabled="!proceed && (selectedUnits < minUnits || selectedUnits > maxUnits)" type="button"
+                <button controller="registerCourses()" ng-disabledx="!proceed && (selectedUnits < minUnits || selectedUnits > maxUnits)" type="button"
                     class="btn-primary">Register courses</button>
             </div>
         </form>

@@ -4,6 +4,7 @@ import toastr from 'toastr';
 import '../../public/styles/toastr.css';
 import ApexCharts from 'apexcharts';
 import '../../public/js/storage.js';
+import swal from 'sweetalert';
 import './request.js';
 import Http from './http.js';
 import './angular/helpers.js';
@@ -17,7 +18,9 @@ import '../../public/js/location.js';
 
 window.toastr = toastr;
 window.ApexCharts = ApexCharts;
-window.Request = new Http();
+window.ajax = new Http({
+    debug: true
+});
 
 // const eventSource = new EventSource('/api/notifications/stream');
 

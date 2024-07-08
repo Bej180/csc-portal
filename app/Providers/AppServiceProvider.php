@@ -50,11 +50,11 @@ class AppServiceProvider extends ServiceProvider
             }
             return "<?php elseif(auth()->check() && auth()->user()->is_staff()): ?>";
         });
-        
+
         Blade::directive('endstaff', function () {
             return "<?php endif; ?>";
         });
-        
+
 
 
         # hod 
@@ -91,7 +91,7 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive('endadmin', function () {
             return "<?php endif; ?>";
         });
-        
+
 
 
         Blade::directive('advisor', function () {
@@ -104,7 +104,7 @@ class AppServiceProvider extends ServiceProvider
             return "<?php endif; ?>";
         });
 
-        
+
 
 
         Validator::extend('admission_format', function ($attribute, $value, $parameters, $validator) {
@@ -112,18 +112,18 @@ class AppServiceProvider extends ServiceProvider
             if (!preg_match('/^\d{4}\/\d{4}$/', $value)) {
                 return false;
             }
-    
+
             // Extract admission year and graduation year
             [$admissionYear, $graduationYear] = explode('/', $value);
-    
+
             // Check if years have a 5-year interval
             if (($graduationYear - $admissionYear) !== 5) {
                 return false;
             }
-    
+
             return true;
         });
-    
+
         // Custom error message for the rule
         Validator::replacer('admission_format', function ($message, $attribute, $rule, $parameters) {
             return str_replace(':attribute', $attribute, 'The :attribute must be in the format "YYYY/YYYY" with a 5-year interval.');
@@ -135,9 +135,53 @@ class AppServiceProvider extends ServiceProvider
 
 
 
-        # CHECK_PASSWORD
+        
+
+
+
+        # PIN
+        Validator::extend('pin', function ($attribute, $value, $parameters, $validator) {
+            if (count($parameters)) {
+                $instances = [
+                    'auth' => auth(),
+                    'request' => request(),
+                ];
+                $type = $parameters[0] ?? 'request';
+                if (!array_key_exists($type, $instances)) {
+                    $type = 'request';
+                }
+                $user = $instances[$type]->user();
+            } else {
+                $user = request()->user();
+            }
+
+            return Hash::check($value, $user->pin);
+        });
+        Validator::replacer('pin', function ($message, $attribute, $rule, $parameters) {
+            return $message ?? 'PIN is invalid';
+        });
+
+
+
+         # PASSWORD
         Validator::extend('password', function ($attribute, $value, $parameters, $validator) {
-           $user = request()->user();
+           
+            if (count($parameters)) {
+                $instances = [
+                    'auth' => auth(),
+                    'request' => request(),
+                ];
+                $type = $parameters[0] ?? 'request';
+                if (!array_key_exists($type, $instances)) {
+                    $type = 'request';
+                }
+                $user = $instances[$type]->user();
+            }
+            else {
+                $user = request()->user();
+            }
+
+
             return Hash::check($value, $user->password);
         });
         Validator::replacer('password', function ($message, $attribute, $rule, $parameters) {
@@ -151,37 +195,30 @@ class AppServiceProvider extends ServiceProvider
 
 
 
-        
+
         # SESSION
-       Validator::extend('session', function ($attribute, $value, $parameters, $validator) {
-    // Check if the format is correct
-    if (!preg_match('/^\d{4}\/\d{4}$/', $value)) {
-        return false;
-    }
-    $limit = (int) ($parameters[0] ?? 1); // Default to 1 if no parameter is provided
+        Validator::extend('session', function ($attribute, $value, $parameters, $validator) {
+            // Check if the format is correct
+            if (!preg_match('/^\d{4}\/\d{4}$/', $value)) {
+                return false;
+            }
+            $limit = (int) ($parameters[0] ?? 1); // Default to 1 if no parameter is provided
 
-    // Extract admission year and graduation year
-    [$admissionYear, $graduationYear] = explode('/', $value);
+            // Extract admission year and graduation year
+            [$admissionYear, $graduationYear] = explode('/', $value);
 
-    // Check if years have the specified interval
-    if (($graduationYear - $admissionYear) !== $limit) {
-        return false;
-    }
+            return ($graduationYear - $admissionYear) !== $limit;
+        });
 
-    return true;
-});
-
-Validator::replacer('session', function ($message, $attribute, $rule, $parameters) {
-    return str_replace([
-        ':attribute', 
-        ':parameter'
-    ], [
-         $attribute,
-         $parameters[0]
-    ], 'The :attribute must be in the format "YYYY/YYYY" with a :parameter-year interval.');
-});
-
-
-       
+        Validator::replacer('session', function ($message, $attribute, $rule, $parameters) {
+            $parameters[0] ??= 1;
+            return str_replace([
+                ':attribute',
+                ':parameter'
+            ], [
+                $attribute,
+                $parameters[0]
+            ], 'The :attribute must be in the format "YYYY/YYYY" with a :parameter-year interval.');
+        });
     }
 }

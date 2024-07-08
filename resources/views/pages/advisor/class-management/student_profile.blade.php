@@ -10,11 +10,11 @@
           <div class="p-toggleable-content">
               <div class="p-fieldset-content">
                   <div class="md:flex md:items-center md:gap-2 md:flex-wrap">
-                      <img src="/profilepic/{% show_student.id %}" alt="student-img"
-                          class="w-24 aspect-square rounded-md">
+                      <avatar user="show_student" alt="student-img"
+                          class="w-24 aspect-square rounded-md"></avatar>
 
                       <div class="flex flex-col gap-2">
-                          <h1 class="font-bold lg:text-lg" ng-bind="show_student.name"></h1>
+                          <h1 class="font-bold lg:text-lg" ng-bind="show_student.user.name"></h1>
 
                           <p
                               class="text-sm lg:text-base text-[--highlight-text-color] rounded-full py-1 px-3">
@@ -72,7 +72,7 @@
                       <p
                           class="text-sm lg:text-base text-[--highlight-text-color] rounded-full py-1 px-3">
                           CGPA: <span class="font-bold" ng-bind="show_student.cgpa"></span></p>
-                      <button class="btn btn-primary" type="button" ng-click="generateTranscript(show_student.reg_no)">Generate Transcripts</button>
+                      <button class="btn btn-primary" type="button" controller="generateTranscript(show_student)">Generate Transcripts</button>
 
                   </div>
               </div>

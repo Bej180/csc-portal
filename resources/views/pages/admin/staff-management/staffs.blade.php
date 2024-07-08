@@ -65,7 +65,7 @@ auth()->user()->account();
                     </div>
                 </div>
                 
-                <div ng-init="src_url='http://127.0.0.1:8000/profilepic/45'" ng-if="loaded && staff_members.length > 0" ng-cloak class="card-body" infinite-scroll="loadMore()">
+                <div ng-if="loaded && staff_members.length > 0" ng-cloak class="card-body" infinite-scroll="loadMore()">
                     
                     <div class="grid grid-cols-1 lg:grid-cols-4 py-5 gap-5">
                         <div ng-show="staff_members" class="col-span-1 flex flex-col"
@@ -77,8 +77,6 @@ auth()->user()->account();
                                         <div class="student-img lg:h-24">
                                             <avatar user="staff" class="w-24 lg:h-24 object-cover rounded-full bg-zinc-100"
                                             alt="Staff's Image" />
-                                            <img profile="staff" src="/profilepic/{%staff.id%}" class="w-24 lg:h-24 object-cover rounded-full bg-zinc-100"
-                                                alt="Staff's Image" />
 
                                         </div>
                                         <div class="w-full flex flex-col lg:items-center">

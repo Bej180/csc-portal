@@ -94,8 +94,9 @@ class AdvisorController extends Controller
 
     public function generate_transcript(Request $request)
     {
+        
         $validator = Validator::make($request->all(), [
-            'reg_no' => 'required|exists:results'
+            'reg_no' => 'required|exists:results,reg_no'
         ], [
             'reg_no.required' => "Student's Registration Number must be provided",
             'reg_no.exists' => "Student's results not found",
@@ -106,8 +107,10 @@ class AdvisorController extends Controller
                 'errors' => $validator->errors()
             ], 400);
         }
+        $reg_no = $request->reg_no;
 
-        $results = \App\Models\Result::where('reg_no', 20184783355)
+        $results = \App\Models\Result::where('reg_no', $reg_no)
+            ->where('status', 'APPROVED')
             ->with('course')
             ->get()
             ->groupBy(['session', 'semester']);
@@ -115,7 +118,7 @@ class AdvisorController extends Controller
         $results = $results->map(function ($sessions) {
             return $sessions->map(function ($semesterResults) {
                 $totalUnits = $semesterResults->sum('course.units');
-                $totalGradePoints = $semesterResults->sum('grade_points'); // Assuming grade_points is a field in Result model
+                $totalGradePoints = $semesterResults->sum('grade_points'); 
                 return [
                     'results' => $semesterResults,
                     'totalUnits' => $totalUnits,
@@ -126,7 +129,7 @@ class AdvisorController extends Controller
                 'totalGradePoints' => $sessions->flatten(1)->sum('grade_points')
             ]);
         });
-        $student = \App\Models\Student::where('reg_no', 20184783355)->with('user')->first();
+        $student = \App\Models\Student::where('reg_no', $reg_no)->with('user')->first();
 
         if (!$student) {
             return response()->json([

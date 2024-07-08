@@ -1,7 +1,6 @@
 // Student COntrollers
 app.controller("StudentCourseRegistrationController", function ($scope) {
     $scope.reg_courses = [];
-    $scope.reg_courses2 = [];
 
     $scope.regData = {
         level: Location.get("level", ""),
@@ -10,44 +9,52 @@ app.controller("StudentCourseRegistrationController", function ($scope) {
     };
     $scope.loaded = false;
     $scope.selection = [];
-    $scope.enrolled = null;
+    $scope.enrollments = [];
+    
     $scope.registeredCourseDetails = {};
     $scope.borrowingCourses = [];
     $scope.selectedUnits = 0;
+    $scope.courses_to_be_registered = [];
 
-    $scope.canBorrowCourses = ({semester, level}) => {
+    $scope.canBorrowCourses = ({ semester, level }) => {
         if ($scope.selectedUnits >= $scope.maxUnits) {
             return false;
         }
-        return !(level == 100 || (level == 400 && semester == 'RAIN'));
-    }
-   
-    $scope.viewCourseRegistrationDetails = ({ level, semester, session }) => {
-        http({
-            cacheId: true,
-            url: "/app/student/enrollments/show",
-            data: { level, semester, session },
-            success(res){
-                
-                $scope.route("enrollment_details");
-                $scope.course_reg = res;
-            },
-            }
-            
-        );
+        return !(level == 100 || (level == 400 && semester == "RAIN"));
     };
+
+    $scope.showCourseRegistrationDetails = (enrollment) => {
+        $scope.enrollment_details = enrollment;
+        $scope.route('enrollment_details');
+    };
+
+    
     $scope.viewEnrollmentDetails = (enrollments) => {
         $scope.route("enrollment_details");
         $scope.course_reg = enrollments;
     };
 
     $scope.loadEnrollments = () => {
-        $scope.api("/app/student/enrollments/index", (res) => {
-            $scope.enrolled = res;
-        }).finally(() => {
-            $scope.loaded = true;
-            $scope.$apply();
-        });
+        $scope
+            .api({
+                url: "/app/student/enrollments/index",
+                success: function (response, xhr) {
+                    
+                    $scope.enrollments = Object.values(
+                        response.enrollments
+                    );
+                    $scope.account = response.account;
+
+                    console.log({
+                        enrollments_: $scope.enrollments
+                    })
+                    
+                },
+            })
+            .finally(() => {
+                $scope.loaded = true;
+                $scope.$apply();
+            });
     };
 
     $scope.displayCourses = () => {
@@ -57,26 +64,25 @@ app.controller("StudentCourseRegistrationController", function ($scope) {
 
         if (level && session && session) {
             return http({
-                url:"/app/student/course_registration/courses",
+                url: "/app/student/course_registration/courses",
                 data: $scope.regData,
-                success({ courses, maxUnits, minUnits }){
+                success({ courses, maxUnits, minUnits }) {
                     $scope.reg_courses = courses;
-                    $scope.parseCourses();
                     $scope.maxUnits = maxUnits;
                     $scope.minUnits = minUnits;
                     $scope.route("reg_courses");
-                }
+                },
             });
         }
     };
 
     $scope.gotoIndex = () => {
-        $scope.route('index', 'Enrollments');
-    }
+        $scope.route("index", "Enrollments");
+    };
 
     $scope.displayCourseRegistrationForm = () => {
-        $scope.route('register_form', 'Register Courses');
-    }
+        $scope.route("register_form", "Register Courses");
+    };
 
     /**
      * @method registerCourse
@@ -85,47 +91,40 @@ app.controller("StudentCourseRegistrationController", function ($scope) {
     $scope.registerCourses = () => {
         let data = $scope.regData;
         data.courses = [];
+        // console.log($scope.selection);return;
 
         $scope.selection.forEach((course) => {
-            if (course.checked) {
+            if (course && course.checked) {
                 data.courses.push(course.id);
             }
         });
 
         return $scope.api(
-            "/app/student/courses/register",
+            "/app/student/courses/enroll",
             data,
-            ({ level, semester, session }) => {
-                $scope.loadEnrollments();
-                $scope.viewCourseRegistrationDetails({
-                    level,
-                    semester,
-                    session,
-                });
+            ({ data }) => {
+                $scope.enrollments = $scope.enrollments.concat([data]);
+                $scope.showCourseRegistrationDetails(data);
                 $scope.regData = {};
-            },
-            (err) => console.error(err)
+            }
         );
     };
 
-    $scope.canBorrow =  () => $scope.regData.level != 100 && $scope.regData.semester !== 'RAIN' && $scope.regData.level !== 400;
+    $scope.canBorrow = () =>
+        $scope.regData.level != 100 &&
+        $scope.regData.semester !== "RAIN" &&
+        $scope.regData.level !== 400;
 
-    $scope.canRegister = () => $scope.selectedUnits < $scope.minUnits || $scope.selectedUnits > $scope.maxUnits;
+    $scope.canRegister = () =>
+        $scope.selectedUnits < $scope.minUnits ||
+        $scope.selectedUnits > $scope.maxUnits;
     $scope.openBorrowPanel = () => {
         $scope.popUp("open_borror_panel");
     };
 
-    $scope.parseCourses = () => {
-        let courses = [];
-        for(let index in $scope.reg_courses) {
-            courses = courses.concat($scope.reg_courses[index]);
-        }
-        $scope.reg_courses2 = courses;
-    }
-
     $scope.recalculate_units = () => {
-        // const total = $scope.reg_courses2.reduce((carry, item) =>
-        const selectedCourses = $scope.reg_courses2.filter(
+        // const total = $scope.reg_courses.reduce((carry, item) =>
+        const selectedCourses = $scope.reg_courses.filter(
             (course) => course.checked === true
         );
         let units = 0;
@@ -139,17 +138,17 @@ app.controller("StudentCourseRegistrationController", function ($scope) {
         const id = course.id;
         const units = parseInt(course.units);
         const sum = units + $scope.selectedUnits;
+
         const index = $scope.findIndex(
-            $scope.reg_courses2,
+            $scope.reg_courses,
             (item) => item.id === id
         );
-        console.log(course);
 
         if (id in $scope.selection) {
             // $scope.selectedUnits -= units;
             $scope.selection.splice(id, 1);
             if (index >= 0) {
-                $scope.reg_courses2[index].checked = false;
+                $scope.reg_courses[index].checked = false;
             }
         } else {
             if (sum > $scope.maxUnits && event.target.checked) {
@@ -164,12 +163,14 @@ app.controller("StudentCourseRegistrationController", function ($scope) {
             } else if (event.target.checked) {
                 // $scope.selectedUnits += units;
                 $scope.selection[id] = course;
-                $scope.reg_courses2[index].checked = true;
-            }
-            else {
-                alert('unchanged')
-            }
+                $scope.reg_courses[index].checked = true;
+            } else {
+                $scope.selection.splice(id, 1);
 
+                if (index >= 0) {
+                    $scope.reg_courses[index].checked = false;
+                }
+            }
         }
 
         $scope.recalculate_units();
@@ -184,7 +185,7 @@ app.controller("StudentCourseRegistrationController", function ($scope) {
         if (id in $scope.selection) {
             $scope.selectedUnits -= units;
             $scope.selection.splice(id, 1);
-            $scope.reg_courses2 = $scope.reg_courses2.filter(
+            $scope.reg_courses = $scope.reg_courses.filter(
                 (item) => item.id !== id
             );
         } else {
@@ -202,7 +203,7 @@ app.controller("StudentCourseRegistrationController", function ($scope) {
                 // $scope.selectedUnits += units;
                 const currentCourse = { checked: true, ...course };
                 $scope.selection[id] = currentCourse;
-                $scope.reg_courses2.push(currentCourse);
+                $scope.reg_courses.push(currentCourse);
             }
         }
         $scope.recalculate_units();
@@ -260,11 +261,11 @@ app.controller("StudentCourseRegistrationController", function ($scope) {
         $scope.units = units;
     };
 
-    $scope.SearchCourse = () => {
+    $scope.SearchCourse = (borrowQuery) => {
         $scope.api(
             "/search/courses",
             {
-                code: $scope.borrowQuery,
+                code: borrowQuery,
                 semester: $scope.regData.semester,
             },
             (response) => {
@@ -320,82 +321,3 @@ app.controller("StudentCourseRegistrationController", function ($scope) {
     };
 });
 
-app.controller("StudentResultsController", function ($scope) {
-    $scope.results = [];
-    $scope.awaitingResults = [];
-    $scope.unsettledResults = [];
-    $scope.totalEnrollments = 0;
-    $scope.cgpa = 0.0;
-
-    // {results: Array(1),
-    $scope.totalUnits = 0;
-    $scope.totalGradePoints = 0;
-
-    $scope.calculateGPA = (totalGradePoints, totalUnits) => {
-        const gpa = totalGradePoints / totalUnits;
-        return gpa.toFixed(2);
-    };
-
-    $scope.getColor = (session_i, semester_i) => {
-        const colors = [
-            ["#abc9fb", "#f7b0d3"],
-            ["#9ae0d9", "#fcc39b"],
-            ["#dab6fc", "$ffaca7"],
-            ["#98e1c9", "#f6de95"],
-            ["#a0e6ba", "#94e0ed"],
-            ["#f7b0d3", "#bcbdf9"],
-        ];
-        if (typeof colors[session_i][semester_i] !== "string") {
-            return colors[0][0];
-        }
-        return colors[session_i][semester_i];
-    };
-
-    $scope.init = () => {
-        $scope.api("/app/student/results/index", {}, (res) => {
-            //$scope.results = res.results;
-            $scope.prepareResults(res.results);
-            $scope.awaitingResults = Object.values(res.awaitingResults);
-            $scope.unsettledResults = res.unsettledResults;
-            $scope.totalEnrollments = res.totalEnrollments;
-        });
-    };
-
-    $scope.prepareResults = (data) => {
-        for (const session in data) {
-            const session_results = data[session];
-
-            for (const semester in session_results) {
-                const semester_results = session_results[semester];
-                if (["RAIN", "HARMATTAN"].includes(semester)) {
-                    $scope.results.push({
-                        session: session,
-                        semester: semester,
-                        carryover: semester_results.results.filter(
-                            (result) => result.remark === "FAILED"
-                        ),
-                        results: semester_results.results,
-                        gpa: (
-                            semester_results.totalGradePoints /
-                            semester_results.totalUnits
-                        ).toFixed(2),
-                    });
-                } else {
-                    $scope.totalUnits += semester_results.totalUnits;
-                    $scope.totalGradePoints +=
-                        semester_results.totalGradePoints;
-                }
-                // $scope.gpa = (semester_results.totalGradePoints / semester_results.totalUnits).toFixed(2);
-            }
-        }
-        let cgpa = $scope.totalGradePoints / $scope.totalUnits;
-        cgpa = cgpa.toFixed(2);
-        $scope.cgpa = isNaN(cgpa) ? 0.0 : cgpa;
-    };
-
-    $scope.displayResults = (result) => {
-        $scope.display_results = result;
-        $scope.route("display_results");
-        console.log({ result });
-    };
-});

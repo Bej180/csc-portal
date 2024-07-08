@@ -91,21 +91,19 @@ app.controller("AdvisorClassController", function ($scope, StudentService) {
         );
     };
 
-    $scope.generateTranscript = (reg_no) => {
-        return $scope.api(
-            "/app/advisor/student/generate_transcript",
-            {
+    $scope.generateTranscript = ({reg_no}) => {
+        return $scope.api({
+            url: "/app/advisor/student/generate_transcript",
+            loadingText: 'Generating Transcript',
+            data: {
                 reg_no,
             },
-            (res) => {
+            success: (res) => {
                 $scope.route("transcript");
                 $scope.transcriptStudent = res.student;
                 $scope.transcriptResults = res.results;
-
-                console.log(res);
-            },
-            (error) => console.error()
-        );
+            }
+        });
     };
 
     $scope.getTotalGradePoints = () => {

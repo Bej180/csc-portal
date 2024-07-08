@@ -31,10 +31,101 @@ class Enrollment extends Model
 
 
 
+    public static function whereParamsAre(array $columns) {
+        $enrollmentQuery = Enrollment::query();
+        foreach($columns as $column => $value) {
+            $enrollmentQuery->where($column, $value);
+        }
+        $enrollmentQuery->join('courses', 'courses.id', '=', 'enrollments.course_id');
 
-    public static function getEnrollmentsByRequestID(string $request_id) {
+        return $enrollmentQuery->get([
+            'enrollments.level',
+            'enrollments.semester',
+            'enrollments.session',
+            'courses.code',
+            'courses.name',
+            'courses.option',
+            'courses.units',
+        ]);
+        
+     }
 
-    }
+     public function qrcode() {
+
+        $enrollment_url = url('/student_enrollments/'.$this->request_id);
+
+        return qrCode($enrollment_url);
+
+     }
+
+     public static function getStudentEnrollments(string $reg_no) {
+        
+        return self::where('reg_no', $reg_no)
+            ->join('courses', 'courses.id', '=', 'enrollments.course_id')
+            ->orderBy('enrollments.level', 'asc')
+            ->orderBy('enrollments.semester', 'desc')
+            ->get([
+                'enrollments.id',
+                'enrollments.request_id',
+                'enrollments.level',
+                'enrollments.semester',
+                'courses.code',
+                'courses.option',
+                'courses.name',
+                'session',
+                'units'
+            ])
+            ->groupBy('request_id')
+            ->map(function($enrollments) use ($reg_no) {
+                $first = $enrollments->first();
+
+                return [
+                    'reg_no' => $reg_no,
+                    'level' => $first->level,
+                    'semester' => $first->semester,
+                    'enrollment_id' => $first->request_id,
+                    'session' => $first->session,
+                    'totalUnits' => $enrollments->sum('units'),
+                    'courses' => $enrollments
+                ];
+                
+            });
+
+     }
+
+     public static function enrollments(Student $student) {
+        
+        return self::where('reg_no', $student->reg_no)
+            ->join('courses', 'courses.id', '=', 'enrollments.course_id')
+            ->orderBy('enrollments.level', 'asc')
+            ->orderBy('enrollments.semester', 'desc')
+            ->get([
+                'enrollments.request_id',
+                'enrollments.level',
+                'enrollments.semester',
+                'courses.code',
+                'courses.option',
+                'courses.name',
+                'session',
+                'units'
+            ])
+            ->groupBy('request_id')
+            ->map(function($enrollments){
+                $first = $enrollments->first();
+
+                return [
+                    'level' => $first->level,
+                    'semester' => $first->semester,
+                    'enrollment_id' => $first->request_id,
+                    'session' => $first->session,
+                    'totalUnits' => $enrollments->sum('units'),
+                    'courses' => $enrollments
+                ];
+                
+            });
+
+     }
+
     
 
 
@@ -221,12 +312,14 @@ class Enrollment extends Model
     }
 
     public static function students($semester, $session, $course_id) {
+        
         return self::where('session', $session)
             ->with(['student.user', 'course'])
             ->where('semester', $semester)
             ->where('course_id', $course_id)
             ->get()
             ->map(function($enrollment) {
+                
                 $enrollment->results = Result::where('session', $enrollment->session)
                     ->where('semester', $enrollment->semester)
                     ->where('course_id', $enrollment->course_id)

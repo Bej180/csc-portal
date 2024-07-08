@@ -1,8 +1,8 @@
-
+<div ng-show="enrollment_details">
 
     <div class="hide-on-print">
         <div class="flex items-center justify-between">
-            <span class="text-2xl hover:text-primary font-bold" ng-click="route('index')">
+            <span class="text-2xl hover:text-primary font-bold" ng-click="gotoIndex()">
                 <i class="fa fa-chevron-left"></i> Course Registration Details
             </span>
 
@@ -26,8 +26,9 @@
 
             <div class="flex gap-3 items-center mt-8 w-fit" id="student-info">
                 <div>
-                    <img src="/profilepic/{% course_reg.user.id %}" alt="user"
-                        class="rounded-full w-14 lg:w-16 xl:w-20 aspect-square" />
+                   
+                        <avatar user="account" alt="user"
+                        class="rounded-full w-14 lg:w-16 xl:w-20 aspect-square"></avatar>
                 </div>
 
 
@@ -38,12 +39,12 @@
                         <div class="grid grid-cols-2 gap-1">
                             <div class="col-span-1 flex gap-2">
                                 <div class="w-[90px] shrink-0">Full Name:</div>
-                                <div class="flex-1 uppercase font-semibold break-words whitespace-break-spaces" ng-bind="course_reg.user.name"></div>
+                                <div class="flex-1 uppercase font-semibold break-words whitespace-break-spaces" ng-bind="account.name"></div>
                             </div>
 
                             <div class="col-span-1 flex gap-2">
                                 <div class="w-[90px] shrink-0">Session:</div>
-                                <div class="flex-1 uppercase font-semibold" ng-bind="course_reg.session"></div>
+                                <div class="flex-1 uppercase font-semibold" ng-bind="enrollment_details.session"></div>
                             </div>
 
                             
@@ -55,13 +56,13 @@
 
                             <div class="col-span-1 flex gap-2">
                                 <div class="w-[90px] shrink-0">Reg. No.:</div>
-                                <div class="flex-1 uppercase font-semibold" ng-bind="course_reg.student.reg_no"></div>
+                                <div class="flex-1 uppercase font-semibold" ng-bind="account.reg_no"></div>
                             </div>
                             
                             <div class="col-span-1 flex gap-2">
                                 <div class="w-[90px] shrink-0">Semester:</div>
-                                <div class="flex-1 uppercase font-semibold" ng-bind="course_reg.semester"></div>
-                            </div>p
+                                <div class="flex-1 uppercase font-semibold" ng-bind="enrollment_details.semester"></div>
+                            </div>
                         </div>
 
                         <div class="grid grid-cols-2 gap-1">
@@ -71,41 +72,11 @@
                             </div>
                             <div class="col-span-1 flex gap-2">
                                 <div class="w-[90px] shrink-0">Level:</div>
-                                <div class="flex-1 uppercase font-semibold" ng-bind="course_reg.level"></div>
+                                <div class="flex-1 uppercase font-semibold" ng-bind="enrollment_details.level"></div>
                             </div>
                         </div>
 
                     </div>
-
-                    {{-- <div class="w-full">
-                        <div class="grid grid-cols-4 gap-1">
-                            <div class="col-span-1">Full Name:</div>
-                            <div class="col-span-1 uppercase font-semibold" ng-bind="course_reg.user.name"></div>
-                            <div class="col-span-1">School:</div>
-                            <div class="col-span-1 uppercase font-semibold">SICT</div>
-                        </div>
-
-                        <div class="grid grid-cols-4 gap-1">
-                            <div class="col-span-1">Registration Number:</div>
-                            <div class="col-span-1 uppercase font-semibold" ng-bind="course_reg.student.reg_no"></div>
-                            <div class="col-span-1">Department:</div>
-                            <div class="col-span-1 uppercase font-semibold">Computer Science</div>
-                        </div>
-
-                        <div class="grid grid-cols-4 gap-1">
-                            <div class="col-span-1">Entry Mode:</div>
-                            <div class="col-span-1 uppercase font-semibold">UTME</div>
-                            <div class="col-span-1">Level:</div>
-                            <div class="col-span-1 uppercase font-semibold" ng-bind="course_reg.level"></div>
-                        </div>
-
-                        <div class="grid grid-cols-4 gap-1">
-                            <div class="col-span-1">Session:</div>
-                            <div class="col-span-1 uppercase font-semibold" ng-bind="course_reg.session"></div>
-                            <div class="col-span-1">Semester:</div>
-                            <div class="col-span-1 uppercase font-semibold" ng-bind="course_reg.semester"></div>
-                        </div>
-                    </div> --}}
 
 
 
@@ -121,17 +92,17 @@
                         <th class="!w-32">Type</th>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="enrollment in course_reg.enrollments">
-                            <td class="!w-[80px]" ng-bind="enrollment.course.code"></td>
-                            <td class="!text-left" ng-bind="enrollment.course.name"></td>
-                            <td ng-bind="enrollment.course.units"></td>
-                            <td class="uppercase" ng-bind="enrollment.course.option"></td>
+                        <tr ng-repeat="enrollment in enrollment_details.courses">
+                            <td class="!w-[80px]" ng-bind="enrollment.code"></td>
+                            <td class="!text-left" ng-bind="enrollment.name"></td>
+                            <td class="!text-center" ng-bind="enrollment.units"></td>
+                            <td class="uppercase" ng-bind="enrollment.option"></td>
                         </tr>
 
                         <tr>
                             <td></td>
                             <td class="uppercase">Total</td>
-                            <td ng-bind="course_reg.totalUnits"></td>
+                            <td ng-bind="enrollment_details.totalUnits"></td>
                             <td></td>
                         </tr>
                     </tbody>
@@ -170,9 +141,6 @@
                 padding: 0px;
             }
 
-            #user-info {
-                flex-direction: row;
-            }
 
             body {
                 background: #fff;
@@ -180,7 +148,8 @@
 
             td,
             th {
-                border: none !important;
+                background: transparent !important;
             }
         }
     </style>
+</div>

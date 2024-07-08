@@ -146,8 +146,7 @@
                 <fieldset class="p-fieldset" ng-if="staff_in_view.classes.length > 0">
                     <legend class="p-legend opacity-50 mb-2">Class Advisor of::</legend>
 
-                    <chip-select items="staff_in_view.classes" label="name" ngModel="remove_class_list"></chip-select>
-
+            
                     <div class="grid gap-2 grid-cols-2">
                         <span ng-repeat="set in staff_in_view.classes"
                         ng-click="toggle_mark_class(set)"

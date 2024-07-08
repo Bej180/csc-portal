@@ -50,6 +50,7 @@ app.controller("StaffController", function ($scope, $timeout) {
         confirmed = null,
         counter = 0
     ) => {
+
         return $timeout(function () {
             return $scope.api(
                 "/app/moderator/make_staff_class_advisor",

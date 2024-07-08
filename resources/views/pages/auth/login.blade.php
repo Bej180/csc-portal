@@ -32,8 +32,8 @@
                         <div class="flex flex-col gap-4 mt-3">
                             <div class="custom-input">
                                 <x-icon name="account_circle" class="icon-md"/>
-                                <input type="text" class="input-bottom" placeholder="Email or Phone"
-                                    name="credential" ng-model="loginData.usermail" />
+                                <input type="email" class="input-bottom" placeholder="Email or Phone"
+                                    name="credential" ng-model="loginData.usermail" autocomplete="off"/>
 
                             </div>
 

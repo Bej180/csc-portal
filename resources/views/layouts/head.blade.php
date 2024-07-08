@@ -22,10 +22,29 @@ $styles = [
 <meta charset="UTF-8" />
 <title ng-bind="app_title">{{ $title??'Futo CSC Portal' }}</title>
 <meta name="theme-color" content="#000000"/>
-@if (isset($description)) 
-  <meta name="description" content="{!!$description!!}"/>
-@endif
+
+
 <link rel="icon" type="image/svg+xml" href="{{asset('svg/logo.svg')}}" />
+
+<meta name="keywords" content="csc school management system, futo, csc futo, cscfuto, futo computer science, techtitans">
+<meta name="author" content="TechTitans">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:domain" content="{{ url('/') }}">
+<meta property="og:url" content="{{ url('/') }}">
+<meta property="twitter:url" content="{{ url('/') }}">
+
+<meta property="og:title" content="{{ $title??'Futo CSC Portal' }}">
+<meta name="twitter:title" content="{{ $title??'Futo CSC Portal' }}">
+
+@if (isset($description)) 
+  <meta name="description" content="{!!$description!!}">
+  <meta property="og:description" content="{!!$description!!}">
+	<meta name="twitter:description" content="{!!$description!!}">
+@endif	
+	<meta property="og:image" content="/assets/img/preview-banner.jpg">
+  <meta name="twitter:image" content="/assets/img/preview-banner.jpg">
+
 {{-- <link rel="stylesheet" href="{{ asset('plugins/bootstrap/css/bootstrap.min.css') }}"> --}}
 
 <link rel="stylesheet" href="{{ asset('plugins/fontawesome/css/fontawesome.min.css') }}">

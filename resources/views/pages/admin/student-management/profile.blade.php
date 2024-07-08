@@ -23,6 +23,9 @@
         </div>
     </div>
 
+    <div class="flexx">
+        <button ng-click="editStudent(show_student)" class="btn btn-secondary w-full">Edit Account</button>
+    </div>
 
 
     <div class="card-body">

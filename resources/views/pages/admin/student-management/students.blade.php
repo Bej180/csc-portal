@@ -5,7 +5,7 @@
 <x-template nav="students" title="Admin - Students Manager" style="admin-list" controller="AdminStudentController"
     ng-init="bootStudentAccounts()">
 
-    <div class="columns">
+    <x-route class="columns">
 
         <section class="half-60">
 
@@ -135,7 +135,7 @@
         </section>
 
         <section class="half-40">
-            <form class="card !p-6 gap-3" ng-action="createStudentAccount()">
+            <form class="card !p-6 gap-3">
 
                 <div class="card-header">
                     <div class="card-title">
@@ -203,7 +203,7 @@
                 </div>
 
                 <div class="card-footer flex gap-2 justify-end">
-                    <button ng-disabledx="!student.set_id" type="button" class="btn-primary" ng-submit>Create
+                    <button ng-disabledx="!student.set_id" type="button" class="btn-primary" controller="createStudentAccount()">Create
                         Student Account</button>
                 </div>
 
@@ -218,8 +218,15 @@
 
             </form>
         </section>
+    </x-route>
 
+    <x-route name="edit_student" class="columns">
+        
+        @include('pages.admin.student-management.edit')
+    </x-route>
 
-
-    </div>
+    <x-route name="enrollment_details" class="full">
+        
+        @include('pages.admin.student-management.view-enrollments')
+    </x-route>
 </x-template>

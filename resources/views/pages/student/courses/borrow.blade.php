@@ -1,15 +1,15 @@
 <x-popend class="!bg-transparent !lg:bg-white" name="open_borror_panel">
 
-    <div class="flex w-full items-center justify-between gap-2 mb-2">
+    <div class="flex w-full items-center justify-between gap-2 mb-2" ng-init="borrowQuery=null;">
       
         <div class="flex-1">
-          {% semester %}
-            <input type="search" ng-model="borrowQuery" class="input"
+          
+            <input type="text" ng-model="borrowQuery" value="" class="input"
                 placeholder="Course Code (eg: CSC 501)"/>
   
         </div>
         <div>
-            <button type="button" ng-disabled="!borrowQuery" class="btn btn-primary" ng-click="SearchCourse()">Search</button>
+            <button type="button" ng-disabled="!borrowQuery" class="btn btn-primary" controller="SearchCourse(borrowQuery)">Search</button>
         </div>
     </div>
   

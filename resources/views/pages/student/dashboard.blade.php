@@ -5,12 +5,13 @@
     $records = $student->courses;
     $set = $student->academicSet;
     $enrolledCourses = $student->courses;
-    $results = $student->results->count();
-    $cgpa = $student->calculateCGPA();
+    $results = $student->results()->where('status', 'APPROVED')->count();
+    $cgpa = $student->cgpa;
+    
     $materials = $student->getMaterials();
 
 @endphp
-<x-template nav="home" title="Student Dashboard">
+<x-template nav="home" title="Student Dashboard" controllerx="StudentController" ng-init="bootDashboard()">
     <script src="{{ asset('js/apexchart.js') }}"></script>
     @if ($records && $records->count() === 0)
         <div id="no-courses" class="h-avail justify-center flex p-2 relative flex-col gap-5 items-center">

@@ -207,32 +207,5 @@ class Course extends Model
     }
 
 
-    public function maxUnits(string $semester) {
-        $HARMATTAN = [
-            'max' => 21,
-            'min' => 19
-        ];
-        $levels = [
-            100 => [
-                'HARMATTAN' => ['max' => 21, 'min' => 19],
-                'RAIN'      => ['max' => 21, 'min' => 19],
-            ],
-            200 => [
-                'HARMATTAN' => ['max' => 21, 'min' => 19],
-                'RAIN'      => ['max' => 21, 'min' => 19],
-            ],
-            300 => [
-                'HARMATTAN' => ['max' => 21, 'min' => 19],
-                'RAIN'      => ['max' => 21, 'min' => 19],
-            ],
-            400 => [
-                'HARMATTAN' => ['max' => 21, 'min' => 19],
-                'RAIN'      => ['max' => 21, 'min' => 19],
-            ],
-            500 => [
-                'HARMATTAN' => ['max' => 21, 'min' => 19],
-                'RAIN'      => ['max' => 21, 'min' => 19],
-            ],
-        ];
-    }
+    
 }

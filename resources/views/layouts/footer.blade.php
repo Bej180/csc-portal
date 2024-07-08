@@ -5,7 +5,7 @@ $module = $module ?? 'page';
 $nav = $nav ?? 'all';
 ?>
 
-<!--absolute bottom-8 right-0-->
+
 @if (in_array($role, ['admin', 'advisor', 'hod']))
     <div class="announcement" ng-controller="AnnouncementController" ng-init="initAnnouncement()" ng-class="{show:displayAnnouncement}">
         <div class="backdrop" ng-click="closeAnnouncement($event)">
@@ -67,18 +67,10 @@ $nav = $nav ?? 'all';
     </div>
 @endif
 
-<div ng-show="showPasswordModal" class="password-modal">
-    <div class="password-modal-content">
-        <span class="close" ng-click="closeModal()">&times;</span>
-        <h2>Verify Password</h2>
-        <input type="password" ng-model="password" placeholder="Enter your password">
-        <button ng-click="verifyPassword()">Submit</button>
-    </div>
-</div>
 <div id="isLoading" class="">
     <div class="flex items-center gap-1">
         <div class="dot-pulse"></div>
-        <div class="text-2xl ml-[20px]">
+        <div id="loadingText" class="text-2xl ml-[20px]">
             Loading...
         </div>
     </div>
@@ -96,7 +88,7 @@ $nav = $nav ?? 'all';
 
 <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('js/scripts/feather.min.js') }}"></script>
-<script src="{{ asset('js/scripts/main.js') }}" type="module"></script>
+<script src="{{ asset('js/scripts/main.js') }}" type="module" defer></script>
 
 <script src="{{ asset('js/scripts/jquery.maskedinput.min.js') }}"></script>
 <script src="{{ asset('js/scripts/mask.js') }}"></script>

@@ -32,7 +32,7 @@
                 <div class="p-4">
 
 
-                    <form class="card" ng-action="addCourse()">
+                    <form class="card">
 
                         <div class="card-header">
                             <div class="card-title px-4">
@@ -201,7 +201,7 @@
                         </div>
                         <div class="card-footer flex justify-end items-center">
 
-                            <button class="btn btn-primary" type="submit" ng-disabled="!check">
+                            <button class="btn btn-primary" type="button" controller="addCourse()" ng-disabled="!check">
                                 Add Course
                             </button>
 

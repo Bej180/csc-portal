@@ -41,6 +41,12 @@ if (!function_exists('toSnakeCase')) {
   }
 }
 
+if (!function_exists('qrCode')) {
+  function qrCode(string $url) {
+    return url('/generate-qr-code?url=' . urlencode($url));
+  }
+}
+
 if (!function_exists('formatFileSize')) {
   function formatFileSize($bytes)
   {
@@ -95,7 +101,7 @@ if (!function_exists('Email')) {
 }
 
 if (!function_exists('generateToken')) {
-  function generateToken(?string $tableColumn = null, int $length = 60, ?int $expiresAt = null): ?string
+  function generateToken(?string $tableColumn = null, int $length = 60): string
   {
     if (!$tableColumn) {
       return Str::random($length);
@@ -109,11 +115,6 @@ if (!function_exists('generateToken')) {
       $exists = DB::table($table)->where($column, $token)->exists();
     } while ($exists);
 
-    try {
-      // Attempt to cache the token
-      Cache::put($token, true, $expiresAt ?? 60); // Cache for 1 minute
-    } catch (Exception $e) {
-    }
 
     return $token;
   }

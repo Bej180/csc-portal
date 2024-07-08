@@ -80,8 +80,7 @@
                         <h2 class="p-[38px] text-2xl  primary-text font-bold mb-2">Reset Password</h2>
                         <div class="px-[38px] pb-[38px] grid place-items-center w-full">
                             <fieldset class="w-full relative z-10 grid grid-cols-1 place-content-center">
-                                <form values="{sent:'Password Reset', sending: 'Resetting Password..', error: 'Failed'}"
-                                    ng-action="changePassword()">
+                                <form>
 
 
                                     <div class="flex flex-col justify-end paragraph"
@@ -122,7 +121,8 @@
 
                                     <div class="flex flex-col mt-8 gap-3">
 
-                                        <button type="button" ng-submit class="btn btn-primary transition w-full">Reset
+                                        <button type="button" values="{sent:'Password Reset', sending: 'Resetting Password..', error: 'Failed'}"
+                                        controller="changePassword()" class="btn btn-primary transition w-full">Reset
                                             Password</buton>
 
                                     </div>

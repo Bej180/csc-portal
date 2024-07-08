@@ -10,6 +10,7 @@
                 </div>
                 <div class="card-body">
                     <div class="card-content">
+                        <button ng-click="test()">Send</button>
                         <div class="h-full mt-5">
                             <div class="flex items-center -mt-5 gap-3 pb-3 max-w-96">
                                 <div class="input-group">
@@ -23,15 +24,14 @@
                             <div class="flex flex-col gap-5">
                                 <div ng-if="all_results" ng-repeat="result in all_results">
                                     <div class="flex flex-col gap-4">
-                                        <div class="card  border">
-                                            <div class="card-body">
+                                        <div class="panel">
+                                            <div class="panel-body">
                                                 <div class="card-caption">
                                                     <div class="card-title">
                                                         <div class="flex items-center gap-1 w-full">
-                                                            <div class="avatar  avatar-circle avatar-lg shrink-0"
-                                                                style="background-color: rgb(222, 233, 252); color: rgb(26, 37, 81);">
+                                                            <div class="avatar avatar-circle avatar-lg shrink-0">
                                                                 <span class="avatar-text"
-                                                                    ng-bind="result.course.code.substring(0,1)"></span>
+                                                                    ng-bind="result.course.code.substring(0,3)"></span>
                                                             </div>
                                                             <h1 title="course-title"
                                                                 class="text-[--highlight-text-color] text-lg w-full whitespace-nowrap text-ellipsis overflow-hidden"
@@ -62,8 +62,8 @@
                                                     <div class="flex flex-wrap items-center gap-3">
                                                         <button class="btn btn-secondary btn-100" type="button"
                                                             ng-click="ViewCourseResult(result)">View</button>
-                                                        <button class="btn btn-primary btn-100"
-                                                            ng-disabled="result.status=='approved'">Edit</button>
+                                                        <button class="btn btn-primary btn-100" ng-click="displayStudentsEnrolledForCourse(result)"
+                                                            ng-disabled="result.status=='APPROVED'">Edit</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -114,7 +114,7 @@
                 <div class="card-caption">
                     <div class="card-title">Add Result</div>
                 </div>
-                <form class="card-body md:max-h-[calc(-12.5rem+100dvh)]">
+                <form class="p-4">
                     <div class="flex flex-col gap-3">
                         <div class="flex flex-col gap-1 mt-2">
                             <div class="font-bold text-sm text-[--surface-500]" for="course">Course</div>
@@ -134,7 +134,7 @@
                             </select>
                         </div>
                         
-                        <button type="button" class="btn btn-primary mt-2" controller="addResults()">Submit</button>
+                        <button type="button" class="btn btn-primary mt-2" controller="displayStudentsEnrolledForCourse(results)">Display Students</button>
                     </div>
                 </form>
             </div>
@@ -150,6 +150,6 @@
     </x-route>
 
     <x-route name="course_results">
-        @include('pages.results.single-course-results')
+        @include('pages.staff.result-management.single-course-results')
     </x-route>
 </x-template>

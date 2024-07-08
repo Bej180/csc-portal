@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('phone', 12)->nullable();
             $table->enum('gender', ['MALE', 'FEMALE']);
             
+            
             $table->string('name');
             $table->tinyInteger('log_attempts', false, true)->default(0);
             $table->timestamp('unlock_duration')->nullable();
@@ -38,6 +39,7 @@ return new class extends Migration
             $table->string('two_factor_secret', 64)->nullable();
             
             $table->string('password');
+            $table->string('pin', 64);
             $table->string('token')->nullable();
             $table->rememberToken();
             $table->timestamp('deleted_at')->nullable();

@@ -25,7 +25,9 @@
     $script = null;
     if (isset($controller)) {
         $controller_part = preg_replace('/Controller$/', '', $controller);
-        $controller_part = strtolower(preg_replace('/([a-z_])([A-Z]+)/', '$1-$2', $controller_part));
+        $controller_part = strtolower(
+            preg_replace('/([a-z_]+)([A-Z]+)/', '$1-$2', $controller_part)
+        );
         $script = asset('/js/angular/modules/'.$controller_part.'.js');
         $attributes['ng-controller'] = $controller;
     }
@@ -53,7 +55,7 @@
     }
 
 @endphp
-<x-app>
+<x-app title="{{$title}}">
 <head>
     @include('layouts.head', compact('title', 'style'))
 

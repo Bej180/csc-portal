@@ -7,6 +7,21 @@ app.controller("AccountSetting", function ($scope) {
             userData
         );
     };
+
+    $scope.changeImage = (id, image) => {
+        
+        return ajax.http({
+            url: '/api/app/user/update_profile',
+            files: {
+                image,
+                id
+            },
+            success(response){
+                console.log(response);
+            }
+        });
+    }
+
     
 
     $scope.uploadImage = async () => {

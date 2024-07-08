@@ -53,7 +53,7 @@ class ResultsController extends Controller
         return redirect()->back()->with('error', 'Failed to process results');
     }
 
-    public function processResults($name): ?array
+    public function processResults($name, ?Course $course = null): ?array
     {
         // the keys are the matcher, they are the names of the column
         // the values are the column name of the table to store the results 
@@ -139,6 +139,24 @@ class ResultsController extends Controller
             }
             $newResult[] = $append;
         }
+        
+
+        return Arr::map($newResult, function($item) use ($course) {
+            $lab = (int) $item['lab'];
+            $score = $lab;
+            $score += (int) $item['exam'];
+            $score += (int) $item['test'];
+
+            $item['score'] = $score;
+            $item['grade'] = Result::scoreToGradeText($score);
+            $item['remark'] = $score > 39 ? 'PASSED' : 'FAILED';
+            if ($course && $course->has_practical && !$lab) {
+                $item['grade'] = 'F';
+                $item['remark'] = 'PASSED';
+            }
+            return $item;
+
+        });
 
         return $newResult;
     }
@@ -410,6 +428,171 @@ class ResultsController extends Controller
 
 
 
+    public function save_as_draft(Request $request)
+    {
+        // Validate the request
+        $validator = Validator::make($request->all(), [
+            'session' => 'required|exists:sessions,name',
+            'students' => 'required|array',
+            'course_id' => 'required|exists:courses,id'
+        ], [
+            'session.required' => 'Session is missing',
+            'session.exists' => 'Academic session not found',
+            'students.required' => 'Student results are missing',
+            'students.array' => 'Student results are missing',
+            'course_id.required' => 'Course id is missing',
+            'course_id.exists' => 'The course you are trying to save its results does not exist',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+
+        $upload = Result::uploadOrUpdateResults(
+            $request->session, 
+            $request->students, 
+            $request->course_id,
+            'DRAFT'
+        );
+
+        if (is_string($upload)) {
+            return response()->json([
+                'error' => $upload
+            ], 400);
+        }
+        
+        return response()->json([
+            'success' => 'Results uploaded successfully'
+        ]);
+
+
+
+
+
+        $students = $request->students;
+        $existingResults = Result::where('course_id', $request->course_id)
+            ->where('session', $request->session)
+            ->get();
+
+        if ($existingResults->isNotEmpty()) {
+            $status = $existingResults[0]->status;
+
+            if ($status === 'INCOMPLETE') {
+                return response()->json(['error' => 'A technologist has uploaded lab score results for this course. You need to approve it before continuing'], 400);
+            }
+            if ($status === 'APPROVED') {
+                return response()->json(['error' => 'You cannot update or add this result because it is already approved previously uploaded ones'], 400);
+            }
+        }
+
+        foreach ($students as $student) {
+
+            $result = Result::firstOrNew([
+                'course_id' => $request->course_id,
+                'session' => $request->session,
+                'reg_no' => $student['reg_no']
+            ]);
+
+            $uploadedBy = $result->uploaded_by;
+
+            if ($uploadedBy) {
+                $result->updated_by = auth()->id();
+            }
+            else {
+                $result->uploaded_by = auth()->id();
+            }
+
+
+            $result->status = 'DRAFT';
+            $result->lab = (int) $student['lab'];
+            $result->exam = (int) $student['exam'];
+            $result->test = (int) $student['test'];
+            $result->score = $result->getScore();
+            $result->grade = $result->getGradeText();
+            $result->remark = $result->getRemark();
+            $result->grade_points = $result->getGradePoints();
+            $result->save();
+        }
+
+        return response()->json([
+            'scuccess' => 'Results successfully saved for later editing'
+        ], 200);
+    }
+
+
+
+
+
+    public function save_results(Request $request)
+    {
+        // Validation rules
+        $validator = Validator::make($request->all(), [
+            'students' => 'required|array',
+            'course_id' => 'required|exists:courses,id',
+            'session' => 'required',
+            'passcode' => 'pin'
+        ], [
+            'students.required' => 'Students results were not submitted',
+            'students.array' => 'Students results were not submitted',
+            'course_id.required' => 'Course was not submitted',
+            'course_id.exists' => 'The course you want to submit results is unknown.',
+            'session.required' => 'Session must be provided',
+        ]);
+
+
+        // Handle validation errors
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors()
+            ], 400);
+        }     
+
+        $upload = Result::uploadOrUpdateResults(
+            $request->session, 
+            $request->students, 
+            $request->course_id,
+            'PENDING'
+        );
+
+        if (is_string($upload)) {
+            return response()->json([
+                'error' => $upload
+            ], 400);
+        }
+        
+        return response()->json([
+            'success' => 'Results uploaded successfully'
+        ]);
+        
+    }
+
+
+    public function upload_ogmr(Request $request) 
+    {
+        $validator = Validator::make($request->all(), [
+            'course_id' => 'required|exists:courses,id',
+            'result' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors(),
+            ], 400);
+        }
+        $course = Course::find($request->course_id);
+        try {
+
+            return $this->processResults('result', $course);
+        }
+        catch(\Maatwebsite\Excel\Exceptions\NoTypeDetectedException $e) {
+            return response()->json([
+                'exception' => $e->getMessage(),
+                'error' => 'The file you tried to upload is not a valid excel file',
+            ], 400);
+        }
+    }
+
+
+
 
 
 
@@ -559,14 +742,20 @@ class ResultsController extends Controller
                 'errors' => $validator->errors()
             ], 400);
         }
+        $course_id = $request->course_id;
+        $semester = $request->semester;
+        $session = $request->session;
 
-        $results = Result::where('course_id', $request->course_id)
-            ->where('semester', $request->semester)
-            ->where('session', $request->session)
+        $results = Result::where('course_id', $course_id)
+            ->where('semester', $semester)
+            ->where('session', $session)
             ->with(['student.user', 'course'])
             ->get();
+        $first = $results->first();
+        $has_practical = !(!$first->course->has_practical);
+        $status = $first->status;
 
-        return $results;
+        return response()->json(compact('status', 'has_practical', 'semester', 'session', 'course_id', 'results'));
     }
 
 

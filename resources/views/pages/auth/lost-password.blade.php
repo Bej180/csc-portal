@@ -1,7 +1,7 @@
 
 <x-popend name="resetPassword">
 
-    <form done="popDown('resetPassword')" ng-action="ResetPassword(loginData.usermail)" class="lg:p-[30px] relative z-10">
+    <form class="lg:p-[30px] relative z-10">
         <div class="center-page">
             <div>
                 <div class="header1">Reset Password</div>
@@ -22,7 +22,7 @@
                         <i class="fas fa-envelope"></i>
                     </div>
                     <div class="flex flex-col gap-3 mt-5">
-                        <button class="btn btn-primary" ng-submit>Reset Password</button>
+                        <button class="btn btn-primary" controller="ResetPassword(loginData.usermail)">Reset Password</button>
                     </div>
                 </div>
             </div>

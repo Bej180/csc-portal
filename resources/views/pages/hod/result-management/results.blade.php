@@ -1,24 +1,24 @@
 
-<x-template title="Results" ng-controller="HODResultsController" ng-init="initializePage()">
+<x-template title="Results" nav="results" controller="HODResultsController" ng-init="initializePage()">
 
     <x-route name="index" class="p-5 w-dvw md:w-full">
-        <div class="tabview " role="tablist" ng-init="active_nav='approved'">
+        <div class="tabview " role="tablist">
             <div class="tabview-nav-container">
                 <div class="tabview-nav-content">
                     <ul class="tabview-nav">
                         <li class="tabview-header" role="presentation" ng-class="{highlight: active_nav=='approved'}" ng-click="active_nav='approved'">
                             <a class="tabview-nav-link tabview-header-action"
-                                tabindex="0" role="tab" aria-selected="true" aria-controls="pv_id_174_1_content">
+                                tabindex="0" role="tab" aria-selected="true">
                                 <h1>Approved</h1>
-                                <span class="badge badge-success -mt-4" ng-bind="approved_results.length" ng-if="approved_results.length>0"></span>
+                                <span class="badge badge-success" ng-bind="approved_results.length|more" ng-if="approved_results.length>0"></span>
                             </a>
                         </li>
 
                         <li class="tabview-header" role="presentation"  ng-class="{highlight: active_nav=='pending'}" ng-click="active_nav='pending'">
-                            <a id="pv_id_174_0_header_action" class="tabview-nav-link tabview-header-action"
-                                tabindex="-1" role="tab" aria-selected="false" aria-controls="pv_id_174_0_content">
+                            <a class="tabview-nav-link tabview-header-action"
+                                tabindex="-1" role="tab" aria-selected="false">
                                 <h1>Pending</h1>
-                                <span ng-if="pending_results.length>0" class="badge badge-no-gutter badge-danger -mt-4" ng-bind="pending_results.length"></span>
+                                <span ng-if="pending_results.length>0" class="badge badge-no-gutter badge-danger" ng-bind="pending_results.length|more"></span>
                             </a>
                         </li>
                         
@@ -74,13 +74,13 @@
                                             <td ng-bind="pending[0].semester"></td>
                                             <td ng-bind="pending[0].level"></td>
                                             <td ng-bind="formatDate(pending[0].created_at)"></td>
-                                            <td class="flex items-center justify-between gap-2">
+                                            <td class="flex items-center justify-end gap-2">
                                                 <button ng-click="viewResults(pending)" class="flex gap-1 items-center btn btn-secondary" type="button"
                                                     aria-label="View">
                                                     <span class="fa fa-eye"></span>
                                                     <span class="p-button-label">View</span>
                                                 </button>
-                                                <button controller="approveResult(pending[0])" class="btn btn-secondary whitespace-nowrap" type="button" aria-label="Approve">
+                                                <button controller="approveResult(pending[0])" class="btn btn-primary whitespace-nowrap" type="button" aria-label="Approve">
                                                     <span class="fa fa-check fa-icon"></span> 
                                                     Approve
                                                 </button>
@@ -99,9 +99,8 @@
                         </div>
                     </div>
                 </div>
-                <div ng-if="active_nav=='approved'" id="pv_id_174_1_content" class="tabview-panel" role="tabpanel"
-                    aria-labelledby="pv_id_174_1_header_action" style="">
-                    <div class="card ">
+                <div ng-if="active_nav=='approved'" class="tabview-panel" role="tabpanel">
+                    <div class="card">
                         <div class="card-body">
                             <div class="card-caption">
                                 <div class="card-title">
@@ -149,16 +148,18 @@
                                                 <td ng-bind="approved[0].semester"></td>
                                                 <td ng-bind="approved[0].level"></td>
                                                 <td ng-bind="formatDate(approved[0].created_at)"></td>
-                                                <td class="flex items-center justify-between gap-2">
+                                                <td class="flex items-center justify-end gap-2">
                                                     <button ng-click="viewResults(approved)" class="flex gap-1 items-center btn btn-secondary" type="button"
                                                         aria-label="View">
                                                         <span class="fa fa-eye"></span>
                                                         <span class="p-button-label">View</span>
                                                     </button>
-                                                    <button disabled class="btn btn-primary whitespace-nowrap">
-                                                        <span class="fa fa-check fa-icon"></span> 
-                                                        Approved
+                                                    <button ng-click="disapproveResult(approved[0])" class="btn btn-danger whitespace-nowrap">
+                                                        <span class="fa fa-times fa-icon"></span> 
+                                                        Disapprove
                                                     </button>
+
+                                                    
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -175,10 +176,10 @@
     <x-route name="view_results">
         <div class="columns">
             <section class="full">
-                <div class="my-3 text-2xl hover:text-primary" ng-click="route('index')">
+                <div class="my-3 text-2xl hover:text-primary" ng-click="Route.back()">
                     <i class="fa fa-chevron-left"></i> Results
                 </div>
-        @include('pages.results.one-course-result')
+                @include('pages.results.one-course-result')
             </section>
     </x-route>
 

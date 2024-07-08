@@ -14,6 +14,7 @@ use App\Models\AcademicSession;
 use App\Models\ActivityLog;
 use App\Models\Admin;
 use App\Models\Course;
+use App\Models\Enrollment;
 use App\Models\CourseAllocation;
 use App\Models\Department;
 use App\Models\Staff;
@@ -522,7 +523,194 @@ class AdminController extends Controller
     }
 
 
+    /**
+    * Delete all enrollments for a particular semester
+     */
+    public function delete_enrollments(Request $request) {
+        
+        $validator = Validator::make($request->all(), [
+            'enrollment_id' => 'required|exists:enrollments,request_id',
+            'reg_no' => 'required|exists:enrollments',
 
+            'passkey' => 'password'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors()
+            ], 400);
+        }
+
+        $enrollments = Enrollment::where('request_id', $request->enrollment_id)
+            ->where('reg_no', $request->reg_no)
+            ->get();
+
+        $first = $enrollments->first();
+
+        // foreach($enrollments as $enrollment) {
+        //     $enrollment->delete();
+        // }
+        Enrollment::destroy($enrollments);
+
+        $enrollments = Enrollment::where('request_id', $request->enrollment_id)
+            ->where('reg_no', $request->reg_no)
+            ->get();
+
+        return response()->json([
+            'data' => $enrollments,
+            'success' => "You have successfully deleted {$first->student->user->name}'s enrollment for {$first->level} level of {$first->session} {$first->semester} semester"
+        ]);
+    }
+
+
+    /**
+    * Update all enrollments for a particular semester
+     */
+    public function update_enrollments(Request $request) {
+        $startYear = date('Y');
+        $endYear = $startYear + 1;
+        
+        $validator = Validator::make($request->all(), [
+            'enrollment_id' => 'required|exists:enrollments,request_id',
+            'session' => 'sometimes|session:5',
+            'level'=>'sometimes|in:100,200,300,400,500',
+            'semester' => 'sometimes|in:RAIN,HARMATTAN',
+
+            'passkey' => 'password'
+        ], [
+            'enrollment_id.required' => 'Enrollment ID to be updated was not provided',
+            'enrollment_id.exists' => 'Enrollment was not found',
+            'session.session' => "Invalid session use (eg: $startYear/$endYear)",
+            'level.in' => 'Invalid level must be from 100 to 500',
+            'semester.in' => 'Invalid Semester must be either HARMATTAN or RAIN',
+        ]);
+        $data = [];
+    
+        if ($semester = $request->semester) {
+            $data['semester'] = strtoupper($semester);
+        }
+        if ($level = $request->level) {
+            $data['level'] = $level;
+        }
+        if ($session = $request->session) {
+            $data['session'] = $session;
+        }
+
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors()
+            ], 400);
+        }
+
+        $enrollments = Enrollment::where('request_id', $request->enrollment_id)
+            ->get();
+
+        $first = $enrollments->first();
+
+        foreach($enrollments as $enrollment) {
+            $enrollment->update($data);
+        }
+
+        return response()->json([
+            'success' => "You have successfully update {$first->student->user->name}'s enrollment record"
+        ]);
+    }
+
+    /**
+     * Delete a single enrollment 
+     */
+
+     public function drop_course_from_enrollment(Request $request) {
+
+        $validator = Validator::make($request->all(), [
+            'passkey' => 'password',
+            'id' => 'required|exists:enrollments'
+        ], [
+            'id.required' => 'Enrollment ID was not provided',
+            'id.exists' => 'Enrollment was not found. It may have been delete already'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors(),
+            ], 400);
+        }
+        
+
+        $enrollment = Enrollment::where('id', $request->id)->with('course')->first();
+        $course_code = $enrollment->course->code;
+        $enrollment->delete();
+
+        return response()->json([
+            'success' => "You have successfully droped $course_code",
+        ]);
+     }
+
+     /**
+      * Add course to enrollment
+      */
+
+      public function add_course_to_enrollment(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'course_id' => 'required|exists:courses,id',
+            'enrollment_id' => 'required|exists:enrollments,request_id',
+            'passkey' => 'password',
+        ], [
+            'course_id.required' => 'Course ID is required',
+            'course_id.exists' => 'Course Not found',
+            'enrollment_id.required' => 'Enrollment ID was missing',
+            'enrollment_id.exists' => 'Enrollment not found',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors(),
+            ], 400);
+        }
+        $enrollments = Enrollment::where('request_id', $request->enrollment_id)
+                ->with('student.user')
+                ->get();
+        $course_ids = $enrollments->pluck('course_id')->toArray();
+        
+        if (in_array($request->course_id, $course_ids)) {
+            return response()->json([
+                'error' => 'Course has already been added to student enrollment',
+            ], 400);
+        }
+        $enrollment = $enrollments->first();
+
+        $newEnrollment = Enrollment::create([
+            'reg_no' => $enrollment->reg_no,
+            'course_id' => $request->course_id,
+            'semester' => $enrollment->semester,
+            'request_id' => $enrollment->request_id,
+            'approved' => 1,
+            'session' => $enrollment->session,
+            'level' => $enrollment->level,
+        ]);
+
+        $course = Enrollment::where('enrollments.id', $newEnrollment->id)
+            ->join('courses', 'courses.id', '=', 'enrollments.course_id')
+            ->select([
+                'enrollments.id',
+                'enrollments.request_id',
+                'enrollments.level',
+                'enrollments.semester',
+                'courses.code',
+                'courses.option',
+                'courses.name',
+                'session',
+                'units'
+            ])
+            ->first();
+
+        return response()->json([
+            'data' => $course,
+            'success' => "You have successfully added {$course->code} to {$enrollment->student->user->name}'s {$enrollment->session} {$enrollment->semester} semester enrollment"
+        ]);
+
+
+      }
     
     # API
 

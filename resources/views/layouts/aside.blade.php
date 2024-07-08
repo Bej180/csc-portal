@@ -18,7 +18,7 @@
 
 
 
-            <div class="sidebar-body">
+            <div class="sidebar-body vertical-scrollx">
                 <ul class="menu">
                     <li class="p-[20px] flex md:hidden items-center justify-between">
                         <span class="text-xs opacity-20 inline-flex gap-2 items-center">
@@ -77,8 +77,8 @@
                         <div class="grow">
                             <div>
                                 <div class="theme-toggler" ng-click="toggleTheme()">
-                                    <x-icon ng-cloak name="dark_mode" ng-if="theme!=='dark'" />
-                                    <x-icon name="light_mode" ng-if="theme==='dark'" />
+                                    <x-icon class="hidden dark:inline-block" ng-cloak name="dark_mode" ng-if="theme!=='dark'" />
+                                    <x-icon class="dark:hidden" name="light_mode" ng-if="theme==='dark'" />
 
                                     <label ng-bind="theme === 'dark' ? 'Light Mode':'Dark Mode'">Light Mode</label>
                                 </div>

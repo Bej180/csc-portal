@@ -1,4 +1,4 @@
-<x-template nav="results" title="Results" ng-controller="StudentResultsController" ng-init="init()">
+<x-template nav="results" title="Results" controller="StudentResultsController" ng-init="init()">
     <x-route name="index" class="columns">
         <section class="half-40">
 

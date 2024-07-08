@@ -241,10 +241,7 @@ $(document).on("click", ".popup", function (event) {
     }
 });
 
-window.onbeforeunload = () => {
-    onOverlay();
-    $(".reload-dismiss").remove();
-};
+
 
 $(function () {
     // $(".sidebar .has-menu").on("click", function(e) {

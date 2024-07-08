@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Announcement;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Illuminate\Support\Facades\Validator;
 
 use App\Models\Staff;
 use App\Models\Student;
@@ -139,9 +140,13 @@ class AnnouncementController extends Controller
         }
         $announcements = Announcement::where('id', '>', $request->user()->last_seen_announcement)
             ->where(function ($query) use ($request) {
-                $query->where('user_id', '=', $request->user()->id)
-                    ->orWhere('target', '=', $request->user()->role)
-                    ->orWhere('target', '=', 'everyone');
+                $user = $request->user();
+                $role = $user->role;
+                $query->where(function($query) use ($user) {
+                        $query->where('target', '=', $user->role)
+                            ->where('user_id', '=', $user->id);
+                    })
+                    ->orWhere('target', '=', "{$role}s");
             })
             ->with('announcer')
             ->paginate(10);
@@ -151,6 +156,29 @@ class AnnouncementController extends Controller
             return $ann;
         });
     }
+    /**
+     * Mark announcement as seen
+     */
+
+     public function mark_as_seen(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|numeric',
+        ], [
+            'id.required' => 'Announcement ID not specified',
+            'id.numeric' => 'Invalid announcement ID',
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors(),
+            ]);
+        }
+        
+        $user = $request->user();
+
+        $user->last_seen_announcement = $request->id;
+        $user->save();
+
+     }
 
     /**
      * Display form to insert announcement
