@@ -360,7 +360,6 @@ app.directive("select", [
                     
                     if (newValue) {
                         if (scope.options) {
-                            console.log(newValue)
                             prepareItems();
                         } else {
                             
@@ -372,7 +371,6 @@ app.directive("select", [
                                 $(this).toggleClass("selected", selection);
 
                                 if (selection) {
-                                    console.log({old:$(this).text(),value: $(this).data('value'), newValue:newValue})
                                    triggerText.text($(this).text());
                                 }
                             });

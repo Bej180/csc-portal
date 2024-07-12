@@ -19,11 +19,8 @@ import '../../plugins/scrollbar/custom-scroll.js';
 
 
         window.onbeforeunload = () => {
-            const loading = $("#isLoading");
-            
-
-            $("#loadingText", loading).text("Reloading...");
-            loading.addClass('show');
+           
+            Overlay(true, 'Reloading')
 
             $(".reload-dismiss").remove();
             $(".reload-hide").hide();
@@ -81,28 +78,55 @@ import '../../plugins/scrollbar/custom-scroll.js';
             });
         });
 
-        $("inputx[type=file][preview-at]").each(function () {
-            const preview = $(this).attr("preview-at");
-            const image = $(preview);
-
-            if (image.length > 0) {
-
-                $(this).on("change", function () {
-                    const files = this.files;
-                    if (!files || files.length === 0) {
-                        return;
-                    }
-                    const file = files[0];
-                    const reader = new FileReader();
-
-                    reader.onload = function (e) {
-                        const dataURL = e.target.result;
-                        image[0].src = dataURL;
-                    };
-
-                    reader.readAsDataURL(file);
+        $(".scrollable").each(function () {
+            var scrollbarTrack = $(this).next(".scrollable-track");
+            let scrollbarThumb;
+            if (scrollbackTrack.length === 0) {
+                scrollbarTrack = $('<div>');
+                scrollbarTrack.addClass('scrollable-track');
+                scrollbarTrack.insertAfter($(this));
+                scrollbarThumb = $('<div>');
+                scrollbarThumb.addClass('scrollable-thumb');
+                scrollbarTrack.append(scrollbarThumb);
+            }
+            else {
+                scrollbarThumb = $(".scrollable-thumb", scrollbarTrack);
+            }
+            const container = $(this)[0];
+        
+            function updateScrollbar() {
+                var contentHeight = container.scrollHeight;
+                var visibleHeight = scrollbarTrack[0].clientHeight;
+                var scrollableHeight = contentHeight - visibleHeight;
+                var scrollPercentage = (container.scrollTop / scrollableHeight) * 100;
+                var ratio = visibleHeight / contentHeight;
+                var thumbHeight = visibleHeight * ratio;
+        
+                scrollbarThumb.css({
+                    top: scrollPercentage + "%",
+                    height: thumbHeight + "px",
                 });
             }
+        
+            function handleScroll() {
+                var contentHeight = container.scrollHeight;
+                var visibleHeight = container.clientHeight;
+                var scrollableHeight = contentHeight - visibleHeight;
+                var scrollPosition = (container.scrollTop / scrollableHeight) * 100;
+        
+                var thumbPosition = (scrollPosition * visibleHeight) / 100;
+                scrollbarThumb.css("top", thumbPosition + "px");
+            }
+        
+            $(this).on("scroll", function () {
+                updateScrollbar();
+                handleScroll();
+            });
+            setTimeout(function () {
+                updateScrollbar();
+            }, 5000);
+        
+            window.addEventListener("resize", updateScrollbar);
         });
     });
 })(jQuery);

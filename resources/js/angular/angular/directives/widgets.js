@@ -94,8 +94,10 @@ app.directive("controller", [
                         if (!scope.disabled && !scope.ngDisabled) {
                             setState("sending");
                             
-                            ajax.silent(false);
-                            ajax.setEvent(e);
+                            ajax.configure({
+                                timeout: 3,
+                                _quiet: false,
+                            });
                            
                             
                             let promise = scope.controller.apply(scope);
@@ -135,6 +137,30 @@ app.directive("controller", [
         };
     },
 ]);
+
+app.directive('tipTitle', function() {
+    return {
+        restrict: 'A',
+        scope: {
+            tipTitle: '@',
+            tipDir: '@',
+        },
+        link: function(scope, element, attrs) {
+            scope.tipDir = scope.tipDir || 'top';
+            const wrapper = angular.element("<span class='tip-wrapper'></span>");
+            const title = angular.element(`<span class="tip-title tip-dir--${scope.tipDIr}">${scope.tipTitle}</span>`);
+            wrapper.append(element, title);
+
+            element.on('mouseenter', function(){
+                wrapper.addClass('show');
+            });
+
+            element.on('mouseleave', function(){
+                wrapper.removeClass('show');
+            });
+        }
+    }
+})
 
 app.directive('check', function() {
     return {

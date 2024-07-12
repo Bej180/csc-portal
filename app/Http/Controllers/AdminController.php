@@ -20,6 +20,7 @@ use App\Models\Department;
 use App\Models\Staff;
 use App\Models\Student;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Rels;
@@ -560,6 +561,25 @@ class AdminController extends Controller
             'data' => $enrollments,
             'success' => "You have successfully deleted {$first->student->user->name}'s enrollment for {$first->level} level of {$first->session} {$first->semester} semester"
         ]);
+    }
+
+    /**
+     * Display all soft deleted courses, students and staffs
+     */
+    public function recycle_bin(Request $request) 
+    {
+        $courses = DB::table('users')
+            ->whereNotNull('deleted_at');
+
+        $users = User::whereNotNull('deleted_at')->get();
+        
+        // $courses = Course::whereNotNull('deleted_at');
+        $results = Course::whereNotNull('deleted_at')->get();
+
+        dd($courses->toSql());
+
+        return view('pages.admin.recycle-bin', compact('users', 'courses', 'results'));
+
     }
 
 

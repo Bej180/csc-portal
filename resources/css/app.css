@@ -84,6 +84,9 @@ fieldset > legend {
 .dot-orange {
     --dot-pulse-color: #d46213;
 }
+.adaptive-pulse {
+    --dot-pulse-color: rgb(59, 130, 249);
+}
 .dot-pulse {
     position: relative;
     left: -9999px;
@@ -2253,6 +2256,47 @@ fieldset.input.focused legend {
     animation: spin 1s linear infinite;
     position: absolute;
     border-top: 4px solid rgb(25 136 6)
+}
+#overlay .spinner, #overlay.spin .dot-pulse {
+    display:none;
+}
+#overlay.spin .spinner {
+    display: inline-block;
+}
+.loading-dots .loading-dot {
+    -webkit-animation: loadingDot 1.5s infinite linear;
+    animation: loadingDot 1.5s infinite linear;
+}
+
+
+.loading-dot:nth-child(0) {
+    -webkit-animation-delay: 0s;
+    animation-delay: 0s;
+}
+.loading-dot:nth-child(1) {
+    -webkit-animation-delay: .5s;
+    animation-delay: .5s;
+}
+.loading-dot:nth-child(2) {
+    -webkit-animation-delay: 10s;
+    animation-delay: 10s;
+}
+@-webkit-keyframes loadingDots {
+    0% {
+        display:none;
+    }
+    50% {
+        display:inline-block;
+    }
+}
+
+@keyframes loadingDots {
+    0% {
+        display:none;
+    }
+    50% {
+        display:inline-block;
+    }
 }
 .btn_spinner {
     display: inline-block;

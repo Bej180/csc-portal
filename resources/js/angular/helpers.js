@@ -78,6 +78,21 @@ const Toast = async (content, options) => {
         await options.callback(element);
     }
 };
+
+const Overlay = (visible, text = 'Loading') => {
+    const overlay = $('#overlay');
+    const loadingText = $('#loadingText', overlay);
+
+    loadingText.text(text);
+    if (visible) {
+        overlay.show();
+    }
+    else {
+        overlay.hide();
+    }
+};
+
+window.Overlay = Overlay;
 window.Toast = Toast;
 
 

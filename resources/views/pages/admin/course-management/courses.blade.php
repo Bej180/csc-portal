@@ -19,12 +19,11 @@
 
     $staffs = \App\Models\Staff::latest()->get();
 @endphp
-<x-template nav="courses" name="dashboard">
+<x-template nav="courses" name="dashboard" controller="AdminCoursesController" ng-init="init()">
 
 
 
-    <div ng-controller="AdminCoursesController" ng-init="init()"
-        class="p-2 lg:!p-0 lg:flex justify-between items-stretch max-h-full overflow-hidden">
+    <div class="p-2 lg:!p-0 lg:flex justify-between items-stretch max-h-full overflow-hidden">
 
         <div class="lg:flex-1 right-column" ng-class="{'hidden lg:block':!active_course}">
             <div class="md:flex flex-col justify-between min-h-full dark:bg-zinc-800">
@@ -221,7 +220,7 @@
                 <form class="input-group pb-3">
                     <input type="search" class="input" ng-model="searchtext" ng-keydown="enterSearch($event)"
                         placeholder="Search for Course..." />
-                    <button class="btn btn-primary btn-icon" ng-click="searchForCourse()"><i
+                    <button class="btn btn-primary btn-icon" controller="searchForCourse()"><i
                             class="fa fa-search"></i></button>
     
                 </form>
@@ -271,79 +270,74 @@
                     </div>
                     <div ng-class="{xHide: courses.length == 0}" class="list">
     
-                        <div ng-repeat="course in courses track by course.id">
-                            <div ng-clickx="display_course(course)" ng-class="{'active':course.id==active_id}"
-                                class="group eachcourse !justify-between gap-2 card border rounded-lg overflow-clip cursor-pointer dark:border-gray-700 group-hover:bg-slate-500 relative dark:!bg-zinc-950">
-                                <div class="flex gap-4 items-start">
-                                    <div class="avatar shrink-0" ng-bind="course.name.substring(0,1)"></div>
-                                    <div class="flex flex-col justify-center flex-1 bottom-0 relative w-full gap-1">
-                                        <div class="flex justify-between">
-                                            <p class="w-full flex-1 text-black font-bold overflow-hidden"><span
-                                                    ng-bind="course.name"></span></p>
-    
-                                            
-    
-                                           
-    
-                                            </span>
-                                        </div>
-    
-                                        <p class="flex items-center gap-1">
-                                            <span
-                                                class="text-black/45 dark:text-gray-300 weight-400 text-sm pr-2 border-r border-r-slate-[var(--body-300)] "
-                                                ng-bind="course.code"></span>
-                                            <span class="divider"></span>
-                                            <span class="text-body-200 weight-400"><span ng-bind="course.units"></span>
-                                                Units</span>
-                                        </p>
-                                        <p>
-                                        </p>
-    
-                                    </div>
-                                </div>
-                                
-                                <div class='text-xs'>
-                                    <p ng-if="course.cordinator">
-    
-                                        Cordinator: <b ng-bind="course.cordinator.user.name"></b>
-                                    </p>
-    
-                                    <p ng-if="!course.cordinator">
-                                        <button ng-if="allocate_now.indexOf(course.id) === -1" type="button"
-                                            class="btn btn-secondary w-full" ng-click="showSelection(course.id)">
-                                            Add Cordinator
-                                        </button>
-                                    <div ng-if="allocate_now.indexOf(course.id) !== -1"
-                                        ng-init="index=allocate_now.indexOf(course.id)">
-                                        <div ng-click='allocate_now.splice(index, 1)'
-                                            class="hover:text-primary font-semibold">Collapse</div>
-                                        <div class="input-group w-full">
-                                            <div class="flex-1 w-full">
-                                                <select drop="top" class="input ignorex"
-                                                    ng-model="allocate_course_to">
-                                                    @foreach ($staffs as $staff)
-                                                        <option value="{{ $staff->id }}">{{ $staff->user->name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
+                        <div ng-repeat="course in courses">
+                            <div ng-class="{'active':course.id==active_id}"
+                                class="group eachcourse flex !justify-between gap-2 card border rounded-lg overflow-clip cursor-pointer dark:border-gray-700 group-hover:bg-slate-500 relative dark:!bg-zinc-950">
+                                <div class="flex-1">
+                                    <div class="flex gap-4 items-start">
+                                        <div class="avatar shrink-0" ng-bind="course.code.substring(0, course.code.indexOf(' ')+1)"></div>
+                                        <div class="flex flex-col justify-center flex-1 bottom-0 relative w-full gap-1">
+                                            <div class="flex justify-between">
+                                                <p class="w-full flex-1 text-black dark:text-white font-bold overflow-hidden">
+                                                <span ng-bind="course.name"></span>
+                                                </p>
+        
                                             </div>
-                                            <div>
-                                                <button ng-disabled="allocate_course_to.length==0" type="button"
-                                                    class="btn btn-icon btn-primary btn-adaptive w-full"
-                                                    controller="makeCourseCordinator(this, course.id, $index)"><i
-                                                        class="fa fa-plus icon"></i></button>
-                                            </div>
+        
+                                            <p class="flex items-center gap-1">
+                                                <span
+                                                    class="text-black/45 dark:text-gray-300 weight-400 text-sm pr-2 border-r border-r-slate-[var(--body-300)] "
+                                                    ng-bind="course.code"></span>
+                                                <span class="divider"></span>
+                                                <span class="text-body-200 weight-400"><span ng-bind="course.units"></span>
+                                                    Units</span>
+                                            </p>
+        
                                         </div>
                                     </div>
-                                    </p>
+                                    
+                                    <div class='text-xs'>
+                                        <p ng-if="course.cordinator">
+        
+                                            Cordinator: <b ng-bind="course.cordinator.user.name"></b>
+                                        </p>
+        
+                                        <p ng-if="!course.cordinator">
+                                            <button ng-if="allocate_now.indexOf(course.id) === -1" type="button"
+                                                class="btn btn-secondary w-full" ng-click="showSelection(course.id)">
+                                                Add Cordinator
+                                            </button>
+                                        <div ng-if="allocate_now.indexOf(course.id) !== -1"
+                                            ng-init="index=allocate_now.indexOf(course.id)">
+                                            <div ng-click='allocate_now.splice(index, 1)'
+                                                class="hover:text-primary font-semibold">Collapse</div>
+                                            <div class="input-group w-full">
+                                                <div class="flex-1 w-full">
+                                                    <select drop="top" class="input ignorex"
+                                                        ng-model="allocate_course_to">
+                                                        @foreach ($staffs as $staff)
+                                                            <option value="{{ $staff->id }}">{{ $staff->user->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div>
+                                                    <button ng-disabled="allocate_course_to.length==0" type="button"
+                                                        class="btn btn-icon btn-primary btn-adaptive w-full"
+                                                        controller="makeCourseCordinator(this, course.id, $index)"><i
+                                                            class="fa fa-plus icon"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </p>
+                                    </div>
                                 </div>
-                                <div class="flex mt-3 gap-2">
-                                    <div class="flex-1">
-                                        <button class="w-full btn btn-primary" ng-click="viewCourse(course)"><i class="fa fa-eye"></i> View</button>
-                                    </div>
-                                    <div class="flex-1"> 
-                                        <button ng-click="deleteCourse(course)" class="w-full btn btn-danger"><i class="fa fa-trash"></i> Delete</button>
-                                    </div>
+                                <div class="hidden group-hover:flex flex-col gap-2">
+                                    
+                                        <button class=" text-primary" tip-title="View" ng-click="viewCourse(course)"><i class="fa fa-eye"></i></button>
+                                    
+                                        <button ng-click="archiveCourse(course)" tip-title="Archive" class="text-red-600"><i class="fa fa-trash"></i></button>
+                                    
                                 </div>
 
                             </div>

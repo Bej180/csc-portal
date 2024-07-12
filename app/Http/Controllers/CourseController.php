@@ -126,17 +126,6 @@ class CourseController extends Controller
 
 
 
-
-
-
-    public function registerCourse()
-    {
-        return view("student.register-courses");
-    }
-
-
-
-
     public function listRegisteredCourses()
     {
         $student = Student::auth();
@@ -175,7 +164,7 @@ class CourseController extends Controller
             'exam' => 'required|numeric',
             'test' => 'sometimes|numeric',
             'prerequisites' => 'sometimes',
-            //'check' => 'required',
+            'outline' => 'sometimes',
             'option' => 'nullable|in:ELECTIVE,COMPULSARY'
         ], [
             'name.required' => 'Course Title is required',
@@ -187,12 +176,13 @@ class CourseController extends Controller
             'code.numeric' => 'Invalid course code',
             'semester.in' => 'Semester must be either RAIN or HARMATTAN',
             'level.in' => 'Invalid level',
-            //'check.required' => 'You need to confirm that the data you provided are valid',
             'option.in' => 'Select option',
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['message' => $validator->errors()->first(), 'errors' => $validator->errors()], 400);
+            return response()->json([
+                'errors' => $validator->errors()
+            ], 400);
         }
 
         $formData = $validator->validated();
@@ -214,34 +204,13 @@ class CourseController extends Controller
     }
 
 
-    private function cloneCourse(Course $course, array $data)
-    {
-
-        $course_data = array_merge([
-            "name" => $course->name,
-            "code" => $course->code,
-            "outline" => $course->outline,
-            "mandatory" => $course->mandatory,
-            "reference_id" => $course->reference_id,
-            "semester" => $course->semester,
-            "status" => $course->status,
-            "level" => $course->level,
-            "exam" => $course->exam,
-            "test" => $course->test,
-            "lab" => $course->lab,
-            "units" => $course->units,
-            "prerequisite" => $course->prerequisite,
-        ], $data);
-
-        return Course::create($course_data);
-    }
 
 
     public function updateCourse(Request $request)
     {
 
 
-        $formData =  $request->validate([
+        $validator =  Validator::make($request->all(), [
             'id' => 'required',
             'name' => 'required',
             'code' => ['required', 'regex:/([a-zA-Z]+){3,3}\s*([0-9]+){3,3}/'],
@@ -265,63 +234,36 @@ class CourseController extends Controller
             'mandatory.in' => 'Select option',
             'image' => 'sometimes|image|max:2048', // Ensure 'image' is present and is an image file (up to 2MB)
         ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors(),
+            ], 400);
+        }
+        $formData = $validator->validated();
+
         $course = Course::find($request->id);
 
-        $image_path = null;
-        if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            $uploadedImage = $request->file('image');
-            $filename = Str::random(10) . '.' . $uploadedImage->getClientOriginalExtension();
-            $image_path = "public/images/$filename";
-            $uploadedImage->storeAs('public/images', $filename);
-        } elseif ($request->has('image')) {
-            // The image data is in base64 format
-            $base64Image = $request->input('image');
-            $imageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base64Image));
-            $filename = Str::random(10) . '.png'; // You can adjust the file extension according to your image format
-            $image_path = storage_path('app/public/images/' . $filename);
-            file_put_contents($image_path, $imageData);
-        }
-        if ($image_path) {
+        if ($image_path = UploaderController::uploadFile('image')) {
             $formData['image'] = $image_path;
         }
-
-
+       
 
         $data = Arr::only($formData, $this->fillable);
 
-        $columnsToCompare = ['units', 'code', 'test', 'lab', 'exam'];
         $data['units'] = $request->lab + $request->exam + $request->test;
         $data['code'] = trim(strtoupper($data['code']));
         $data['name'] = ucfirst(trim($data['name']));
         $data['reference_id'] = $request->level + ($request->semester === 'RAIN' ? 2 : 1);
 
-        $columnChanged = false;
 
-        foreach ($columnsToCompare as $column) {
-            if ($course->$column !== $data[$column]) {
-                $columnChanged = true;
-                break;
-            }
-        }
+        $course->update($data);
 
-
-
-
-        if ($columnChanged) {
-            $course->status = 'inactive';
-            $course->update();
-            $course = $this->cloneCourse($course, $data);
-        } else {
-            $course->update($data);
-        }
-
-
-
-        if ($course) {
-            return redirect("/admin/courses?level={$request->level}&semester={$request->semester}&course_id={$course->id}")->with('success', "Course has been updated successfully");
-        } else {
-            return redirect()->back()->with('error', 'Failed to update course');
-        }
+        return response()->json([
+            'thumb' => [
+                'message' => "Course has been updated successfully"
+            ]
+        ]);
+        
     }
 
 
@@ -612,12 +554,12 @@ class CourseController extends Controller
     }
 
 
-    public function delete_course(Request  $request) {
+    public function archive_course(Request  $request) {
         $validator = Validator::make($request->all(), [
             'course_id' => 'required|exists:courses,id',
         ], [
             'course_id.required' => 'Course ID required',
-            'course_id.exists' => 'Course was not found, may it has already been deleted',
+            'course_id.exists' => 'Course was not found',
         ]);
 
         if ($validator->fails()) {
@@ -626,16 +568,13 @@ class CourseController extends Controller
             ], 400);
         }
 
-        if ($request->user()->role !== 'admin') {
-            return response()->json([
-                'error' => 'Only admin can delete course',
-            ], 400);
-        }
 
         $course = Course::find($request->course_id);
+        $code = $course->code;
         $course->delete();
+
         return response()->json([
-            'success' => "Course deleted successfully",
+            'success' => "$code has been archived successfully",
         ]);
     }
 

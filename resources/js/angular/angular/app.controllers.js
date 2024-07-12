@@ -1,6 +1,6 @@
 
 import './controllers/admin-controllers.js';
-import './controllers/admin-course.js';
+// import './controllers/admin-course.js';
 import './controllers/admin-cpanel.js';
 import './controllers/admin-staff.js';
 // import './controllers/advisor-controller.js';

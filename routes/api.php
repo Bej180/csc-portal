@@ -243,7 +243,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/app/admin/courses/prerequisites/index', [CourseController::class, 'index_prerequisites']);
     Route::post('/app/admin/courses/index', [CourseController::class, 'index_courses']);
     Route::post('/app/admin/courses/search', [CourseController::class, 'search_courses']);
-    Route::post('/app/admin/courses/delete', [CourseController::class, 'delete_course']);
+    Route::post('/app/admin/courses/archive', [CourseController::class, 'archive_course']);
     Route::post('/app/admin/courses/create', [CourseController::class, 'createCourse']);
     Route::post('/app/admin/courses/make_cordinator', [CourseController::class, 'makeCourseCordinator']);
     // Route::post('/app/admin/courses/allocate/to_staff', [CourseController::class, 'allocate_to_staff']);

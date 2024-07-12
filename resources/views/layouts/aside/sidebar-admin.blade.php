@@ -73,6 +73,12 @@
     Settings
 </li>
 
+{{-- <li data-nav="recycle" ng-class="{'active': isActiveNav('recycle')}" ng-click="changeNav('recycle')">
+    <a href="{{ route('admin.recycle-bin') }}">
+        <i class="faIcon"><x-icon name="delete"/></i>
+        <label>Recycle Bin</label>
+    </a>
+</li> --}}
 <li data-nav="configurations" ng-class="{'active': isActiveNav('configurations')}" ng-click="changeNav('configurations')">
     <a href="{{ route('admin.show-configurations') }}">
         <i class="faIcon"><x-icon name="tune"/></i>

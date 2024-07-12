@@ -204,6 +204,10 @@ Route::post('/2fa/verify', [TwoFactorController::class, 'postVerify'])->name('2f
             ->name('admin.view-courses')
             ->middleware('role:admin');
 
+            Route::get('/admin/recycle-bin', [AdminController::class, 'recycle_bin'])
+                ->name('admin.recycle-bin')
+                ->middleware('role:admin');
+
             Route::get('/admin/classes', [ClassController::class, 'show_to_admin'])
                 ->name('admin.classes')
                 ->middleware('role:admin');
@@ -379,9 +383,7 @@ Route::post('/2fa/verify', [TwoFactorController::class, 'postVerify'])->name('2f
             Route::get('/technologist/lab_results', [TechnologistController::class, 'lab_results'])->middleware('role:staff,designation:technologist');
 
         /**STUDENT ROUTES**/
-            Route::get('/student/register-courses', [CourseController::class, 'registerCourse'])
-                ->middleware('role:student')
-                ->name('register.course');
+           
 
             Route::get('/student/profile', [StudentController::class, 'profile_settings'])->middleware('role:student');
                

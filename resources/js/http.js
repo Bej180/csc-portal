@@ -12,6 +12,7 @@ export default class Http {
         this._method = null;
         this.event = null;
         this._queue = {}
+        this._configurations = {};
     }
 
     /**
@@ -82,7 +83,7 @@ export default class Http {
             files: null,
             error: () => {},
             contentType: "application/json",
-            timeout: 30000,
+            timeout: null,
             retryLimit: 3,
             loadingText: "Loading",
             askPassword: false,
@@ -93,6 +94,7 @@ export default class Http {
             throwError: this._throwError,
             headers: {},
             debug: this._debug,
+            ...this._configurations,
             ...options,
         };
         this.throwError(false);
@@ -161,6 +163,8 @@ export default class Http {
      */
     loadingText(args, text, show = true) {
         if (!args.quiet) {
+            Overlay(show, text);
+            return;
             const loading = $("#isLoading");
             text = text || args.loadingText;
            
@@ -220,6 +224,9 @@ export default class Http {
                     },
                 },
             });
+        }
+        else if (response.thumb) {
+            this.thumbUp(response.thumb, args);
         }
 
         if (response.redirect)
@@ -329,13 +336,47 @@ export default class Http {
         return args;
     }
 
+    thumbUp = (option, args) => {
+        if (typeof option === 'string') {
+            option = {message:option}
+        }
+        else if (typeof option !== 'object' || option === null || !option.message) {
+            return;
+        }
+
+        const title = option.title || 'Congratulations';
+
+        swal({
+            content: {
+                element: 'div',
+                attributes: {
+                    innerHTML: `
+                    <img src='/public/images/thumbs-up.jpg'/>
+                    <h3 class="text-2xl">${title}</h3>
+                    <div>${option.message}</h3>
+                    
+                    `
+                }
+            },
+            buttons: {
+                confirm: 'Okay'
+            }
+        })
+        .then(value => {
+            if (value && typeof args.thumbCallback === 'function') {
+                args.thumbCallback();
+            }
+        })
+        ;
+    }
+
     /**
      * Show a toast message for a timeout.
      * @param {Object} args - The arguments/options for the request.
      * @param
      */
 
-    toastTimeout = (args, actionText = 'Refresh', message) => {
+    toastTimeout = (args, actionText = 'Refreshing', message) => {
         message = message || 'This request is taking time';
         
             args = this.enqueue(args);
@@ -350,7 +391,7 @@ export default class Http {
                         
                         queue.map(options => {
                         options.loadingText = actionText;
-                        options.timeout += 3000;
+                        options.timeout *= 1.5;
                         return this.http(options);
                         })
 
@@ -560,6 +601,7 @@ export default class Http {
         this.silent(this._silence);
         this.event = null;
         this.loadingText(args, null, false);
+        this.disconfigure();
     }
 
     confirmPrompt(message, args) {
@@ -742,7 +784,7 @@ export default class Http {
                             }
                         });
 
-                        $(".pin-code").pin({ paste: true, toggle: true });
+                        $(".pin-code").pin({ paste: false, toggle: true });
                     };
 
                     return resetPinCode();
@@ -780,6 +822,26 @@ export default class Http {
         this._method = type;
     }
 
+    configure = (obj, value) => {
+        if (typeof obj === 'string' && typeof value !== 'undefined') {
+            obj = {[obj]: value};
+        }
+        else if (typeof obj !== 'object' || obj === null) {
+            return this;
+        }
+
+        for(var item in obj) {
+            this._configurations[item] = obj[item];
+        }
+        return this;
+    }
+    disconfigure = () => {
+        this._configurations = {};
+        return this;
+
+    }
+
+
     http = async (options) => {
         const args = this.parseArgs(options);
 
@@ -807,7 +869,7 @@ export default class Http {
             typeof args.error === "function" ? args.error : (err, xhr) => {};
         
         if (!args.__type__) {
-            args.__type__ = this._method ? this.method : args.type;
+            args.__type__ = this._method ? this._method : args.type;
         }
        
         
@@ -896,50 +958,4 @@ export default class Http {
         }
     };
 
-    /**
-     * Make multiple concurrent AJAX requests using axios.
-     * @param {Array<Object>} requests - The array of request options.
-     * @returns {Promise<Array<Object>>} - The array of responses from the server.
-     */
-    ajax = async (request) => {
-        if (typeof request === 'object' && request !== null && !Array.isArray(request)) {
-            request = [request];
-        }
-        const argsArray = request.map(options => this.parseArgs(options));
-
-        if (this._debug) {
-            console.log("HTTP request args:", argsArray);
-        }
-
-        await this.loadToken();
-
-        const headers = this.setHeaders();
-
-        if (this._debug) {
-            console.log("Request headers:", headers);
-        }
-
-        const configArray = argsArray.map(args => ({
-            method: args.type,
-            url: args.url,
-            headers: headers,
-            data: args.data,
-            timeout: args.timeout,
-        }));
-
-        try {
-            const responses = await Promise.all(configArray.map(config => axios(config)));
-            return responses.map((response, i) => this.handleResponse(response, argsArray[i]));
-        } catch (err) {
-           
-
-            if (this._debug) {
-                console.error("HTTP request errors:", err);
-            }
-            if (args.throwError) {
-                throw err;
-            }
-            return this.handleError(err, args);
-        }
-    }
 }

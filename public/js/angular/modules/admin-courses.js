@@ -41,7 +41,6 @@ app.controller("AdminCoursesController", function ($scope) {
         const course = courses[index];
         const course_id = course.id;
 
-        console.log({ course, index });
         switch (scope.option) {
             case "delete":
                 $scope.api("/app/admin/course/delete", {
@@ -64,9 +63,6 @@ app.controller("AdminCoursesController", function ($scope) {
     };
 
     $scope.makeCourseCordinator = (scope, course_id, index) => {
-        //  const index = scope.allocate_now.indexOf(course_id);
-        // console.log();
-
         if (scope.allocate_course_to) {
             return $scope.api(
                 "/app/admin/courses/make_cordinator",
@@ -75,10 +71,8 @@ app.controller("AdminCoursesController", function ($scope) {
                     staff_id: scope.allocate_course_to,
                 },
                 (res) => {
-                    console.log(res);
                     $scope.courses[index].cordinator = res.data;
-                },
-                (err) => console.error(err)
+                }
             );
         }
     };
@@ -130,8 +124,7 @@ app.controller("AdminCoursesController", function ($scope) {
         }
     };
 
-    $scope.searchForCourse = () => {
-       
+    $scope.searchForCourse = (indicator) => {
         $scope.cache("courses", $scope.courses);
         if ($scope.searchtext) {
             $scope.currentPage = 1;
@@ -146,7 +139,7 @@ app.controller("AdminCoursesController", function ($scope) {
                 },
                 (error) => {
                     setTimeout(() => {
-                        $scope.courses = $scope.cache('courses')
+                        $scope.courses = $scope.cache("courses");
                     }, 5000);
                 }
             );
@@ -164,13 +157,14 @@ app.controller("AdminCoursesController", function ($scope) {
         $scope.popUp("active_course");
     };
 
-    $scope.deleteCourse = (course) => {
-        $.confirm("Are you sure you want to delete " + course.code + "?", {
-            accept: function () {
-                return $scope.api("/app/admin/courses/delete", {
-                    course_id: course.id,
-                });
+    $scope.archiveCourse = (course) => {
+        return $scope.api({
+            url: "/app/admin/courses/archive",
+            data: {
+                course_id: course.id,
             },
+            loadingText: "Archiving Course",
+            confirm: "Are you sure you want to archive " + course.code + "?",
         });
     };
     $scope.display_course = (course) => {
@@ -189,8 +183,7 @@ app.controller("AdminCoursesController", function ($scope) {
                 $scope.active_course = response;
                 $scope.popend("active_course");
                 $scope.$apply();
-            },
-            (error) => console.error(error)
+            }
         );
     };
 
@@ -221,19 +214,19 @@ app.controller("AdminCoursesController", function ($scope) {
     $scope.init = () => {
         $scope.courses = [];
 
-        $scope
-            .api("/app/admin/courses/index", {
+        $scope.api({
+            url: "/app/admin/courses/index",
+            data: {
                 level: $scope.level,
                 semester: $scope.semester,
                 search: $scope.searchtext,
-            })
-            .then((res) => {
+            },
+            success: (res) => {
                 $scope.courses = res.data;
                 $scope.currentPage = 2;
-                console.log(res);
                 $scope.$apply();
-            })
-            .catch((error) => console.error(error));
+            },
+        });
     };
 
     /**
