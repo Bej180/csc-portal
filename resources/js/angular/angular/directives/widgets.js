@@ -95,7 +95,7 @@ app.directive("controller", [
                             setState("sending");
                             
                             ajax.configure({
-                                timeout: 3,
+                                timeout: 40000,
                                 _quiet: false,
                             });
                            
@@ -137,6 +137,42 @@ app.directive("controller", [
         };
     },
 ]);
+
+app.directive('info', function(){
+    return {
+        restrict: 'A',
+        scope: {
+            message: '<',
+            type: '@',
+        },
+        link: (scope, element, attrs) => {
+
+            element.addClass('info');
+
+            scope.$watch('type', function(newValue, oldValue){
+                if (newValue) {
+                    const pattern = /\binfo-(danger|success|error|warning)\b/;
+                    const classList = element.attr('class');
+                    const mtch = classList.match(pattern);
+                    if (mtch) {
+                        element.removeClass(mtch[0]);
+                    }
+                    element.addClass('info-'+newValue)
+                }
+            });
+
+            scope.$watch('message', function(newMessage, oldMessage){
+                if (newMessage) {
+                    element.fadeIn();
+                }
+                else {
+                    element.fadeOut();
+                }
+            });
+            
+        }
+    }
+})
 
 app.directive('tipTitle', function() {
     return {

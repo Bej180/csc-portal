@@ -5,6 +5,7 @@ app.controller('AdminRecyclebinController', function($scope){
 
         swal({
             title: 'Take Action',
+            dangerMode: true,
             content: {
                 element: 'div',
                 attributes: {
@@ -50,14 +51,35 @@ app.controller('AdminRecyclebinController', function($scope){
             }
         })
         .then(selection => {
+            
+
             if (selection) {
+                let data = {
+                    id: trash.id,
+                    type: trash.type
+                };
+
+                let confirm = false;
+
                 if (selection === 'restore') {
-                    $scope.api({
-                        url: '/app/admin/recyclebin/restore',
-                        data: trash,
-                    })
+                    data.action = 'restore';
                 }
-                else if (selection === 'delete') {}
+                else if (selection === 'delete') {
+                    data.action = 'delete';
+                    confirm = 'Are you sure you want to permanently delete this '+trash.type;
+                }
+
+                if (data.action) {
+                    
+                    $scope.api({
+                        url: '/app/admin/recyclebin/take_action',
+                        data: data,
+                        confirm: confirm,
+                        success: (res) => {
+                            $scope.deleted.splice(index, 1);
+                        }
+                    });
+                }
             }
         });
     }

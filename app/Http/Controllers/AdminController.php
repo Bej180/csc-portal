@@ -574,6 +574,83 @@ class AdminController extends Controller
 
     }
 
+    public function recycleBinTakeAction(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'action' => 'required|in:restore,delete',
+            'type' => 'required|in:Course,User,Enrollment',
+            'id' => 'required|integer',
+        ], [
+            'action.required' => 'Action is required',
+            'action.in' => 'Unknown action',
+            'type.required' => 'An error occured',
+            'type.in' => 'Invalid type',
+            'id.required' => 'ID not provided',
+            'id.integer' => 'Invalid ID',
+        ]);
+        
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors()
+            ], 400);
+        }
+
+        if (!$request->user()->is_admin()) {
+            return response()->json([
+                'error' => 'You are not allowed to perform '.$request->action,
+            ], 400);
+        }
+        $type = $request->type;
+
+        $builder = match($type) {
+            'Course' => Course::query(),
+            'Enrollment' => Enrollment::query(),
+            'User' => User::query(),
+            default => null,
+        };
+
+        if ($builder) {
+            $first = $builder->onlyTrashed()
+                ->where('id', $request->id)->first();
+            
+            if (!$first) {
+                return response()->json([
+                    'error' => $type.' record not found. It may have already been deleted',
+                ], 404);
+            }
+            
+            $message = match($type) {
+                'Course' => $first->code,
+                'User' => "{$first->name}'s account",
+                default => $type,
+            };
+
+            if ($request->action === 'restore') {
+                
+                $first->update([
+                    'deleted_at' => null
+                ]);
+                $message .= ' has been restored';
+            }
+            else if ($request->action === 'delete') {
+                if (!$request->confirmed) {
+                    return response()->json([
+                        'confirm' => 'Are you sure you want to permanently delete this ' . $type
+                    ], 400);
+                }
+                $first->forceDelete();
+
+                $message .= ' has been deleted permanently';
+            }
+
+            return response()->json([
+                'success' => $message
+            ]);
+        }
+
+
+
+    }
+
     public function recycleBin (Request $request) {
 
         if (!$request->user()->is_admin()) {

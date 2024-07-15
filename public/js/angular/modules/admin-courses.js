@@ -52,6 +52,16 @@ app.controller("AdminCoursesController", function ($scope) {
         }
     };
 
+    $scope.showCourse = course => {
+        $scope.show_course = course;
+        $scope.popUp('show_course');
+    }
+
+    $scope.editCourse = course => {
+        $scope.edit_course = course;
+        $scope.popUp('edit_course');
+    }
+
     $scope.showSelection = (course_id) => {
         const index = $scope.allocate_now.indexOf(course_id);
 
@@ -191,19 +201,22 @@ app.controller("AdminCoursesController", function ($scope) {
      * updateCourse
      * Updates the selected course's details.
      */
-    $scope.updateCourse = () => {
-        if ($scope.active_id) {
-            $scope.api(
-                "/course",
-                {
-                    course_id: $scope.active_id,
-                },
-                (response) => {
-                    $scope.editData = response;
-                    $scope.$apply();
-                }
-            );
-        }
+    $scope.updateCourse = (course) => {
+        return $scope.api({
+            askPin: true,
+            url: "/app/admin/update",
+            data: course,
+            success: (response) => {
+                $scope.editData = response;
+                $scope.$apply();
+            },
+            error: error => {
+                $scope.registerError(error, (err) => {
+                    $scope.edit_course_error = err;
+                });
+            }
+        });
+        
     };
 
     /**

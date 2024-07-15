@@ -26,7 +26,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        ini_set('max_execution_time', 300);
 
         Blade::directive('role', function ($role) {
             return "<?php if(auth()->check() && auth()->user()->role == '{$role}'): ?>";

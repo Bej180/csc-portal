@@ -656,7 +656,8 @@ export default class Http {
             }
         });
     }
-    pinPrompt(args) {
+    
+     pinPrompt(args) {
         args.askPin = false;
         const id = "pin_group";
 
@@ -695,6 +696,7 @@ export default class Http {
                 if (value === "reset") {
                     const resetPinCode = () => {
                         swal({
+                            
                             title: "Change Pin",
                             text: "Enter new Pin Below",
                             content: {
@@ -712,6 +714,7 @@ export default class Http {
                                     className: "pin-code",
                                 },
                             },
+                            onClickOutside: false,
                             buttons: {
                                 cancel: true,
                                 reset: {
@@ -763,7 +766,17 @@ export default class Http {
                             }
                         });
 
-                        $(".pin-code").pin({ paste: false, toggle: true });
+                        $(".pin-code").pin({ paste: false, onComplete: (value) => {
+                            args.data = this.appendData(
+                                args.data,
+                                {
+                                    passcode: value,
+                                }
+                            );
+                            args.throwError = true;
+
+                            return this.http(args);
+                        }});
                     };
 
                     return resetPinCode();
@@ -788,7 +801,151 @@ export default class Http {
 
         enterPin();
 
-        return $(".pin-code").pin();
+        return $(".pin-code").pin({ paste: false, onComplete: (value) => {
+            args.data = this.appendData(
+                args.data,
+                {
+                    passcode: value,
+                }
+            );
+            args.throwError = true;
+
+            return this.http(args);
+        }});
+    }
+
+
+    pinPrompt2(args) {
+        args.askPin = false;
+        const id = "pin_group";
+
+        swal({
+            
+            className: "custom-modal",
+
+            content: {
+                element: "div",
+                attributes: {
+                    innerHTML: `
+                    <form>
+                        <div class="pin-header">
+                            <div class="flex-1 text-center">PIN Verification</div>
+                            <span class="text-2xl" id="close-swal-modal">&times;</span>
+                        </div>
+                        <div class="text-center">Enter Your Pin</div>
+                        <div class="pin-code">
+                            <input type="password" autocomplete="off" maxlength="1" autofocus="true" class="pin-token"/>
+                            <input type="password" autocomplete="off" maxlength="1" class="pin-token"/>
+                            <input type="password" autocomplete="off" maxlength="1" class="pin-token"/>
+                            <input type="password" autocomplete="off" maxlength="1" class="pin-token"/>
+                            <span class="pin-visibility"></span>
+                        </div>
+                        <div class="pin-footer">
+                            <button type="button" class="btn link" id="reset_pin">Reset Pin</button>
+                        </div>
+                    </form>`,
+                    id: id,
+                },
+            },
+            closeOnClickOutside: false,
+            closeOnEsc: false,
+            buttons: false,
+            timer: false,
+        });
+
+        $(`#${id} #reset_pin`).on('click', function(){
+
+            swal({
+                    
+                title: "Change Pin",
+                text: "Enter new Pin Below",
+                content: {
+                    element: "form",
+                    attributes: {
+                        innerHTML: `   
+                            <form id="change_pin">
+                                <div class="pin-header">
+                                    <div class="flex-1 text-center">Change Pin</div>
+                                    <span class="text-2xl" id="close-swal-modal">&times;</span>
+                                </div>
+                                <div class="text-center">Enter New Pin</div>
+                                <div class="change-pin-code">
+                                    <input type="password" autocomplete="off" maxlength="1" autofocus="true" class="pin-token"/>
+                                    <input type="password" autocomplete="off" maxlength="1" class="pin-token"/>
+                                    <input type="password" autocomplete="off" maxlength="1" class="pin-token"/>
+                                    <input type="password" autocomplete="off" maxlength="1" class="pin-token"/>
+                                    <span class="pin-visibility"></span>
+                                </div>
+
+                                <div>
+                                    <input type="password" name="old_password_" placeholder="Enter Your Password" id="old_password"/>
+                                </div>
+                                
+                            </form>`,
+
+                        className: "pin-code",
+                    },
+                },
+                closeOnClickOutside: false,
+                closeOnEsc: false,
+                buttons: {
+                    cancel: true,
+                    reset: {
+                        closeModal: false,
+                        attributes: {
+                            id: "pinAutoFocus",
+                        },
+                        text: "Reset Pin",
+                    },
+                },
+            }).then((value) => {
+                if (value === "reset") {
+                    const element = $("#change_pin");
+                    const passkey = $("#old_password", element).val();
+                    const pin = element.data("value");
+
+
+                    this.http({
+                        url: "/app/user/update_profile",
+                        data: {
+                            data: { pin, passkey },
+                        },
+                        success: () => {
+                            args.data = this.appendData(
+                                args.data,
+                                {
+                                    passcode: pin,
+                                }
+                            );
+
+                            return this.http(args);
+                        },
+                        
+                    });
+
+                }
+            });
+
+            $('.change-pin-code').pin({
+                paste: false,
+                onComplete: false
+            });
+
+        });
+
+         
+
+        $(".pin-code").pin({ paste: false, onComplete: (value) => {
+            args.data = this.appendData(
+                args.data,
+                {
+                    passcode: value,
+                }
+            );
+            args.throwError = true;
+
+            return this.http(args);
+        }});
     }
 
     normalizeUrl = (url) => {

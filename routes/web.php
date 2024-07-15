@@ -204,7 +204,7 @@ Route::post('/2fa/verify', [TwoFactorController::class, 'postVerify'])->name('2f
             ->name('admin.view-courses')
             ->middleware('role:admin');
 
-            Route::get('/admin/recycle-bin', [AdminController::class, 'recycle_bin_view'])
+            Route::get('/admin/recycle-bin', [AdminController::class, 'recycle_bin_view9'])
                 ->name('admin.recycle-bin')
                 ->middleware('role:admin');
 
@@ -251,9 +251,6 @@ Route::post('/2fa/verify', [TwoFactorController::class, 'postVerify'])->name('2f
 
 
 
-
-
-            Route::get('/admin/course/edit', [CourseController::class, 'edit']);
            
 
             Route::get('/admin/advisors', [AdvisorController::class, 'index_admin']);
@@ -305,10 +302,6 @@ Route::post('/2fa/verify', [TwoFactorController::class, 'postVerify'])->name('2f
         
            
         
-            // Admin: update course 
-            Route::post('/courses/update', [CourseController::class, 'updateCourse'])
-            ->middleware('role:admin')
-            ->name('update.course');
         
 
            

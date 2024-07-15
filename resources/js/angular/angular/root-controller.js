@@ -405,9 +405,17 @@ app.controller("RootController", [
        
 
 
-        $scope.registerErrors = (error) => {
-            $scope.errors = { ...$scope.errors, ...error };
+        $scope.registerError = (err, callback) => {
+            if (typeof err !== 'object' || err === null) {
+                err = {};
+            }
+            if (typeof callback === 'function') {
+                callback(err);
+            }
         };
+
+
+        
         $scope.formatDate = (date) => {
             const dateObj = new Date(date);
             const dd = dateObj.getDate();

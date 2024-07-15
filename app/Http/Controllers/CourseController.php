@@ -89,21 +89,6 @@ class CourseController extends Controller
 
 
 
-    public function edit(Request $request)
-    {
-        $request->validate([
-            'course_id' => 'required'
-        ]);
-        $course = Course::find($request->course_id)?->get()?->first();
-        if (!$course) {
-            return redirect()->back()->with('error', 'Course not found');
-        }
-
-        return view('pages.course.edit', [
-            'course' => $course
-        ]);
-    }
-
 
 
     public function index()
@@ -216,13 +201,14 @@ class CourseController extends Controller
             'code' => ['required', 'regex:/([a-zA-Z]+){3,3}\s*([0-9]+){3,3}/'],
             'semester' => 'required|in:RAIN,HARMATTAN',
             'level' => 'required|in:100,200,300,400,500,600',
-            'lab' => 'required|regex:/^(\d+)$/',
-            'exam' => 'required|regex:/^(\d+)$/',
-            'test' => 'required|regex:/^(\d+)$/',
+            'lab' => 'required|integer',
+            'exam' => 'required|integer',
+            'test' => 'required|integer',
             'prerequisites' => 'sometimes',
             'check' => 'required',
-            'mandatory' => 'required|in:1,0',
-            'outline' => 'sometimes'
+            'option' => 'required|in:COMPULSARY,ELECTIVE',
+            'outline' => 'sometimes',
+            'image' => 'sometimes|image|max:2048',
         ], [
             'name.required' => 'Course Title is required',
             'code.required' => 'Couse Code is required',
@@ -231,8 +217,12 @@ class CourseController extends Controller
             'semester.in' => 'Semester must be either RAIN or HARMATTAN',
             'level.in' => 'Invalid level',
             'check.required' => 'You need to confirm that the data you provided are valid',
-            'mandatory.in' => 'Select option',
-            'image' => 'sometimes|image|max:2048', // Ensure 'image' is present and is an image file (up to 2MB)
+            'option.in' => 'Select option',
+            'image.image' => 'Invalid image format',
+            'image.max' => 'Image filesize must not exceed 2MB',
+            'exam.integer' => 'Exam mark must be an integer',
+            'test.integer' => 'Test mark must be an integer',
+            'lab.integer' => 'Lab mark must be an integer',
         ]);
         if ($validator->fails()) {
             return response()->json([

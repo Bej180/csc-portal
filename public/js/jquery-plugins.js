@@ -310,6 +310,55 @@ const uniqueAttr = (attr, value) => {
 
 window.uniqueAttr = uniqueAttr;
 
+$.fn.typingEffect = (options) => {
+    if (typeof options !== 'object' || options === null) {
+        options = {};
+    }
+    options = {
+        retype: true,
+        ...options
+    };
+
+    $(this).each(function(){
+        let text = '';
+        let index = 0;
+        let isDeleting = false;
+        const element = $(this);
+        let fullText = element.attr('data-fulltext');
+        if (!fullText) {
+            fullText = element.text();
+            element.attr('data-fulltext', fullText);
+        }
+
+        const type = () => {
+
+            if (!isDeleting && index < fullText.length) {
+                text += fullText.charAt(index);
+                index++;
+                element.text(text);
+                setTimeout(type, 100); // Adjust typing speed here
+            } else if (isDeleting && index > 0) {
+                text = text.substring(0, text.length - 1);
+                index--;
+                element.text(text);
+                setTimeout(type, 50); // Adjust deleting speed here
+            } else if (index === fullText.length) {
+                if (options.retype) {
+                    isDeleting = true;
+                    setTimeout(type, 500); // Pause before starting to delete
+                }
+            } else if (index === 0 && isDeleting) {
+                isDeleting = false;
+                setTimeout(type, 500); // Pause before starting to type again
+            }
+        }
+
+        // Initial typing effect
+        type();
+    });
+
+}
+
 $.fn.setAttr = (attr, value) => {
     value = uniqueAttr(attr, value)
     $(this).attr(attr, value);
@@ -325,24 +374,41 @@ $.fn.pin = function (options) {
     // Set default options and merge with user options
     options = {
         paste: false,
-        toggle: true,
+        toggle: false,
         hide: true,
         count: 4,
         form: null,
         timeout: 2000,
-        onComplete: function(value){
-           const modal = this.closest('.swal-modal');
-           modal.find('#pinAutoFocus').click();
-           console.log('Completed')
-        },
         ...options,
     };
+
+    
+
+    
 
     // Iterate over each element in the jQuery object
     $(this).each(function () {
         const element = $(this);
-        const modal = element.closest('sw')
+        const overlay = element.closest('.swal-overlay')
         const inputType = options.hide ? "password" : "number";
+        const buttons = $('button', overlay);
+
+        const completeFnc = options.onComplete;
+
+        options.onComplete = function(value) {
+            if (typeof completeFnc === 'function') {
+                const fncCall = completeFnc(value);
+                if (typeof fncCall.finally === 'function') {
+    
+                    return fncCall
+                        .finally(() => {
+                            buttons.prop('disabled', false);
+                        });
+                }
+                
+            }
+            buttons.prop('disabled', false);
+        };
         
         
         let inputs = element.find("input");
@@ -353,7 +419,6 @@ $.fn.pin = function (options) {
             }
             inputs = $("input", element);
         }
-        inputs.css('height', inputs.eq(0).css('width'))
         inputs.attr('type', inputType);
         
         // Function to insert the value into data-value attribute
@@ -362,7 +427,9 @@ $.fn.pin = function (options) {
             inputs.each(function () {
                 pinArr.push($(this).val().replace(/\D+/g, ""));
             });
-            element.attr("data-value", pinArr.join(""));
+            const value = pinArr.join("");
+            element.attr("data-value", value);
+            return value;
         };
 
         // Insert initial value and focus on the first input
@@ -372,7 +439,7 @@ $.fn.pin = function (options) {
         inputs.on("input", function () {
             const value = $(this).val();
             const index = inputs.index(this);
-
+console.log({value, index});
             // Ensure only numeric input and shift focus to the next input
             if (/\D/.test(value)) {
                 $(this).val("");
@@ -380,7 +447,9 @@ $.fn.pin = function (options) {
                 insertValue();
                 $(inputs[index + 1]).focus();
             } else {
-                insertValue();
+                const insertedValue = insertValue();
+                
+                options.onComplete(insertedValue);
             }
 
             // Trigger custom event
@@ -446,11 +515,18 @@ $.fn.pin = function (options) {
 
         // Handle keyup events
         inputs.on("keyup", function (event) {
-            console.log(inputs.last())
             if ($(this).val().length > 1 && $(this).is(inputs.last())) {
-                alert(333)
+               
                 if (options.onComplete) {
-                    options.onComplete.call(element, element.data("value"));
+                    const fncCall = options.onComplete.call(element, element.data("value"));
+
+                    buttons.prop('disabled', true);
+                    if (fncCall && typeof fncCall.finally === 'function') {
+                        fncCall
+                            .finally(() => {
+                                buttons.prop('disabled', false);
+                            })
+                    }
                 }
                 $(this).blur();
             }

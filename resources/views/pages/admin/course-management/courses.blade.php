@@ -22,9 +22,7 @@
 <x-template nav="courses" name="dashboard" controller="AdminCoursesController" ng-init="init()">
 
 
-
-    <div class="p-2 lg:!p-0 lg:flex justify-between items-stretch max-h-full overflow-hidden">
-
+    <x-route class="columns">
         <div class="lg:flex-1 right-column" ng-class="{'hidden lg:block':!active_course}">
             <div class="md:flex flex-col justify-between min-h-full dark:bg-zinc-800">
 
@@ -270,7 +268,7 @@
                     </div>
                     <div ng-class="{xHide: courses.length == 0}" class="list">
     
-                        <div ng-repeat="course in courses">
+                        <div ng-repeat="course in courses" ng-click="showCourse(course)">
                             <div ng-class="{'active':course.id==active_id}"
                                 class="group eachcourse flex !justify-between gap-2 card border rounded-lg overflow-clip cursor-pointer dark:border-gray-700 group-hover:bg-slate-500 relative dark:!bg-zinc-950">
                                 <div class="flex-1">
@@ -348,11 +346,12 @@
             </div>
 
         </div>
+    </x-route>
 
-        {{-- @include('pages.admin.course-management.add') --}}
-        @include('pages.admin.course-management.show-course')
-    </div>
-
+       
+    @include('pages.admin.course-management.show-course')
+    @include('pages.admin.course-management.edit')
+    
 
 
 
@@ -373,6 +372,5 @@
             background: rgba(228, 228, 231, 0.6);
         }
     </style>
-    <script src="{{ asset('scripts/upload.js') }}"></script>
 
 </x-template>

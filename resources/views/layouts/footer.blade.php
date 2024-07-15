@@ -83,7 +83,7 @@ $nav = $nav ?? 'all';
 @isset($script)
     <script type="module" src="{{ $script }}"></script>
 @endisset
-<script type="module" src="{{ asset('scripts/main.js') }}"></script>
+
 
 
 <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>

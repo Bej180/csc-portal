@@ -84,8 +84,10 @@ const Overlay = (visible, text = 'Loading') => {
     const loadingText = $('#loadingText', overlay);
 
     loadingText.text(text);
+
     if (visible) {
         overlay.show();
+        loadingText.typingEffect();
     }
     else {
         overlay.hide();
