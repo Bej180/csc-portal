@@ -71,7 +71,7 @@ $nav = $nav ?? 'all';
     <div class="flex items-center gap-1">
         <div class="dot-pulse"></div>
         <div id="loadingText" class="text-2xl ml-[20px]">
-            Loading...
+            Initializing...
         </div>
     </div>
 </div>

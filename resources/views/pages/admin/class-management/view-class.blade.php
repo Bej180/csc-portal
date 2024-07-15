@@ -28,7 +28,11 @@
             Graduation Year: <b ng-bind='display_class.end_year'></b>
         </p>
 
-        <div class="mt-5">
+        <div ng-controller="ImportClassListController">
+            <button type="button" ng-click="importClassList($event, display_class.id)" class="mt-5 btn btn-primary w-full">Import Students</button>
+        </div>
+
+        <div ng-if="display_class.students.length" class="mt-5">
             <b>{% display_class.students.length %} Students</b>
             <div class="card">
                 <table class="responsive-table no-zebra">

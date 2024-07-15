@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\AcademicSet;
 use App\Models\AcademicSession;
+use App\Http\Controllers\UploaderController;
 use App\Models\Staff;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
+use App\Models\User;
 
 class ClassController extends Controller
 {
@@ -53,6 +56,45 @@ class ClassController extends Controller
 
 
 
+    public function importClassList(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'class_id' => 'required|exists:sets,id',
+            'class_list' => 'required|mimes:xlsx'
+        ], [
+            'class_id.required' => 'Class ID not provided',
+            'class_id.exists' => 'Class doesnt exist. It may have been deleted',
+        ]);
+        
+        if ($validator->fails()) {
+            return response()->json([
+                'error' => $validator->errors(),
+            ], 400);
+        }
+
+        if ($students = UploaderController::ExcelToArray('class_list', [
+            'name' => 'name',
+            'names' => 'name',
+            'regno' => 'reg_no',
+            'registrationnumber' => 'reg_no',
+            'email' => 'email',
+            'emailaddress' => 'email',
+        ], [
+            'set_id' => $request->class_id
+        ])) {
+            $insert = User::createAccount($students);
+           
+            $errors = array_filter($insert, fn($text) => is_string($text));
+           
+            if (count($errors)) {
+                return response()->json([
+                    'errors' => $errors
+                ], 400);
+            }
+
+            return $insert;
+        }
+
+    }
 
     public function generateClassName() {
 

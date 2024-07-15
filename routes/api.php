@@ -232,6 +232,7 @@ Route::post('/app/auth/resetpassword/timer', [ForgotPasswordController::class, '
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
     // New Routes for users
+    Route::post('/app/admin/recyclebin', [AdminController::class, 'recycleBin']);
     Route::post('/app/admin/classes', [ClassController::class, 'classes']);
     Route::post('/app/admin/classes/create', [ClassController::class, 'create']);
     Route::post('/app/admin/classes/advisor/add', [ClassController::class, 'add_advisor']);
@@ -280,6 +281,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
    
     Route::post('/app/class/generateInviteLink', [ClassController::class, 'apiGenerateInviteLink'])
         ->middleware('role:staff');
+        
+    Route::post('/app/class/import', [ClassController::class, 'importClassList'])
+        ->middleware('role:admin,staff');
+
     Route::post('/app/class/withdrawInviteLink', [ClassController::class, 'apiWithdrawInvite'])
         ->middleware('role:staff');
     

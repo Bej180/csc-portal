@@ -4,7 +4,11 @@
 
     <form>
         <fieldset class="fieldset">
-            <p class="font-bold primary-text">Class Info</p>
+            <p class="font-bold primary-text flex items-center justify-between" ng-init="ImportClasListController">
+                <span class="font-bold">Class Info</span> 
+                <button class="btn btn-primary" controller="importClassList()">Import Class List</button>
+            </p>
+            
 
             <div class="flex gap-4 flex-col mt-5">
                 <div class="flex">

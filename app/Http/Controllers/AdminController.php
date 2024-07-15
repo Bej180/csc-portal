@@ -16,7 +16,7 @@ use App\Models\Admin;
 use App\Models\Course;
 use App\Models\Enrollment;
 use App\Models\CourseAllocation;
-use App\Models\Department;
+use App\Models\Result;
 use App\Models\Staff;
 use App\Models\Student;
 use Illuminate\Support\Arr;
@@ -566,19 +566,36 @@ class AdminController extends Controller
     /**
      * Display all soft deleted courses, students and staffs
      */
-    public function recycle_bin(Request $request) 
+    public function recycle_bin_view(Request $request) 
     {
-        $courses = DB::table('users')
-            ->whereNotNull('deleted_at');
+       
 
-        $users = User::whereNotNull('deleted_at')->get();
+        return view('pages.admin.recycle-bin');
+
+    }
+
+    public function recycleBin (Request $request) {
+
+        if (!$request->user()->is_admin()) {
+            return response()->json([
+                'error' => 'You are not allowed to access this feature',
+            ], 400);
+        }
+
+        $courses = Course::onlyTrashed()->get([
+            'id', 'code as name', 'deleted_at', 'created_at'
+        ]);
+
+        $users = User::onlyTrashed()->get([
+            'id', 'name', 'deleted_at', 'created_at'
+        ]);
         
-        // $courses = Course::whereNotNull('deleted_at');
-        $results = Course::whereNotNull('deleted_at')->get();
+        $results = [];//Result::onlyTrashed()->get();
 
-        dd($courses->toSql());
+        $enrollments = [];//Enrollment::onlyTrashed()->get();
 
-        return view('pages.admin.recycle-bin', compact('users', 'courses', 'results'));
+
+        return compact('users', 'courses', 'results', 'enrollments');
 
     }
 

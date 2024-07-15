@@ -3,6 +3,7 @@ import './controllers/admin-controllers.js';
 // import './controllers/admin-course.js';
 import './controllers/admin-cpanel.js';
 import './controllers/admin-staff.js';
+import '/public/js/angular/modules/class.js';
 // import './controllers/advisor-controller.js';
 import './controllers/advisor-student.js';
 import './controllers/technologist.controller.js';

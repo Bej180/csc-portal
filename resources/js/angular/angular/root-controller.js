@@ -25,7 +25,6 @@ app.controller("RootController", [
         // Initialize scope variables
 
 
-
         $scope.app_title = 'Futo CSC Portal';
         $scope.Route = RouteService.initiate();
         $scope.open = false;

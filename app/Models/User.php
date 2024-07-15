@@ -180,33 +180,53 @@ class User extends Authenticatable
         return $this->morphTo();
     }
 
+
+
     
-    public static function createAccount(array $data)
-{
-    $role = $data['role'] ?? 'student';
-    $profileClasses = [
-        'student' => new Student(),
-        'staff' => new Staff(),
-        'admin' => new Admin(),
-        'dean' => new Dean(),
-    ];
+    public static function createAccount(array $data) : Array | string | null
+    {
+        if (!Arr::isAssoc($data)) {
+            return Arr::map(
+                $data, 
+                fn($user) => self::createAccount($user)
+            );
+        }
+        $role = $data['role'] ?? 'student';
+        $profileClasses = [
+            'student' => new Student(),
+            'staff' => new Staff(),
+            'admin' => new Admin(),
+            'dean' => new Dean(),
+        ];
 
-    if (!isset($profileClasses[$role])) {
-        throw new \Exception('Unknown role');
+        if (!isset($profileClasses[$role])) {
+            return 'Invalid role';
+        }
+        if (!Arr::exists($data, 'email')) {
+            return "Email Address is required";
+        }
+        $user = User::where('email', $data['email'])->first();
+
+        if ($user) {
+            return "Email Address {$data['email']} has been taken";
+        }
+
+        $user = User::create($data);
+        if (!$user) {
+            return "Failed to create account";
+        }
+        $data['id'] = $user->id;
+
+        $profileClass = $profileClasses[$role];
+        $profileData = Arr::only($data, $profileClass->getFillable());
+        $profile = $profileClass::create($profileData);
+
+        // Associate profile with user via morph relationship
+        // $user->profile()->associate($profile);
+        $user->save();
+
+        return $user->fresh(); // Return user with loaded profile
     }
-
-    $user = User::create($data);
-
-    $profileClass = $profileClasses[$role];
-    $profileData = Arr::only($data, $profileClass->getFillable());
-    $profile = $profileClass::create($profileData);
-
-    // Associate profile with user via morph relationship
-    $user->profile()->associate($profile);
-    $user->save();
-
-    return $user->fresh(); // Return user with loaded profile
-}
 
 
 

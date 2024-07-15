@@ -5,7 +5,7 @@ export default class Http {
         this._session_name = "access_token";
         this._debug = true;
         this._throwError = false;
-        this._quiet = false;
+        this._quiet = true;
         this._silence = this._quiet;
         this._bearerToken = null;
         this._csrfToken = null;
@@ -55,6 +55,7 @@ export default class Http {
      */
     silent(silent = true) {
         this._quiet = silent;
+        return this;
     }
 
 
@@ -85,7 +86,8 @@ export default class Http {
             contentType: "application/json",
             timeout: null,
             retryLimit: 3,
-            loadingText: "Loading",
+            loadingText: "Please Wait",
+            successLoadingText: 'Processing',
             askPassword: false,
             cacheKey: null,
             retries: 0,
@@ -185,7 +187,7 @@ export default class Http {
      */
 
     handleResponse = (res, args) => {
-        this.loadingText(args, 'Processing');
+        this.loadingText(args, args.successLoadingText);
         const response = this.parseResponse(res);
         args = this.dequeue(args);
 
@@ -554,30 +556,7 @@ export default class Http {
         return {};
     }
 
-    loadingIndicator(indicatorText = "Loading") {
-        let existing, wrapper, loading, dotPulse, indicator;
-        existing = $(".isLoading");
-
-        if (existing.length > 0) {
-            return existing;
-        }
-
-        loading = $("<div>");
-        wrapper = $("<div>");
-        dotPulse = $("<div>");
-        indicator = $("<div>");
-
-        loading.addClass("isLoading show");
-        wrapper.addClass("flex items-center gap-1");
-        dotPulse.addClass("dot-pulse");
-        indicator.addClass("text-2xl ml-[20px]");
-        indicator.text(indicatorText);
-
-        wrapper.append(dotPulse, indicator);
-        loading.append(wrapper);
-        return loading;
-    }
-
+  
     disableTriggers(args, disabled = true) {
         if (args.trigger) {
             args.trigger.prop("disabled", disabled);
@@ -588,7 +567,7 @@ export default class Http {
         this.disableTriggers(args);
         args.beforeSend();
 
-        this.loadingText(args);
+        this.loadingText(args, args.loadingText);
     }
 
     end(args) {

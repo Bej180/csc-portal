@@ -5,7 +5,7 @@
        <div class="loading-indicator flex items-center gap-1 absolute bottom-[50px]">
             <div class="dot-pulse"></div>
             <div id="loadingText" class="lg:text-2xl ml-[20px]">
-                Loading...
+                Initializing...
             </div>
         </div>
 
