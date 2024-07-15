@@ -49,42 +49,22 @@ class DatabaseSeeder extends Seeder
             echo "  Populated admin tables\n";
         }
 
-   
-    //     $populate(AcademicSet::class, $academicSet);
-    //     echo "  Populated Academic Records tables\n";
-        
-    //     foreach($students as $student) {
-    //         User::store_user($student);
-    //     }
-    //     echo "  Populated Student table \n";
-    //    ob_clean();
+        foreach($academicSet as $set) {
+            User::createAccount($set);
+            echo "  Populated Academic Set table\n";
+        }
+
+        foreach($students as $student) {
+            User::createAccount($student);
+            echo "  Populated student table\n";
+        }
+
         
         $populate(Course::class, $courses);
         echo "  Populating Course table\n";
-       ob_clean();
+        ob_clean();
         
-        $count = count($enrollments);
-    //     echo "  Populating $count Courses \n";
-    //     foreach($enrollments as $course) {
-    //         Enrollment::create($course);
-    //     }
-    //     echo "  Populated Courses \n";
-    //    ob_clean();
-        
-    //     $count = count($results);
-    //     echo "  Populating $count Results \n";
-
-    //     foreach($gradings as $grading) {
-    //         Grading::create($grading);
-    //     }
-      
-    //     foreach($results as $result) {
-    //         Result::create($result);
-    //     }
-    //    ob_clean();
-    //     echo "Populated all tables\n";
-    //    ob_clean();
-    //     echo "Done!!";
+        echo "Done!!";
     }
     
 }

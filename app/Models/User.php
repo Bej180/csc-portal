@@ -210,8 +210,23 @@ class User extends Authenticatable
         if ($user) {
             return "Email Address {$data['email']} has been taken";
         }
+        
 
-        $user = User::create($data);
+        $userData = Arr::only($data, (new User())->getFillable());
+
+        if (!Arr::exists($userData, 'password')) {
+            $userData['password'] = match(true) {
+                $role === 'student' => $userData['reg_no'] ?? $userData['phone'] ?? null,
+                default => $userData['staff_id'] ?? $userData['phone'] ?? null,
+            };
+        }
+
+        if (!$userData['password']) {
+            return $userData['role'] === 'student' ? 'Registration Number is required' : 'Staff ID is required';
+        }
+        $userData['password'] = Hash::make($userData['password']);
+
+        $user = User::create($userData);
         if (!$user) {
             return "Failed to create account";
         }
