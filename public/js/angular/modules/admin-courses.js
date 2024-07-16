@@ -204,11 +204,10 @@ app.controller("AdminCoursesController", function ($scope) {
     $scope.updateCourse = (course) => {
         return $scope.api({
             askPin: true,
-            url: "/app/admin/update",
+            url: "/app/admin/courses/update",
             data: course,
             success: (response) => {
                 $scope.editData = response;
-                $scope.$apply();
             },
             error: error => {
                 $scope.registerError(error, (err) => {

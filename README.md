@@ -135,43 +135,54 @@ Node.js is a JavaScript runtime, and npm is the Node.js package manager. Follow 
     DB_PASSWORD=
     ```
 
-    Then run:
+    To create all the tables, then run:
     ```sh
     php artisan migrate
     ```
 
-    OR Run the code below to automatically create the database, tables and populate the initial user accounts (`admin`, `student`, `staff`).
+    Run the code below to create and seed (populate) `admin`, `student`, `staff` and `course` records.
     ```sh
-    create database new_school
     php artisan migrate:refresh --seed
     ```
 
-    *NOTE:* Ensure that your MySQL Server has been started
+    *NOTE:* Ensure that your MySQL Server has been started. [Click here](#running-the-application) to see how to start MySQL Server
     
-## INITIAL USERS DETAILS
-    **Administrator Account Details**
-    email: `admin@cscfuto.com` password: `admin`
+### INITIAL USERS DETAILS
+1. **Admin**
+email: `admin@cscfuto.com` password: `admin`
+2. **Lecturer:**
+email: `lecturer@cscfuto.com` password: `lecturer`
+3. **Advisor:**
+email: `advisor@cscfuto.com` password: `lecturer`
+4. **HOD:**
+email: `hod@cscfuto.com` password: `hod`
+5. **Student1:**
+email: `student1@cscfuto.com` password: `student1`
+6. **Student2:**
+email: `student2@cscfuto.com` password: `student2`
 
-    **Lecturer Account**
-    email: `lecturer@cscfuto.com` password: `lecturer`
+These are just initial accounts. You can easily create any account using Admin account. So login with email as `admin@cscfuto.com` and password as `admin`
 
-    **Class Advisor Account**
-    email: `advisor@cscfuto.com` password: `lecturer`
 
-    **HOD Account**
-    email: `hod@cscfuto.com` password: `hod`
-
-    **STUDENTS Account**
-    email: `student1@cscfuto.com` password: `student1`
-    email: `student2@cscfuto.com` password: `student2`
 
 ### Frontend (AngularJS)
 
+We used AngularJS as the main frontend framework. While we used many dependencies during development. The top development dependencies are:
+
+1. autoprefixer
+2. axios
+3. postcss
+4. tailwindcss
+5. vite
+
+These dependencies need to be installed for the application to start working. `Next` is how to install the dependencies using npm install command.
+
+
 **Install Node.js dependencies:**
 
-    ```sh
-    npm install
-    ```
+```sh
+npm install
+```
 
 ## Running the Application
 

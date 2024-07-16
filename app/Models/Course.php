@@ -92,7 +92,7 @@ class Course extends Model
      */
     public static function getAllCourses()
     {
-        return self::active()->get()->unique('code');
+        return self::all()->unique('code');
     }
 
     /**
@@ -148,8 +148,7 @@ class Course extends Model
      */
     public static function getCourses($level, $semester)
     {
-        return self::active()
-            ->with('enrollments')
+        return self::with('enrollments')
             ->where('level', $level)
             ->where('semester', $semester)
             ->orderBy('option', 'desc')
@@ -169,8 +168,7 @@ class Course extends Model
         $borrowed ??= [];
         $borrowed = array_filter($borrowed, fn ($item) => is_numeric($item));
 
-        return self::active()
-            ->where('level', $level)
+        return self::where('level', $level)
             ->where('semester', $semester)
             ->orWhereIn('id', $borrowed)
             ->with('enrollments')

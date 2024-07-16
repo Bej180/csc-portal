@@ -429,10 +429,7 @@ class CourseController extends Controller
         $courses = Course::where('code', 'LIKE', "%$prerequisites%")
             ->where('level', '<', $request->level)
             ->where('semester', $request->semester)
-            ->where('status', 'active')
             ->get();
-        // ->orWhere('name', 'LIKE', "%$prerequisites%")
-        //->get();
 
         if (count($courses) === 0) {
             return response()->json([
@@ -456,7 +453,6 @@ class CourseController extends Controller
 
         $courses_query = Course::query();
         $courses_query->with('cordinator.user');
-        $courses_query->where('status', 'active');
 
         if ($semester = $request->semester) {
             $courses_query->where('semester', $semester);
@@ -515,8 +511,7 @@ class CourseController extends Controller
         $search = preg_replace('/(\D+)(\d+)/', "$1 $2", $search);
         $search = preg_replace('/\s+/', '%', $search);
 
-        $courses_query = Course::where('status', 'active')
-            ->where(function ($query) use ($search) {
+        $courses_query = Course::where(function ($query) use ($search) {
                 $query->where('code', 'LIKE', "%$search%");
                 $query->orWhere('name', 'LIKE', "%$search%");
             });

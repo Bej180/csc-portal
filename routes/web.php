@@ -204,7 +204,7 @@ Route::post('/2fa/verify', [TwoFactorController::class, 'postVerify'])->name('2f
             ->name('admin.view-courses')
             ->middleware('role:admin');
 
-            Route::get('/admin/recycle-bin', [AdminController::class, 'recycle_bin_view9'])
+            Route::get('/admin/recycle-bin', [AdminController::class, 'recycle_bin_view'])
                 ->name('admin.recycle-bin')
                 ->middleware('role:admin');
 

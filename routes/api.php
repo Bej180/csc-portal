@@ -243,7 +243,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/app/admin/session/course_registration_status/update', [SessionController::class, 'update_course_registration_status']);
     // Route::post('/api/admin/sessions/reopen_registration', [SessionController::class, 'reopen_registration']);
     Route::post('/app/admin/courses', [CourseController::class, 'api_getCourses']);
-    Route::post('/app/admin/update', [CourseController::class, 'updateCourse']);
+    Route::post('/app/admin/courses/update', [CourseController::class, 'updateCourse']);
     Route::post('/app/admin/courses/prerequisites/index', [CourseController::class, 'index_prerequisites']);
     Route::post('/app/admin/courses/index', [CourseController::class, 'index_courses']);
     Route::post('/app/admin/courses/search', [CourseController::class, 'search_courses']);
