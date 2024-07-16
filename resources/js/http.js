@@ -11,7 +11,7 @@ export default class Http {
         this._csrfToken = null;
         this._method = null;
         this.event = null;
-        this._queue = {}
+        this._queue = {};
         this._configurations = {};
     }
 
@@ -19,7 +19,6 @@ export default class Http {
      * Set the event handler.
      * @param {Function} event - The event handler function.
      */
-
 
     setEvent(event) {
         this.event = event;
@@ -48,7 +47,6 @@ export default class Http {
         }
     }
 
-
     /**
      * Enable or disable silent mode.
      * @param {boolean} [silent=true] - Whether to enable silent mode.
@@ -58,7 +56,6 @@ export default class Http {
         return this;
     }
 
-
     /**
      * Enable or disable error throwing.
      * @param {boolean} [throwErr=true] - Whether to enable error throwing.
@@ -66,7 +63,6 @@ export default class Http {
     throwError(throwErr = true) {
         this._throwError = throwErr;
     }
-
 
     /**
      * Parse and merge default and provided options.
@@ -87,7 +83,7 @@ export default class Http {
             timeout: null,
             retryLimit: 3,
             loadingText: "Please Wait",
-            successLoadingText: 'Processing',
+            successLoadingText: "Processing",
             askPassword: false,
             cacheKey: null,
             retries: 0,
@@ -104,7 +100,6 @@ export default class Http {
 
         return opt;
     }
-
 
     /**
      * Set headers for the request.
@@ -132,7 +127,6 @@ export default class Http {
         return headers;
     }
 
-
     /**
      * Call the appropriate function (success or error) based on the response.
      * @param {Object} xhr - The XMLHttpRequest object or AxiosError.
@@ -152,8 +146,6 @@ export default class Http {
 
         if (typeof fn === "function") {
             fn.call(this, response);
-
-            
         }
     };
 
@@ -169,14 +161,11 @@ export default class Http {
             return;
             const loading = $("#isLoading");
             text = text || args.loadingText;
-           
 
             $("#loadingText", loading).text(text);
 
-            loading.toggleClass("show", !(!show));
-            
+            loading.toggleClass("show", !!show);
         }
-        
     }
 
     /**
@@ -226,8 +215,7 @@ export default class Http {
                     },
                 },
             });
-        }
-        else if (response.thumb) {
+        } else if (response.thumb) {
             this.thumbUp(response.thumb, args);
         }
 
@@ -256,24 +244,20 @@ export default class Http {
     alertPrompt = async (data) => {
         let type = null;
         let message = null;
-        if ('alert.error' in data) {
-            type = 'error';
+        if ("alert.error" in data) {
+            type = "error";
             message = data.alert.error;
-        }  
-        else if ('alert.success' in data) {
-            type = 'success';
+        } else if ("alert.success" in data) {
+            type = "success";
             message = data.alert.success;
-        }  
-        else if ('alert.warning' in data) {
-            type = 'warning';
+        } else if ("alert.warning" in data) {
+            type = "warning";
             message = data.alert.warning;
-        }  
-        else if ('alert.info' in data) {
-            type = 'info';
+        } else if ("alert.info" in data) {
+            type = "info";
             message = data.alert.info;
-        }  
-        else if ('alert' in data) {
-            type = 'info';
+        } else if ("alert" in data) {
+            type = "info";
             message = data.alert;
         }
 
@@ -294,10 +278,9 @@ export default class Http {
                 },
             });
         }
-        
-        return null;
-    }
 
+        return null;
+    };
 
     /**
      * Generate a unique queue ID.
@@ -305,11 +288,11 @@ export default class Http {
      */
     queueId = () => {
         let value = Math.random().toString(36).substring(2, 9);
-        while(value in this._queue) {
+        while (value in this._queue) {
             value = Math.random().toString(36).substring(2, 9);
         }
         return value;
-    }
+    };
 
     /**
      * Add a request to the queue.
@@ -322,7 +305,7 @@ export default class Http {
             this._queue[args.__queue_id] = args;
         }
         return args;
-    }
+    };
 
     /**
      * Remove a request from the queue.
@@ -336,41 +319,42 @@ export default class Http {
         }
 
         return args;
-    }
+    };
 
     thumbUp = (option, args) => {
-        if (typeof option === 'string') {
-            option = {message:option}
-        }
-        else if (typeof option !== 'object' || option === null || !option.message) {
+        if (typeof option === "string") {
+            option = { message: option };
+        } else if (
+            typeof option !== "object" ||
+            option === null ||
+            !option.message
+        ) {
             return;
         }
 
-        const title = option.title || 'Congratulations';
+        const title = option.title || "Congratulations";
 
         swal({
             content: {
-                element: 'div',
+                element: "div",
                 attributes: {
                     innerHTML: `
                     <img src='/public/images/thumbs-up.jpg'/>
                     <h3 class="text-2xl">${title}</h3>
                     <div>${option.message}</h3>
                     
-                    `
-                }
+                    `,
+                },
             },
             buttons: {
-                confirm: 'Okay'
-            }
-        })
-        .then(value => {
-            if (value && typeof args.thumbCallback === 'function') {
+                confirm: "Okay",
+            },
+        }).then((value) => {
+            if (value && typeof args.thumbCallback === "function") {
                 args.thumbCallback();
             }
-        })
-        ;
-    }
+        });
+    };
 
     /**
      * Show a toast message for a timeout.
@@ -378,31 +362,28 @@ export default class Http {
      * @param
      */
 
-    toastTimeout = (args, actionText = 'Refreshing', message) => {
-        message = message || 'This request is taking time';
-        
-            args = this.enqueue(args);
+    toastTimeout = (args, actionText = "Refreshing", message) => {
+        message = message || "This request is taking time";
 
-            Toast(message, {
-                timeout:false,
-                position: 'bottom-right',
-                action: {
-                    text: 'Refresh',
-                    callback: () =>  {
-                        const queue = Object.values(this._queue);
-                        
-                        queue.map(options => {
+        args = this.enqueue(args);
+
+        Toast(message, {
+            timeout: false,
+            position: "bottom-right",
+            action: {
+                text: "Refresh",
+                callback: () => {
+                    const queue = Object.values(this._queue);
+
+                    queue.map((options) => {
                         options.loadingText = actionText;
                         options.timeout *= 1.5;
                         return this.http(options);
-                        })
-
-                    }
-                }
-            })
-            
-
-    }
+                    });
+                },
+            },
+        });
+    };
 
     async handleError(err, args) {
         const errorData = parseResponse(err);
@@ -415,23 +396,26 @@ export default class Http {
 
         if (typeof errorData.confirm === "string") {
             return this.confirmPrompt(errorData.confirm, args);
-            
-        } 
-        else if ("error" in errorData || "errors" in errorData) {
+        } else if ("error" in errorData || "errors" in errorData) {
             let errorText = errorData.error;
 
-            
-            if ('errors' in errorData) {
+            if ("errors" in errorData) {
                 errorText = Object.values(errorData.errors)[0];
 
-                 if (Array.isArray(errorData.errors.passcode) && errorData.errors.passcode.includes("validation.pin")) {
+                if (
+                    Array.isArray(errorData.errors.passcode) &&
+                    errorData.errors.passcode.includes("validation.pin")
+                ) {
                     toastr.error(
                         "Could not verify your PIN",
                         "Failed Pin Verification"
                     );
 
                     return this.pinPrompt(args);
-                } else if (Array.isArray(errorData.errors.passkey) && errorData.errors.passkey.includes("validation.password")) {
+                } else if (
+                    Array.isArray(errorData.errors.passkey) &&
+                    errorData.errors.passkey.includes("validation.password")
+                ) {
                     toastr.error(
                         "Could not verify your password",
                         "Password not verified"
@@ -440,7 +424,7 @@ export default class Http {
                     return this.passwordPrompt(args);
                 }
             }
-            
+
             if (Array.isArray(errorText)) {
                 errorText = errorText[0];
             }
@@ -460,8 +444,7 @@ export default class Http {
                     },
                 },
             });
-        } 
-        else if ("alert" in errorData) {
+        } else if ("alert" in errorData) {
             return swal({
                 text: errorData.alert,
                 buttons: {
@@ -472,10 +455,6 @@ export default class Http {
                 },
             });
         }
-        
-
-
-
 
         if (errorData.redirect) {
             setTimeout(() => (window.location.href = errorData.redirect), 2000);
@@ -493,7 +472,11 @@ export default class Http {
         } else if (
             /(CSRF token mismatch|Maximum execution)/.test(errorData.message)
         ) {
-            return this.toastTimeout(args, 'Retrying', 'Request has met a bottleneck');
+            return this.toastTimeout(
+                args,
+                "Retrying",
+                "Request has met a bottleneck"
+            );
         }
 
         if (args.throwError) throw errorData;
@@ -556,7 +539,6 @@ export default class Http {
         return {};
     }
 
-  
     disableTriggers(args, disabled = true) {
         if (args.trigger) {
             args.trigger.prop("disabled", disabled);
@@ -587,7 +569,7 @@ export default class Http {
         args.confirm = false;
 
         swal({
-            title: 'Confirm',
+            title: "Confirm",
             content: {
                 element: "div",
                 attributes: {
@@ -607,7 +589,7 @@ export default class Http {
 
                 return this.http(args);
             }
-            console.log({confirmed})
+            console.log({ confirmed });
         });
     }
 
@@ -656,8 +638,8 @@ export default class Http {
             }
         });
     }
-    
-     pinPrompt(args) {
+
+    pinPrompt2(args) {
         args.askPin = false;
         const id = "pin_group";
 
@@ -696,7 +678,6 @@ export default class Http {
                 if (value === "reset") {
                     const resetPinCode = () => {
                         swal({
-                            
                             title: "Change Pin",
                             text: "Enter new Pin Below",
                             content: {
@@ -766,17 +747,17 @@ export default class Http {
                             }
                         });
 
-                        $(".pin-code").pin({ paste: false, onComplete: (value) => {
-                            args.data = this.appendData(
-                                args.data,
-                                {
+                        $(".pin-code").pin({
+                            paste: false,
+                            onComplete: (value) => {
+                                args.data = this.appendData(args.data, {
                                     passcode: value,
-                                }
-                            );
-                            args.throwError = true;
+                                });
+                                args.throwError = true;
 
-                            return this.http(args);
-                        }});
+                                return this.http(args);
+                            },
+                        });
                     };
 
                     return resetPinCode();
@@ -801,26 +782,24 @@ export default class Http {
 
         enterPin();
 
-        return $(".pin-code").pin({ paste: false, onComplete: (value) => {
-            args.data = this.appendData(
-                args.data,
-                {
+        return $(".pin-code").pin({
+            paste: false,
+            onComplete: (value) => {
+                args.data = this.appendData(args.data, {
                     passcode: value,
-                }
-            );
-            args.throwError = true;
+                });
+                args.throwError = true;
 
-            return this.http(args);
-        }});
+                return this.http(args);
+            },
+        });
     }
 
-
-    pinPrompt2(args) {
+    pinPrompt(args) {
         args.askPin = false;
         const id = "pin_group";
 
         swal({
-            
             className: "custom-modal",
 
             content: {
@@ -833,7 +812,7 @@ export default class Http {
                             <span class="text-2xl" id="close-swal-modal">&times;</span>
                         </div>
                         <div class="text-center">Enter Your Pin</div>
-                        <div class="pin-code">
+                        <div id="verify-pin" class="pin-code">
                             <input type="password" autocomplete="off" maxlength="1" autofocus="true" class="pin-token"/>
                             <input type="password" autocomplete="off" maxlength="1" class="pin-token"/>
                             <input type="password" autocomplete="off" maxlength="1" class="pin-token"/>
@@ -853,23 +832,20 @@ export default class Http {
             timer: false,
         });
 
-        $(`#${id} #reset_pin`).on('click', function(){
-
+        $(`#${id} #reset_pin`).on("click", function () {
             swal({
-                    
-                title: "Change Pin",
-                text: "Enter new Pin Below",
+                className: "custom-modal",
                 content: {
-                    element: "form",
+                    element: "div",
                     attributes: {
                         innerHTML: `   
-                            <form id="change_pin">
+                            <form id="change_pin" class="flex flex-col">
                                 <div class="pin-header">
                                     <div class="flex-1 text-center">Change Pin</div>
                                     <span class="text-2xl" id="close-swal-modal">&times;</span>
                                 </div>
                                 <div class="text-center">Enter New Pin</div>
-                                <div class="change-pin-code">
+                                <div id="change-pin" class="change-pin-code">
                                     <input type="password" autocomplete="off" maxlength="1" autofocus="true" class="pin-token"/>
                                     <input type="password" autocomplete="off" maxlength="1" class="pin-token"/>
                                     <input type="password" autocomplete="off" maxlength="1" class="pin-token"/>
@@ -878,7 +854,7 @@ export default class Http {
                                 </div>
 
                                 <div>
-                                    <input type="password" name="old_password_" placeholder="Enter Your Password" id="old_password"/>
+                                    <input type="password" class="input" name="old_password_" placeholder="Enter Your Password" id="old_password"/>
                                 </div>
                                 
                             </form>`,
@@ -904,48 +880,43 @@ export default class Http {
                     const passkey = $("#old_password", element).val();
                     const pin = element.data("value");
 
-
                     this.http({
                         url: "/app/user/update_profile",
                         data: {
                             data: { pin, passkey },
                         },
                         success: () => {
-                            args.data = this.appendData(
-                                args.data,
-                                {
-                                    passcode: pin,
-                                }
-                            );
+                            args.data = this.appendData(args.data, {
+                                passcode: pin,
+                            });
 
                             return this.http(args);
                         },
-                        
                     });
-
                 }
             });
 
-            $('.change-pin-code').pin({
-                paste: false,
-                onComplete: false
+            $("#change-pin").pin({
+                onComplete: false,
             });
-
         });
 
-         
-
-        $(".pin-code").pin({ paste: false, onComplete: (value) => {
-            args.data = this.appendData(
-                args.data,
-                {
+        $("$verify-pin").pin({
+            onProcess: () => {
+                $("#pinAutoFocus").processingBtn(true);
+            },
+            onDone: () => {
+                $("#pinAutoFocus").processingBtn(false);
+            },
+            onComplete: (value) => {
+                args.data = this.appendData(args.data, {
                     passcode: value,
-                }
-            );
-            args.throwError = true;
+                });
+                args.throwError = true;
 
-            return this.http(args);
-        }});
+                return this.http(args);
+            },
+        });
     }
 
     normalizeUrl = (url) => {
@@ -956,27 +927,24 @@ export default class Http {
     };
     method = (type) => {
         this._method = type;
-    }
+    };
 
     configure = (obj, value) => {
-        if (typeof obj === 'string' && typeof value !== 'undefined') {
-            obj = {[obj]: value};
-        }
-        else if (typeof obj !== 'object' || obj === null) {
+        if (typeof obj === "string" && typeof value !== "undefined") {
+            obj = { [obj]: value };
+        } else if (typeof obj !== "object" || obj === null) {
             return this;
         }
 
-        for(var item in obj) {
+        for (var item in obj) {
             this._configurations[item] = obj[item];
         }
         return this;
-    }
+    };
     disconfigure = () => {
         this._configurations = {};
         return this;
-
-    }
-
+    };
 
     http = async (options) => {
         const args = this.parseArgs(options);
@@ -989,7 +957,6 @@ export default class Http {
             args.headers["Content-Type"] = "multipart/form-data";
         }
 
-
         args.beforeSend =
             typeof args.beforeSend === "function" ? args.beforeSend : () => {};
 
@@ -997,18 +964,14 @@ export default class Http {
             typeof args.success === "function"
                 ? args.success
                 : (res, xhr) => {};
-        args.done =
-                typeof args.done === "function"
-                    ? args.done
-                    : () => {};
+        args.done = typeof args.done === "function" ? args.done : () => {};
         args.error =
             typeof args.error === "function" ? args.error : (err, xhr) => {};
-        
+
         if (!args.__type__) {
             args.__type__ = this._method ? this._method : args.type;
         }
-       
-        
+
         if (this._method) {
             args.type = this._method;
             this.method(null);
@@ -1048,14 +1011,11 @@ export default class Http {
         await this.loadToken();
         args.headers = this.setHeaders(args.headers);
 
-
         if (args.askPin) {
             return this.pinPrompt(args);
-        } 
-        else if (args.confirm) {
+        } else if (args.confirm) {
             return this.confirmPrompt(args.confirm, args);
-        }
-        else if (args.askPassword) {
+        } else if (args.askPassword) {
             return this.passwordPrompt(args);
         }
 
@@ -1074,7 +1034,7 @@ export default class Http {
                         args.timeout || 0
                     );
 
-                    window.addEventListener("keydown",  (e) => {
+                    window.addEventListener("keydown", (e) => {
                         if (e.key === "Escape") {
                             reject(new Error("Aborted"));
                         }
@@ -1093,5 +1053,4 @@ export default class Http {
             args.done();
         }
     };
-
 }

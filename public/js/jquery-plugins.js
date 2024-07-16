@@ -364,6 +364,30 @@ $.fn.setAttr = (attr, value) => {
     $(this).attr(attr, value);
     return value;
 }
+$.fn.cloneAttrs = function(sourceElement) {
+    Array.from(sourceElement.attributes).forEach(item => {
+        const value = item.nodeValue;
+        const name = item.nodeName;
+        $(this).attr(name, value);
+    });
+}
+$.fn.processingBtn = function(processing) {
+    let element = $(this);
+    if (element.is('input')) {
+        element = $('<button>');
+        element.cloneAttrs(this);
+        $(this).replaceWith(element);
+    }
+    let indicator = $('i.btn-indicator');
+    if (indicator.length === 0) {
+        indicator = $('<i>');
+        indicator.addClass('btn-indicator');
+        element.prepend(indicator);
+    }
+
+    element.prop('disabled', processing);
+    element.toggleClass('btn-processing', processing);
+}
 
 $.fn.pin = function (options) {
     // Validate options
@@ -373,15 +397,23 @@ $.fn.pin = function (options) {
    
     // Set default options and merge with user options
     options = {
-        paste: false,
+        paste: !options.hide,
         toggle: false,
         hide: true,
         count: 4,
         form: null,
         timeout: 2000,
+        onProcess: ()=>{},
+        onDone: ()=>{},
         ...options,
     };
 
+    if (typeof options.onProcess !== 'function') {
+        options.onProcess = () => {};
+    }
+    if (typeof options.onDone !== 'function') {
+        options.onDone = () => {};
+    }
     
 
     
@@ -398,15 +430,20 @@ $.fn.pin = function (options) {
         options.onComplete = function(value) {
             if (typeof completeFnc === 'function') {
                 const fncCall = completeFnc(value);
-                if (typeof fncCall.finally === 'function') {
+                if (typeof fncCall.then === 'function') {
     
+                    options.onProcess();        
+
                     return fncCall
                         .finally(() => {
+                            options.onDone();
+                            
                             buttons.prop('disabled', false);
                         });
                 }
                 
             }
+            options.onDone();
             buttons.prop('disabled', false);
         };
         
@@ -439,7 +476,7 @@ $.fn.pin = function (options) {
         inputs.on("input", function () {
             const value = $(this).val();
             const index = inputs.index(this);
-console.log({value, index});
+            
             // Ensure only numeric input and shift focus to the next input
             if (/\D/.test(value)) {
                 $(this).val("");
@@ -457,13 +494,17 @@ console.log({value, index});
         });
         
         // Handle toggle visibility
-        if (options.hide) {
+        let visibility = element.find(".pin-visibility");
+        if (!options.toggle) {
+            visibility.remove();
+        }
+
+        else {
            
-            let visibility = element.find(".pin-visibility");
             if (visibility.length === 0) {
                 visibility = $("<span>", {
                     class: "pin-visibility",
-                    tabindex: "0",
+                    tabindex: "-1",
                     role: "button",
                     "aria-label": "Toggle visibility",
                 });

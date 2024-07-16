@@ -2298,10 +2298,10 @@ fieldset.input.focused legend {
         display:inline-block;
     }
 }
-#pin_group .pin-header, #pin_group .pin-footer {
+#pin_group .pin-header, #pin_group .pin-footer, .custom-modal .pin-header, .custom-modal .pin-footer {
     padding: 20px 0px;
 }
-#pin_group .pin-header {
+#pin_group .pin-header, .custom-modal .pin-header {
     @apply flex items-center justify-between;
 }
 .btn_spinner {
@@ -3389,7 +3389,7 @@ td.score-cell input {
 .pin-code {
     @apply flex justify-center gap-2 items-center;
 }
-.pin-code input {
+.pin-code .pin-token {
     @apply w-12 h-12 lg:h-16 lg:w-16 rounded focus:outline-none focus:border-none text-center bg-zinc-200 dark:bg-[#0d0d0d4e] dark:text-white/70 text-zinc-700 text-2xl;
 }
 
